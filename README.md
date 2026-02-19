@@ -1,9 +1,34 @@
-# orgauth
-
 <!-- badges: start -->
+[![Project Status: Concept - Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![GPL-3](https://img.shields.io/badge/License-GPL-3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
+[![Release](https://img.shields.io/github/release/inbo/orgauth.svg)](https://github.com/inbo/orgauth/releases)
+![GitHub Workflow Status](https://github.com/inbo/orgauth/actions/workflows/check_on_main.yml/badge.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/inbo/orgauth)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/inbo/orgauth.svg)
+![r-universe name](https://inbo.r-universe.dev/badges/:name?color=c04384)
+![r-universe package](https://inbo.r-universe.dev/badges/orgauth)
+[![Codecov test coverage](https://codecov.io/gh/inbo/orgauth/branch/main/graph/badge.svg)](https://app.codecov.io/gh/inbo/orgauth?branch=main)
 <!-- badges: end -->
 
-The goal of orgauth is to manage person and organisation information with validation and formatting capabilities. It provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, and integration with citation management systems.
+# orgauth: Manage Person and Organisation Information
+
+[Onkelinx, Thierry![ORCID logo](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-8804-4216)[^aut][^cre][^INBO]
+[Research Institute for Nature and Forest (INBO)](mailto:info%40inbo.be)[^cph][^fnd][^pbl]
+
+[^aut]: author
+[^cre]: contact person
+[^INBO]: Research Institute for Nature and Forest (INBO)
+[^cph]: copyright holder
+[^fnd]: funder
+[^pbl]: publisher
+
+**keywords**:  organisation, author, standardisation
+
+
+<!-- description: start -->
+Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, and integration with citation management systems.
+<!-- description: end -->
 
 ## Installation
 
@@ -39,4 +64,5 @@ org$print()
 
 ## Code of Conduct
 
-Please note that the orgauth project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the orgauth project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

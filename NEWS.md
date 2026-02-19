@@ -6,4 +6,5 @@
 * Core R6 classes: `org_item` and `org_list` 
 * Author management functions: `use_author()`, `store_authors()`, `author2df()`
 * Validation functions: `validate_email()`, `validate_orcid()`
-* Support for multiple languages, ORCID/ROR identifiers, and licensing requirements
+* Support for multiple languages, ORCID/ROR identifiers, and licensing
+  requirements.

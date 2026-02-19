@@ -1,0 +1,13 @@
+citHeader("To cite `orgauth` in publications please use:")
+# begin checklist entry
+bibentry(
+  bibtype = "Manual",
+  title = "orgauth: Manage Person and Organisation Information. Version 0.0.1",
+  author = c(person(given = "Thierry", family = "Onkelinx")),
+  year = 2026,
+  url = "https://github.com/inbo/orgauth/",
+  abstract = "Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, and integration with citation management systems.",
+  textVersion = "Onkelinx, Thierry (2026) orgauth: Manage Person and Organisation Information. Version 0.0.1. https://github.com/inbo/orgauth/",
+  keywords = "organisation, author, standardisation",
+)
+# end checklist entry

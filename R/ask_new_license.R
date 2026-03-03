@@ -1,5 +1,4 @@
 #' Ask one or more licenses.
-#' 
 #' @param licenses A named vector of available licenses.
 #'   The vector contains the URL to the markdown version of the license.
 #'   Use the abbreviation of the license name as names.

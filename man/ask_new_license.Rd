@@ -20,6 +20,7 @@ Ask one or more licenses.
 \seealso{
 Other question: 
 \code{\link{ask_email}()},
-\code{\link{ask_language}()}
+\code{\link{ask_language}()},
+\code{\link{ask_ror}()}
 }
 \concept{question}

@@ -96,6 +96,7 @@ cache_org <- function(url, config_folder) {
   return(org)
 }
 
+#' @importFrom utils file_test
 org_list_from_url <- function(git) {
   ssh_http(git) |>
     gsub(pattern = "https://", replacement = "") |>

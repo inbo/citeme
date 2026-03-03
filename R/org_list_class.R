@@ -69,6 +69,7 @@ org_list <- R6Class(
     #' @param email The email address of the organisation.
     #' @param role The role of the person to return.
     #' @param lang The language to return the organisation name in.
+    #' @importFrom utils person
     get_person = function(email, role = c("cph", "fnd"), lang) {
       if (!email %in% self$get_email) {
         return(person(email = email, role = role))
@@ -277,6 +278,7 @@ org_list <- R6Class(
     #' @description Validate the rules for the rightsholder and funder.
     #' @param rightsholder The rightsholders as a `person` object.
     #' @param funder The funders as a `person` object.
+    #' @importFrom utils person
     validate_rules = function(rightsholder = person(), funder = person()) {
       ol_validate_rules(
         person = rightsholder,
@@ -458,6 +460,7 @@ ol_valid_rules <- function(rules) {
   all(rules %in% c("shared", "optional"))
 }
 
+#' @importFrom utils person
 ol_validate_rules <- function(
   person = person(),
   which_person,
@@ -557,6 +560,7 @@ first_valid <- function(choices, x) {
   return(x)
 }
 
+#' @importFrom utils person
 ol_validate_org <- function(person, this_org, lang) {
   person_name <- format(person, c("given", "family"))
   lang <- first_valid(choices = names(this_org$name), x = lang)
@@ -602,6 +606,7 @@ ol_validate_org <- function(person, this_org, lang) {
   return(updated_person)
 }
 
+#' @importFrom utils person
 ol_validate_person <- function(person, lang, items) {
   if (is.null(person$email)) {
     updated_person <- person

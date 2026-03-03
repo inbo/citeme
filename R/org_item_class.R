@@ -184,6 +184,7 @@ org_item <- R6Class(
     #' @param lang The language to use for the organisation name.
     #' Defaults to the first language in the `name` vector.
     #' @param role The role of the person in the organisation.
+    #' @importFrom utils person
     as_person = function(
       lang = names(private$name)[1],
       role = c("cph", "fnd")

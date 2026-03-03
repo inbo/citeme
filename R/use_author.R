@@ -194,6 +194,7 @@ new_author <- function(current, root, org, lang) {
   return(current)
 }
 
+#' @importFrom utils person
 author2person <- function(role = "aut", lang) {
   df <- use_author(lang = lang)
   if (is.na(df$email) || df$email == "") {

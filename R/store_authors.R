@@ -3,6 +3,7 @@
 #' @export
 #' @importFrom desc description
 #' @importFrom fs path
+#' @importFrom stats aggregate
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family utils

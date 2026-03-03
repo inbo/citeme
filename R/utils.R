@@ -165,8 +165,9 @@ first_non_null <- function(...) {
 validate_license <- function(license) {
   stopifnot(
     "`license` must be a list" = inherits(license, "list"),
-    "`license` must contain \`package\`, \`project\`, and \`data\`" =
-      all(c("package", "project", "data") %in% names(license)),
+    "`license` must contain \`package\`, \`project\`, and \`data\`" = all(
+      c("package", "project", "data") %in% names(license)
+    ),
     "`license` must contain character vectors" = all(
       vapply(license, is.character, FUN.VALUE = logical(1))
     ),

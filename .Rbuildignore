@@ -3,9 +3,11 @@
 ^LICENSE.md$
 ^LICENSE\.md$
 ^README\.Rmd$
+^[.]?air[.]toml$
 ^\.Rproj\.user$
 ^\.github$
 ^\.httr-oauth$
+^\.vscode$
 ^\.zenodo\.json$
 ^_pkgdown.yml$
 ^_pkgdown\.yml$

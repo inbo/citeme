@@ -20,6 +20,7 @@ and connect research organizations to researchers and research outputs.
 Other question: 
 \code{\link{ask_email}()},
 \code{\link{ask_language}()},
-\code{\link{ask_new_license}()}
+\code{\link{ask_new_license}()},
+\code{\link{ask_url}()}
 }
 \concept{question}

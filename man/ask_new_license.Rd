@@ -21,6 +21,7 @@ Ask one or more licenses.
 Other question: 
 \code{\link{ask_email}()},
 \code{\link{ask_language}()},
-\code{\link{ask_ror}()}
+\code{\link{ask_ror}()},
+\code{\link{ask_url}()}
 }
 \concept{question}

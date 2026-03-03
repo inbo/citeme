@@ -19,6 +19,7 @@ Ask for a language
 Other question: 
 \code{\link{ask_email}()},
 \code{\link{ask_new_license}()},
-\code{\link{ask_ror}()}
+\code{\link{ask_ror}()},
+\code{\link{ask_url}()}
 }
 \concept{question}

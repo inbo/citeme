@@ -13,4 +13,8 @@ ask_email(prompt)
 \description{
 Ask for an e-mail address
 }
+\seealso{
+Other question: 
+\code{\link{ask_language}()}
+}
 \concept{question}

@@ -17,6 +17,7 @@ Ask for a language
 }
 \seealso{
 Other question: 
-\code{\link{ask_email}()}
+\code{\link{ask_email}()},
+\code{\link{ask_new_license}()}
 }
 \concept{question}

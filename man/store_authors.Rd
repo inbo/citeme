@@ -7,7 +7,7 @@
 store_authors(x = ".")
 }
 \arguments{
-\item{x}{Projh}
+\item{x}{Path to a project}
 }
 \description{
 Store author details for later usage

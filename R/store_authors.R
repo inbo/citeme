@@ -1,5 +1,5 @@
 #' Store author details for later usage
-#' @param x Projh
+#' @param x Path to a project
 #' @export
 #' @importFrom desc description
 #' @importFrom fs path

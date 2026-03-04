@@ -1,8 +1,9 @@
 test_that("validate_orcid validates correct ORCID format with checksum", {
+
   # Valid ORCIDs with correct checksum
-  expect_true(validate_orcid("0000-0001-8804-4216"))  # Real ORCID from DESCRIPTION
+  expect_true(validate_orcid("0000-0001-8804-4216"))
   expect_true(validate_orcid("0000-0002-1825-0097"))
-  expect_true(validate_orcid("0000-0002-9079-593X"))  # ORCID with X checksum
+  expect_true(validate_orcid("0000-0002-9079-593X"))
 })
 
 test_that("validate_orcid allows empty string", {
@@ -20,8 +21,8 @@ test_that("validate_orcid rejects invalid ORCID format", {
 
 test_that("validate_orcid rejects ORCID with wrong checksum", {
   # Valid format but wrong checksum
-  expect_false(validate_orcid("0000-0001-8804-4210"))  # Changed last digit
-  expect_false(validate_orcid("0000-0000-0000-0000"))  # All zeros (invalid checksum)
+  expect_false(validate_orcid("0000-0001-8804-4210"))
+  expect_false(validate_orcid("0000-0000-0000-0000"))
 })
 
 test_that("validate_orcid handles vectors of ORCIDs", {

@@ -11,7 +11,7 @@ test_that("org_list creates object with org_item", {
   ol <- org_list$new(item)
   expect_s3_class(ol, "org_list")
   expect_equal(length(ol$get_email), 1)
-  expect_equal(ol$get_email, "test@example.org")
+  expect_equal(unname(ol$get_email), "test@example.org")
 })
 
 test_that("org_list creates object with multiple org_items", {

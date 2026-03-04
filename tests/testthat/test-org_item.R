@@ -4,8 +4,8 @@ test_that("org_item creates valid object with minimal parameters", {
     email = "test@example.org"
   )
   expect_s3_class(item, "org_item")
-  expect_equal(item$get_email, "test@example.org")
-  expect_equal(item$get_default_name, "Test Organization")
+  expect_equal(unname(item$get_email), "test@example.org")
+  expect_equal(unname(item$get_default_name), "Test Organization")
 })
 
 test_that("org_item creates INBO object when @inbo.be email is used", {
@@ -14,7 +14,7 @@ test_that("org_item creates INBO object when @inbo.be email is used", {
     name = c("en-GB" = "Ignored Name")
   )
   expect_s3_class(item, "org_item")
-  expect_equal(item$get_email, "info@inbo.be")
+  expect_equal(unname(item$get_email), "info@inbo.be")
   expect_equal(
     item$get_name["en-GB"],
     c("en-GB" = "Research Institute for Nature and Forest (INBO)")

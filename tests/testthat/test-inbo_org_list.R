@@ -11,7 +11,7 @@ test_that("inbo_org_list contains INBO organisation", {
 
 test_that("inbo_org_list has correct git URL", {
   ol <- inbo_org_list()
-  expect_equal(ol$get_git, "https://github.com/inbo")
+  expect_equal(unname(ol$get_git), "https://github.com/inbo")
 })
 
 test_that("inbo_org_list contains multiple organisations", {

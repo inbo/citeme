@@ -37,6 +37,7 @@ Other utils:
 
 Other validation: 
 \code{\link{validate_email}()},
+\code{\link{validate_license}()},
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}
 }

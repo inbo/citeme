@@ -4,7 +4,7 @@
 \alias{ask_yes_no}
 \title{Function to ask a simple yes no question
 Provides a simple wrapper around \code{utils::askYesNo()}.
-This function is used to ask questions in an interactive way.
+This function is used to ask yes no questions in an interactive way.
 It repeats the question until a valid answer is given.}
 \usage{
 ask_yes_no(msg, default = TRUE, prompts = c("Yes", "No", "Cancel"), ...)
@@ -32,7 +32,15 @@ Additional parameters, ignored by the default function.
 \description{
 Function to ask a simple yes no question
 Provides a simple wrapper around \code{utils::askYesNo()}.
-This function is used to ask questions in an interactive way.
+This function is used to ask yes no questions in an interactive way.
 It repeats the question until a valid answer is given.
 }
-\concept{questions}
+\seealso{
+Other question: 
+\code{\link{ask_email}()},
+\code{\link{ask_language}()},
+\code{\link{ask_new_license}()},
+\code{\link{ask_ror}()},
+\code{\link{ask_url}()}
+}
+\concept{question}

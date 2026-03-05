@@ -61,7 +61,7 @@ validate_ror <- function(ror) {
     "`ror` cannot be NA" = assertthat::noNA(ror)
   )
   grepl(
-    "^https:\\/\\/ror\\.org\\/0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$",
+    "^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$",
     ror,
     perl = TRUE
   )

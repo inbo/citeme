@@ -17,20 +17,6 @@ set_non_empty <- function(x, fun, prompt) {
   return(x)
 }
 
-ask_orcid <- function(prompt = "orcid: ") {
-  orcid <- readline(prompt = prompt)
-  if (orcid == "") {
-    return(orcid)
-  }
-  while (!validate_orcid(orcid)) {
-    message(
-      "\nPlease provide a valid ORCiD in the format `0000-0000-0000-0000`\n"
-    )
-    orcid <- readline(prompt = prompt)
-  }
-  return(orcid)
-}
-
 coalesce <- function(...) {
   dots <- list(...)
   i <- 1

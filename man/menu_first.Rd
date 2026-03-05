@@ -35,6 +35,7 @@ Other question:
 \code{\link{ask_email}()},
 \code{\link{ask_language}()},
 \code{\link{ask_new_license}()},
+\code{\link{ask_orcid}()},
 \code{\link{ask_ror}()},
 \code{\link{ask_url}()},
 \code{\link{ask_yes_no}()}

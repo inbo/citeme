@@ -55,18 +55,6 @@ validate_orcid <- function(orcid) {
   return(orcid == "" | format_ok)
 }
 
-validate_ror <- function(ror) {
-  stopifnot(
-    "`ror` must be a string" = assertthat::is.string(ror),
-    "`ror` cannot be NA" = assertthat::noNA(ror)
-  )
-  grepl(
-    "^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$",
-    ror,
-    perl = TRUE
-  )
-}
-
 validate_url <- function(url) {
   stopifnot(
     "`url` must be a string" = assertthat::is.string(url),

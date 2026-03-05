@@ -27,7 +27,6 @@ Other utils:
 \code{\link{menu_first}()},
 \code{\link{store_authors}()},
 \code{\link{use_author}()},
-\code{\link{validate_email}()},
 \code{\link{validate_orcid}()}
 }
 \concept{utils}

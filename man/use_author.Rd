@@ -31,7 +31,6 @@ Other utils:
 \code{\link{inbo_org_list}()},
 \code{\link{menu_first}()},
 \code{\link{store_authors}()},
-\code{\link{validate_email}()},
 \code{\link{validate_orcid}()}
 }
 \concept{utils}

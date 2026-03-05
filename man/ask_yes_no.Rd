@@ -41,6 +41,7 @@ Other question:
 \code{\link{ask_language}()},
 \code{\link{ask_new_license}()},
 \code{\link{ask_ror}()},
-\code{\link{ask_url}()}
+\code{\link{ask_url}()},
+\code{\link{menu_first}()}
 }
 \concept{question}

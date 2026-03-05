@@ -31,4 +31,8 @@ Validate that a ROR is a string of 9 characters starting with 0, followed by
 6 characters which can be a letter (except i, l, o) or a digit, and ending
 with 2 digits.
 }
+\seealso{
+Other validation: 
+\code{\link{validate_url}()}
+}
 \concept{validation}

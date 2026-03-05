@@ -55,18 +55,6 @@ validate_orcid <- function(orcid) {
   return(orcid == "" | format_ok)
 }
 
-validate_url <- function(url) {
-  stopifnot(
-    "`url` must be a string" = assertthat::is.string(url),
-    "`url` cannot be NA" = assertthat::noNA(url)
-  )
-  grepl(
-    "^(http|https)://[a-z0-9-]+(\\.[a-z0-9-]+)+(:[0-9]+)?(/.*)?$",
-    url,
-    perl = TRUE
-  )
-}
-
 #' Determine if a directory is in a git repository
 #'
 #' The path arguments specifies the directory at which to start the search for

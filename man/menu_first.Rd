@@ -39,14 +39,5 @@ Other question:
 \code{\link{ask_ror}()},
 \code{\link{ask_url}()},
 \code{\link{ask_yes_no}()}
-
-Other utils: 
-\code{\link{author2df}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{store_authors}()},
-\code{\link{use_author}()},
-\code{\link{validate_orcid}()}
 }
 \concept{question}
-\concept{utils}

@@ -92,17 +92,6 @@ use_author <- function(email, lang) {
   return(current[selected, ])
 }
 
-#' Improved version of menu()
-#' @inheritParams utils::menu
-#' @export
-#' @family utils
-menu_first <- function(choices, graphics = FALSE, title = NULL) {
-  if (!interactive()) {
-    return(1)
-  }
-  menu(choices = choices, graphics = graphics, title = title)
-}
-
 #' @importFrom fs path
 #' @importFrom utils menu write.table
 update_author <- function(current, selected, root, org, lang) {
@@ -342,50 +331,4 @@ validate_author <- function(current, selected, org, lang) {
     current$affiliation[selected]
   )
   return(current)
-}
-
-#' Validate the structure of an ORCID id
-#'
-#' Checks whether the ORCID has the proper format and the checksum.
-#' @param orcid A vector of ORCID
-#' @returns A logical vector with the same length as the input vector.
-#' @export
-#' @importFrom assertthat assert_that noNA
-#' @family utils
-validate_orcid <- function(orcid) {
-  assert_that(is.character(orcid), noNA(orcid))
-  format_ok <- grepl("^(\\d{4}-){3}\\d{3}[\\dX]$", orcid, perl = TRUE)
-  if (!any(format_ok)) {
-    return(orcid == "" | format_ok)
-  }
-  gsub("-", "", orcid[format_ok]) |>
-    strsplit(split = "") |>
-    do.call(what = cbind) -> digits
-  checksum <- digits[16, ]
-  seq_len(15) |>
-    rev() |>
-    matrix(ncol = 1) -> powers
-  apply(digits[-16, , drop = FALSE], 1, as.integer, simplify = FALSE) |>
-    do.call(what = rbind) |>
-    crossprod(2^powers) |>
-    as.vector() -> total
-  remainder <- (12 - (total %% 11)) %% 11
-  remainder <- as.character(remainder)
-  remainder[remainder == "10"] <- "X"
-  format_ok[format_ok] <- remainder == checksum
-  return(orcid == "" | format_ok)
-}
-
-ask_orcid <- function(prompt = "orcid: ") {
-  orcid <- readline(prompt = prompt)
-  if (orcid == "") {
-    return(orcid)
-  }
-  while (!validate_orcid(orcid)) {
-    message(
-      "\nPlease provide a valid ORCiD in the format `0000-0000-0000-0000`\n"
-    )
-    orcid <- readline(prompt = prompt)
-  }
-  return(orcid)
 }

@@ -1,4 +1,5 @@
 #' Ask for an `ORCID iD`
+#'
 #' The [`ORCID iD`](https://orcid.org/) is a unique, persistent identifier
 #' free of charge to researchers.
 #' This function prompts the user to enter an `ORCID iD` and validates its

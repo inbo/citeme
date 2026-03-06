@@ -1,4 +1,5 @@
 #' Validate URL
+#'
 #' Validate that a URL is a string of length 1 which is not NA and matches the
 #' pattern of a valid URL.
 #' @param url A URL to validate.

@@ -15,7 +15,7 @@
 #' @importFrom fs path
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
-#' @family utils
+#' @family author
 #' @export
 use_author <- function(email, lang) {
   root <- R_user_dir("orgauth", which = "data")

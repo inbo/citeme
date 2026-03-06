@@ -9,7 +9,7 @@
 #' @return An `org_list` object containing the organisation list.
 #' The function also stores the information in the user's R configuration.
 #' @export
-#' @family utils
+#' @family organisation
 #' @importFrom gert git_remote_list
 get_default_org_list <- function(x = ".") {
   stopifnot(is_repository(x))

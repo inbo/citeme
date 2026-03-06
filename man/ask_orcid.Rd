@@ -2,14 +2,7 @@
 % Please edit documentation in R/ask_orcid.R
 \name{ask_orcid}
 \alias{ask_orcid}
-\title{Ask for an \verb{ORCID iD}
-The \href{https://orcid.org/}{\verb{ORCID iD}} is a unique, persistent identifier
-free of charge to researchers.
-This function prompts the user to enter an \verb{ORCID iD} and validates its
-format.
-The \verb{ORCID iD} must be in the format \code{0000-0000-0000-0000} where the last
-digit can be a number or \code{"X"}.
-Empty strings are considered valid to allow optional \verb{ORCID iD}.}
+\title{Ask for an \verb{ORCID iD}}
 \usage{
 ask_orcid(prompt = "orcid: ")
 }
@@ -21,7 +14,6 @@ The default is \code{"orcid: "}.}
 A character string containing the \verb{ORCID iD} entered by the user.
 }
 \description{
-Ask for an \verb{ORCID iD}
 The \href{https://orcid.org/}{\verb{ORCID iD}} is a unique, persistent identifier
 free of charge to researchers.
 This function prompts the user to enter an \verb{ORCID iD} and validates its

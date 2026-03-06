@@ -2,9 +2,7 @@
 % Please edit documentation in R/validate_url.R
 \name{validate_url}
 \alias{validate_url}
-\title{Validate URL
-Validate that a URL is a string of length 1 which is not NA and matches the
-pattern of a valid URL.}
+\title{Validate URL}
 \usage{
 validate_url(url)
 }
@@ -15,7 +13,6 @@ validate_url(url)
 A logical value indicating whether the URL is valid.
 }
 \description{
-Validate URL
 Validate that a URL is a string of length 1 which is not NA and matches the
 pattern of a valid URL.
 }

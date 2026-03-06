@@ -6,7 +6,7 @@
 #' @importFrom stats aggregate
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
-#' @family utils
+#' @family author
 store_authors <- function(x = ".") {
   root <- R_user_dir("orgauth", which = "data")
   current <- stored_authors(root)
@@ -50,7 +50,7 @@ store_authors <- function(x = ".") {
 #' @param person The person object or a list of person objects, `NA` or `NULL`.
 #' Any `"character"` is converted to a person object using `as.person()` with a
 #' warning.
-#' @family utils
+#' @family author
 #' @export
 author2df <- function(person) {
   UseMethod("author2df", person)

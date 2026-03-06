@@ -204,7 +204,6 @@ yaml_author_format <- function(person, role) {
     list()
 }
 
-#' @family utils
 #' @importFrom assertthat is.string noNA
 string2date <- function(date) {
   if (!is.string(date)) {

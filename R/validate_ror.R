@@ -1,4 +1,5 @@
 #' Validate ROR
+#'
 #' The Research Organization Registry ([ROR](https://ror.org/)) is a global,
 #' community-led registry of open persistent identifiers for research
 #' organizations.

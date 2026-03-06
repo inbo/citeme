@@ -1,4 +1,5 @@
 #' Function to ask a simple yes no question
+#'
 #' Provides a simple wrapper around `utils::askYesNo()`.
 #' This function is used to ask yes no questions in an interactive way.
 #' It repeats the question until a valid answer is given.

@@ -21,12 +21,8 @@ The \code{origin} of the repository is used to determine the root URL of the
 organisation.
 }
 \seealso{
-Other utils: 
-\code{\link{author2df}()},
+Other organisation: 
 \code{\link{inbo_org_list}()},
-\code{\link{menu_first}()},
-\code{\link{store_authors}()},
-\code{\link{use_author}()},
-\code{\link{validate_orcid}()}
+\code{\link{new_org_list}()}
 }
-\concept{utils}
+\concept{organisation}

@@ -18,12 +18,8 @@ Missing elements result in an empty string (\code{""}).
 Persons with multiple roles will have the roles as a comma separated string.
 }
 \seealso{
-Other utils: 
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{menu_first}()},
+Other author: 
 \code{\link{store_authors}()},
-\code{\link{use_author}()},
-\code{\link{validate_orcid}()}
+\code{\link{use_author}()}
 }
-\concept{utils}
+\concept{author}

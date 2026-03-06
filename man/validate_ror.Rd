@@ -2,15 +2,7 @@
 % Please edit documentation in R/validate_ror.R
 \name{validate_ror}
 \alias{validate_ror}
-\title{Validate ROR
-The Research Organization Registry (\href{https://ror.org/}{ROR}) is a global,
-community-led registry of open persistent identifiers for research
-organizations.
-ROR makes it easy for anyone or any system to disambiguate institution names
-and connect research organizations to researchers and research outputs.
-Validate that a ROR is a string of 9 characters starting with 0, followed by
-6 characters which can be a letter (except i, l, o) or a digit, and ending
-with 2 digits.}
+\title{Validate ROR}
 \usage{
 validate_ror(ror)
 }
@@ -21,7 +13,6 @@ validate_ror(ror)
 A logical value indicating whether the ROR is valid.
 }
 \description{
-Validate ROR
 The Research Organization Registry (\href{https://ror.org/}{ROR}) is a global,
 community-led registry of open persistent identifiers for research
 organizations.

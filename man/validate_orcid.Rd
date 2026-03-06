@@ -2,10 +2,8 @@
 % Please edit documentation in R/validate_orcid.R
 \name{validate_orcid}
 \alias{validate_orcid}
-\title{Validate the structure of an ORCID id}
+\title{Validate the structure of an \verb{ORCID iD}}
 \usage{
-validate_orcid(orcid)
-
 validate_orcid(orcid)
 }
 \arguments{
@@ -13,12 +11,8 @@ validate_orcid(orcid)
 }
 \value{
 A logical vector with the same length as the input vector.
-
-A logical vector with the same length as the input vector.
 }
 \description{
-Checks whether the ORCID has the proper format and the checksum.
-
 The \href{https://orcid.org/}{\verb{ORCID iD}} is a unique, persistent identifier
 free of charge to researchers.
 Checks whether the \verb{ORCID iD} has the proper format and a correct checksum.
@@ -33,5 +27,4 @@ Other validation:
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}
 }
-\concept{utils}
 \concept{validation}

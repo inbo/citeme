@@ -17,5 +17,9 @@ Reuses available organisations where possible.
 }
 \seealso{
 \code{\link{org_list}}, \code{\link{org_item}}
+
+Other organisation: 
+\code{\link{get_default_org_list}()},
+\code{\link{inbo_org_list}()}
 }
-\concept{setup}
+\concept{organisation}

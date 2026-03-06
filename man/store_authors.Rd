@@ -13,12 +13,8 @@ store_authors(x = ".")
 Store author details for later usage
 }
 \seealso{
-Other utils: 
+Other author: 
 \code{\link{author2df}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{menu_first}()},
-\code{\link{use_author}()},
-\code{\link{validate_orcid}()}
+\code{\link{use_author}()}
 }
-\concept{utils}
+\concept{author}

@@ -25,12 +25,8 @@ Reuse existing author information or add a new author.
 Allows to update existing author information.
 }
 \seealso{
-Other utils: 
+Other author: 
 \code{\link{author2df}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{menu_first}()},
-\code{\link{store_authors}()},
-\code{\link{validate_orcid}()}
+\code{\link{store_authors}()}
 }
-\concept{utils}
+\concept{author}

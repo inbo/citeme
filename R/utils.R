@@ -3,10 +3,6 @@ rules <- function(x = "#", nl = "\n") {
   paste(c(nl, rep(x, getOption("width", 80)), nl), collapse = "")
 }
 
-file_exists <- function(path) {
-  file.exists(path)
-}
-
 set_non_empty <- function(x, fun, prompt) {
   if (x == "") {
     return(x)

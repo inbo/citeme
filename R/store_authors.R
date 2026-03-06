@@ -11,7 +11,7 @@ store_authors <- function(x = ".") {
   root <- R_user_dir("orgauth", which = "data")
   current <- stored_authors(root)
   current$ror <- ""
-  if (file_exists(path(x, "DESCRIPTION"))) {
+  if (file.exists(path(x, "DESCRIPTION"))) {
     this_desc <- description$new(file = path(x, "DESCRIPTION"))
     this_desc$get_authors() |>
       author2df() |>

@@ -246,7 +246,7 @@ org_list <- R6Class(
     #' @importFrom yaml read_yaml
     read = function(x = ".") {
       stopifnot("`x` is not an existing directory" = is_dir(x))
-      if (!file_exists(path(x, "organisation.yml"))) {
+      if (!file.exists(path(x, "organisation.yml"))) {
         return(git_org(x))
       }
       path(x, "organisation.yml") |>
@@ -736,7 +736,7 @@ ssh_http <- function(url) {
 
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
-    if (file_exists(path(x, "organisation.yml"))) {
+    if (file.exists(path(x, "organisation.yml"))) {
       return(org_list$new()$read(x))
     }
     return(org_list$new(org_item$new(email = "info@inbo.be")))
@@ -754,7 +754,7 @@ git_org <- function(x = ".") {
     tolower() -> config_name
   R_user_dir("orgauth", "config") |>
     path(config_name) -> config_path
-  if (file_exists(path(config_path, "organisation.yml"))) {
+  if (file.exists(path(config_path, "organisation.yml"))) {
     org <- org_list$new()$read(config_path)
     org$write(x)
     return(org)
@@ -767,7 +767,7 @@ git_org <- function(x = ".") {
     url,
     "/checklist doesn't exists."
   )
-  if (file_exists(path(x, "organisation.yml"))) {
+  if (file.exists(path(x, "organisation.yml"))) {
     return(org_list$new()$read(x))
   }
   return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))

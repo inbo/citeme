@@ -16,7 +16,7 @@ citation_readme <- function(meta, org, lang) {
   readme <- readLines(readme_file)
   readme_badges(readme) |>
     readme_title() |>
-    readme_author(org = org, lang = lang) |>
+    readme_individual(org = org, lang = lang) |>
     readme_version() |>
     readme_community() |>
     readme_description() |>
@@ -182,17 +182,17 @@ strip_markdown <- function(text) {
 
 #' @importFrom stats setNames
 #' @importFrom utils person
-readme_author <- function(text, org, lang) {
+readme_individual <- function(text, org, lang) {
   text$text <- remove_empty_line(text$text, top = TRUE)
   if (length(text$text) == 0) {
-    text$errors <- c(text$errors, "No author information in README.md")
+    text$errors <- c(text$errors, "No individual information in README.md")
     return(text)
   }
   grep("^\\s*$", text$text) |>
     head(1) -> empty_line
   text$text[seq_len(empty_line - 1)] |>
-    gsub(pattern = ";\\s*$", replacement = "") -> authors
-  orgs <- authors
+    gsub(pattern = ";\\s*$", replacement = "") -> individuals
+  orgs <- individuals
   orgs[!grepl("\\[\\^.*\\]", orgs)] <- ""
   gsub(".*?\\[\\^(.*?)\\]", "\\1;", orgs) |>
     gsub(pattern = "(aut|cph|cre|ctb|fnd|rev);", replacement = "") |>
@@ -201,13 +201,13 @@ readme_author <- function(text, org, lang) {
   unlist(orgs) |>
     unique() |>
     sprintf(fmt = "\\[\\^%s\\]") -> to_remove
-  roles <- authors
+  roles <- individuals
   for (pattern in to_remove) {
     gsub(pattern = pattern, "", roles) -> roles
   }
   gsub(".*?\\[\\^(.*)\\]", "\\1", roles) |>
     strsplit("\\]\\[\\^") -> roles
-  authors <- gsub("\\[\\^.*\\]", "", authors)
+  individuals <- gsub("\\[\\^.*\\]", "", individuals)
   c(
     "^\\[(.*?)!\\[ORCID logo\\]",
     "\\(https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png\\)",
@@ -215,14 +215,14 @@ readme_author <- function(text, org, lang) {
     "\\(https://orcid.org/(.+)\\)$"
   ) |>
     paste(collapse = "") -> orcid_grep
-  ifelse(grepl(orcid_grep, authors), authors, "") |>
-    gsub(pattern = orcid_grep, replacement = "\\2") -> authors_orcid
-  authors <- gsub(orcid_grep, "\\1", authors)
+  ifelse(grepl(orcid_grep, individuals), individuals, "") |>
+    gsub(pattern = orcid_grep, replacement = "\\2") -> individuals_orcid
+  individuals <- gsub(orcid_grep, "\\1", individuals)
   email_grep <- "\\[(.*?)\\]\\((mailto:)+(.+?(@|%40){1}.+?)\\)"
-  ifelse(grepl(email_grep, authors), authors, "") |>
+  ifelse(grepl(email_grep, individuals), individuals, "") |>
     gsub(pattern = email_grep, replacement = "\\3") |>
-    gsub(pattern = "%40", replacement = "@") -> authors_email
-  authors <- gsub(email_grep, "\\1", authors)
+    gsub(pattern = "%40", replacement = "@") -> individuals_email
+  individuals <- gsub(email_grep, "\\1", individuals)
 
   if (empty_line > 0) {
     tail(text$text, -empty_line) |>
@@ -240,7 +240,7 @@ readme_author <- function(text, org, lang) {
   )
   gsub("\\[\\^(.*?)\\]:\\s*(.*)", "\\2", affiliations) |>
     setNames(aff_code) -> affiliations
-  authors_aff <- vapply(
+  individuals_aff <- vapply(
     orgs,
     FUN.VALUE = character(1),
     z = affiliations,
@@ -250,10 +250,10 @@ readme_author <- function(text, org, lang) {
   )
   text$errors <- c(
     text$errors,
-    "No authors found or no empty line after author in README.md"[
-      length(authors) == 0
+    "No individuals found or no empty line after individual in README.md"[
+      length(individuals) == 0
     ],
-    "Nobody marked as author in README.md. Add `[^aut]` behind the name"[
+    "Nobody marked as individual in README.md. Add `[^aut]` behind the name"[
       !"aut" %in% unlist(roles)
     ],
     "No contact person found in README.md. Add `[^cre]` behind the name"[
@@ -269,7 +269,7 @@ readme_author <- function(text, org, lang) {
     "No `[^cph]:` found in README.md."[!has_name(affiliations, "cph")],
     "No `[^cre]:` found in README.md."[!has_name(affiliations, "cre")],
     "Duplicate affiliations found in README.md."[anyDuplicated(aff_code) > 0],
-    "Affiliation of some authors not defined with `[^*]:` in README.md"[
+    "Affiliation of some individuals not defined with `[^*]:` in README.md"[
       !all(aff_code_check)
     ],
     "Persons or insitutions without defined role in README.md."[
@@ -279,26 +279,26 @@ readme_author <- function(text, org, lang) {
 
   text$text <- text$text[!grepl("\\[\\^.*?\\]:", text$text)]
   vapply(
-    seq_along(authors),
+    seq_along(individuals),
     FUN.VALUE = vector("list", 1),
-    authors = authors,
-    FUN = function(i, authors) {
-      if (authors_orcid[i] != "") {
-        comment <- c(ORCID = authors_orcid[i])
+    individuals = individuals,
+    FUN = function(i, individuals) {
+      if (individuals_orcid[i] != "") {
+        comment <- c(ORCID = individuals_orcid[i])
       } else {
         comment <- c()
       }
-      if (authors_aff[i] != "") {
-        comment <- c(comment, affiliation = authors_aff[i])
+      if (individuals_aff[i] != "") {
+        comment <- c(comment, affiliation = individuals_aff[i])
       }
       person(
-        given = gsub(".*,\\s*(.*)", "\\1", authors[i]),
+        given = gsub(".*,\\s*(.*)", "\\1", individuals[i]),
         family = ifelse(
-          grepl(",", authors[i]),
-          gsub("(.*),.*", "\\1", authors[i]),
+          grepl(",", individuals[i]),
+          gsub("(.*),.*", "\\1", individuals[i]),
           ""
         ),
-        email = authors_email[i],
+        email = individuals_email[i],
         comment = comment,
         role = roles[i]
       ) |>

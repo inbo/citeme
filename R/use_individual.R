@@ -1,8 +1,8 @@
-#' Which author to use
+#' Which individual to use
 #'
-#' Reuse existing author information or add a new author.
-#' Allows to update existing author information.
-#' @return A data.frame with author information.
+#' Reuse existing individual information or add a new individual.
+#' Allows to update existing individual information.
+#' @return A data.frame with individual information.
 #' @param email An optional email address.
 #' When given and it matches with a single person, the function immediately
 #' returns the information of that person.
@@ -15,15 +15,15 @@
 #' @importFrom fs path
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
-#' @family author
+#' @family individual
 #' @export
-use_author <- function(email, lang) {
+use_individual <- function(email, lang) {
   root <- R_user_dir("checklist", which = "data")
   org <- org_list$new()$read()
-  current <- stored_authors(root)
+  current <- stored_individuals(root)
   assert_that(
     interactive() || nrow(current) > 0,
-    msg = "No available authors in a non-interactive session."
+    msg = "No available individuals in a non-interactive session."
   )
   current <- current[
     order(-current$usage, current$family, current$given, current$orcid),
@@ -43,14 +43,14 @@ use_author <- function(email, lang) {
       next
     }
     if (selected > nrow(current)) {
-      current <- new_author(
+      current <- new_individual(
         current = current,
         root = root,
         org = org,
         lang = lang
       )
     }
-    current <- validate_author(
+    current <- validate_individual(
       current = current,
       selected = selected,
       org = org,
@@ -61,7 +61,7 @@ use_author <- function(email, lang) {
       break
     }
     if (final == 2) {
-      current <- update_author(
+      current <- update_individual(
         current = current,
         selected = selected,
         root = root,
@@ -74,12 +74,12 @@ use_author <- function(email, lang) {
   current$usage[selected] <- pmax(current$usage[selected], 0) + 1
   write.table(
     current,
-    file = path(root, "author.txt"),
+    file = path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("author information stored at ", path(root, "author.txt"))
+  message("individual information stored at ", path(root, "individual.txt"))
   aff <- org$get_name_by_domain(current$email[selected], lang = lang)
   if (length(aff) == 1) {
     current$affiliation[selected] <- names(aff)
@@ -94,11 +94,11 @@ use_author <- function(email, lang) {
 
 #' @importFrom fs path
 #' @importFrom utils menu write.table
-update_author <- function(current, selected, root, org, lang) {
+update_individual <- function(current, selected, root, org, lang) {
   original <- current
   item <- c("given", "family", "email", "orcid", "affiliation")
   repeat {
-    current <- validate_author(
+    current <- validate_individual(
       current = current,
       selected = selected,
       org = org,
@@ -126,17 +126,17 @@ update_author <- function(current, selected, root, org, lang) {
   }
   write.table(
     current,
-    file = path(root, "author.txt"),
+    file = path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("author information stored at ", path(root, "author.txt"))
+  message("individual information stored at ", path(root, "individual.txt"))
   return(current)
 }
 
 #' @importFrom assertthat assert_that
-new_author <- function(current, root, org, lang) {
+new_individual <- function(current, root, org, lang) {
   assert_that(inherits(org, "org_list"))
   cat("Please provide person information.\n")
   data.frame(
@@ -174,18 +174,18 @@ new_author <- function(current, root, org, lang) {
   rbind(current, extra) -> current
   write.table(
     current,
-    file = path(root, "author.txt"),
+    file = path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("author information stored at ", path(root, "author.txt"))
+  message("individual information stored at ", path(root, "individual.txt"))
   return(current)
 }
 
 #' @importFrom utils person
-author2person <- function(role = "aut", lang) {
-  df <- use_author(lang = lang)
+individual2person <- function(role = "aut", lang) {
+  df <- use_individual(lang = lang)
   if (is.na(df$email) || df$email == "") {
     email <- NULL
   } else {
@@ -211,7 +211,7 @@ author2person <- function(role = "aut", lang) {
   )
 }
 
-authors2badge <- function(df, role = "aut") {
+individuals2badge <- function(df, role = "aut") {
   badges <- character(nrow(df))
   footnotes <- vector(mode = "list", length = nrow(df))
   for (i in seq_len(nrow(df))) {
@@ -221,7 +221,7 @@ authors2badge <- function(df, role = "aut") {
     } else {
       this_role <- role
     }
-    badge <- author2badge(df[i, ], role = this_role)
+    badge <- individual2badge(df[i, ], role = this_role)
     footnotes[[i]] <- attr(badge, "footnote")
     badges[i] <- badge
   }
@@ -232,9 +232,9 @@ authors2badge <- function(df, role = "aut") {
 
 #' @importFrom assertthat assert_that
 #' @importFrom utils tail
-author2badge <- function(df, role = "aut") {
+individual2badge <- function(df, role = "aut") {
   if (nrow(df) > 1) {
-    return(authors2badge(df, role = role))
+    return(individuals2badge(df, role = role))
   }
   sprintf("[^%s]", role) |>
     paste(collapse = "") -> role_link
@@ -287,7 +287,7 @@ author2badge <- function(df, role = "aut") {
     )
 }
 
-validate_author <- function(current, selected, org, lang) {
+validate_individual <- function(current, selected, org, lang) {
   assert_that(inherits(org, "org_list"))
   affiliation <- org$get_name_by_domain(current$email[selected], lang = lang)
   if (length(affiliation) == 0) {

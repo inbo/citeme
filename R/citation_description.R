@@ -13,7 +13,7 @@ citation_description <- function(meta) {
   urls <- description_url(descript$get_urls())
   lang <- descript$get_field("Language", default = "")
   descript$get_authors() |>
-    org$validate_person(lang = lang) -> authors
+    org$validate_person(lang = lang) -> individuals
   descript$get_field("License") |>
     gsub(pattern = " \\+ file LICENSE", replacement = "") |>
     gsub(pattern = "^GPL-3$", replacement = "GPL-3.0") -> license
@@ -49,8 +49,8 @@ citation_description <- function(meta) {
   }
   list(
     meta = cit_meta,
-    person = authors,
-    errors = c(attr(authors, "errors"), urls$errors, keywords$errors),
+    person = individuals,
+    errors = c(attr(individuals, "errors"), urls$errors, keywords$errors),
     warnings = communities$warnings,
     notes = character(0)
   )

@@ -99,7 +99,7 @@ citation_meta <- R6Class(
       return(private$notes)
     },
 
-    #' @field get_person Return the authors and organisations as a list of
+    #' @field get_person Return the individuals and organisations as a list of
     #' `person` objects.
     get_person = function() {
       private$person
@@ -216,7 +216,7 @@ validate_citation <- function(meta) {
         length(required_communities) > 0 &&
           !all(required_communities %in% meta$get_meta$community)
       ],
-      "no author with `corresponding: true` or role `cre`"[!contact]
+      "no individual with `corresponding: true` or role `cre`"[!contact]
     )
 }
 
@@ -257,7 +257,7 @@ citation_zenodo <- function(meta) {
       FUN.VALUE = vector("list", 1)
     ) -> zenodo$contributors
 
-  # Extract package creators (authors)
+  # Extract package creators (individuals)
   person[vapply(
     person$role,
     FUN = function(x) {
@@ -429,7 +429,7 @@ citation_cff <- function(meta) {
     vapply(
       FUN = format_cff,
       FUN.VALUE = vector(mode = "list", 1)
-    ) -> authors
+    ) -> individuals
   person[vapply(
     person$role,
     FUN = function(x) {
@@ -454,7 +454,7 @@ citation_cff <- function(meta) {
     `cff-version` = "1.2.0",
     message = "If you use this software, please cite it using these metadata.",
     title = input$title,
-    authors = authors,
+    individuals = individuals,
     keywords = as.list(input$keywords),
     contact = contact,
     doi = input$doi,
@@ -534,7 +534,7 @@ citation_r <- function(meta) {
   if (length(errors) > 0) {
     return(errors = errors)
   }
-  authors <- meta$get_person[vapply(
+  individuals <- meta$get_person[vapply(
     meta$get_person,
     FUN.VALUE = logical(1),
     FUN = function(x) {
@@ -542,16 +542,16 @@ citation_r <- function(meta) {
     }
   )]
   format(
-    authors,
+    individuals,
     include = c("given", "family"),
     braces = list(
       given = c("person(given = \"", "\","),
       family = c("family = \"", "\")")
     )
   ) |>
-    paste(collapse = ", ") -> authors_bibtex
-  authors_plain <- format(
-    authors,
+    paste(collapse = ", ") -> individuals_bibtex
+  individuals_plain <- format(
+    individuals,
     include = c("family", "given"),
     braces = list(family = c("", ","))
   )
@@ -563,7 +563,7 @@ citation_r <- function(meta) {
       cit_meta$title,
       cit_meta$version
     ),
-    author = sprintf("c(%s)", authors_bibtex),
+    individual = sprintf("c(%s)", individuals_bibtex),
     year = format(Sys.Date(), "%Y"),
     url = c(cit_meta$url, cit_meta$source) |>
       head(1) |>
@@ -571,7 +571,7 @@ citation_r <- function(meta) {
     abstract = paste0("\"", cit_meta$description, "\""),
     textVersion = sprintf(
       "\"%s (%s) %s. Version %s. %s\"",
-      paste(authors_plain, collapse = "; "),
+      paste(individuals_plain, collapse = "; "),
       format(Sys.Date(), "%Y"),
       cit_meta$title,
       cit_meta$version,

@@ -22,7 +22,7 @@ citation_quarto <- function(meta) {
     yaml <- yaml$book
   }
   yaml$lang <- coalesce(yaml$lang, language)
-  cit_meta <- yaml_author(yaml = yaml)
+  cit_meta <- yaml_individual(yaml = yaml)
   cit_meta$warnings <- cit_meta$notes <- character(0)
   description <- quarto_description(meta$get_path)
   cit_meta$meta$description <- description$description

@@ -1,16 +1,16 @@
-#' Add an author to a file
+#' Add an individual to a file
 #' @param path A path to a file or directory.
 #' The file must be a quarto file (e.g. `_quarto.yml` or `*.qmd`).
 #' @param role The role of the person to add.
 #' One of `"aut"` (author), `"rev"` (reviewer), `"cph"` (copyright holder), or
 #' `"fnd"` (funder).
 #' @export
-add_author <- function(path = ".", role = c("aut", "rev", "cph", "fnd")) {
+add_individual <- function(path = ".", role = c("aut", "rev", "cph", "fnd")) {
   role <- match.arg(role)
   path <- determine_type(path)
   switch(
     names(path),
-    quarto = add_author_quarto(path, role = role),
+    quarto = add_individual_quarto(path, role = role),
     stop("`path` type is not supported")
   )
 }
@@ -33,11 +33,11 @@ determine_type <- function(path) {
   stop("`path` as directory is to do")
 }
 
-add_author_quarto <- function(path, role = c("aut", "rev", "cph", "fnd")) {
+add_individual_quarto <- function(path, role = c("aut", "rev", "cph", "fnd")) {
   role <- match.arg(role)
   header <- get_yaml_header(path)
-  use_author(lang = header$lang) |>
-    author2list() -> extra
+  use_individual(lang = header$lang) |>
+    individual2list() -> extra
   if ("flandersqmd" %in% names(header)) {
     element <- switch(
       role,
@@ -90,16 +90,18 @@ write_yaml_header <- function(header) {
   return(invisible(NULL))
 }
 
-author2list <- function(author) {
-  author_list <- list(name = list(given = author$given, family = author$family))
-  if (!is.na(author$email) && author$email != "") {
-    author_list$email <- author$email
+individual2list <- function(individual) {
+  individual_list <- list(
+    name = list(given = individual$given, family = individual$family)
+  )
+  if (!is.na(individual$email) && individual$email != "") {
+    individual_list$email <- individual$email
   }
-  if (!is.na(author$orcid) && author$orcid != "") {
-    author_list$orcid <- author$orcid
+  if (!is.na(individual$orcid) && individual$orcid != "") {
+    individual_list$orcid <- individual$orcid
   }
-  if (!is.na(author$affiliation) && author$affiliation != "") {
-    author_list$affiliation <- list(author$affiliation)
+  if (!is.na(individual$affiliation) && individual$affiliation != "") {
+    individual_list$affiliation <- list(individual$affiliation)
   }
-  return(author_list)
+  return(individual_list)
 }

@@ -21,7 +21,7 @@ Other class:
 
 \item{\code{get_notes}}{Return the notes}
 
-\item{\code{get_person}}{Return the authors and organisations as a list of
+\item{\code{get_person}}{Return the individuals and organisations as a list of
 \code{person} objects.}
 
 \item{\code{get_type}}{A string indicating the type of source.}

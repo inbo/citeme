@@ -15,7 +15,7 @@ citation_bookdown <- function(meta) {
     )
   }
   yaml <- yaml_front_matter(index_file)
-  cit_meta <- yaml_author(yaml = yaml)
+  cit_meta <- yaml_individual(yaml = yaml)
   description <- bookdown_description(meta$get_path)
   cit_meta$meta$description <- description$description
   cit_meta$errors <- c(cit_meta$errors, description$errors)
@@ -126,36 +126,36 @@ split_community <- function(community) {
 }
 
 #' @importFrom assertthat has_name
-yaml_author <- function(yaml) {
+yaml_individual <- function(yaml) {
   vapply(
     X = yaml$author,
     role = "aut",
-    FUN = yaml_author_format,
+    FUN = yaml_individual_format,
     FUN.VALUE = vector(mode = "list", 1)
   ) |>
     c(
       vapply(
         X = yaml$reviewer,
-        FUN = yaml_author_format,
+        FUN = yaml_individual_format,
         role = "rev",
         FUN.VALUE = vector(mode = "list", 1)
       ),
       vapply(
         X = yaml$funder,
-        FUN = yaml_author_format,
+        FUN = yaml_individual_format,
         role = "fnd",
         FUN.VALUE = vector(mode = "list", 1)
       ),
       vapply(
         X = yaml$rightsholder,
-        FUN = yaml_author_format,
+        FUN = yaml_individual_format,
         role = "cph",
         FUN.VALUE = vector(mode = "list", 1)
       )
-    ) -> authors
+    ) -> individuals
   list(
     person = vapply(
-      authors,
+      individuals,
       function(x) {
         list(x$person)
       },
@@ -163,7 +163,7 @@ yaml_author <- function(yaml) {
     ) |>
       do.call(what = c),
     errors = vapply(
-      authors,
+      individuals,
       function(x) {
         list(x$errors)
       },
@@ -175,7 +175,7 @@ yaml_author <- function(yaml) {
 
 #' @importFrom assertthat has_name is.flag
 #' @importFrom utils person
-yaml_author_format <- function(person, role) {
+yaml_individual_format <- function(person, role) {
   if (
     !inherits(person, "list") ||
       !has_name(person, "name") ||

@@ -1,4 +1,4 @@
-Package: orgauth
+Package: citeme
 Title: Manage Person and Organisation Information
 Version: 0.0.1
 Authors@R: c(
@@ -13,8 +13,8 @@ Description: Manage person and organisation information with validation
     ORCID identifiers, ROR identifiers, licensing requirements, and
     integration with citation management systems.
 License: GPL-3
-URL: https://github.com/inbo/orgauth
-BugReports: https://github.com/inbo/orgauth/issues
+URL: https://github.com/inbo/citeme
+BugReports: https://github.com/inbo/citeme/issues
 Depends:
     R (>= 4.1.0)
 Imports:

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: If you use this software, please cite it using these metadata.
-title: "orgauth: Manage Person and Organisation Information"
+title: "citeme: Manage Person and Organisation Information"
 authors:
 - given-names: Thierry
   family-names: Onkelinx

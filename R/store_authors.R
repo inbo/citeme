@@ -8,7 +8,7 @@
 #' @importFrom utils write.table
 #' @family author
 store_authors <- function(x = ".") {
-  root <- R_user_dir("orgauth", which = "data")
+  root <- R_user_dir("citeme", which = "data")
   current <- stored_authors(root)
   current$ror <- ""
   if (file.exists(path(x, "DESCRIPTION"))) {

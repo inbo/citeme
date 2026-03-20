@@ -1,4 +1,4 @@
-# orgauth 0.0.1
+# citeme 0.0.1
 
 * Initial release
 * Extracted person and organisation management functionality from

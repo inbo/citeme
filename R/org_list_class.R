@@ -752,7 +752,7 @@ git_org <- function(x = ".") {
   }
   gsub("https://", "", url) |>
     tolower() -> config_name
-  R_user_dir("orgauth", "config") |>
+  R_user_dir("citeme", "config") |>
     path(config_name) -> config_path
   if (file.exists(path(config_path, "organisation.yml"))) {
     org <- org_list$new()$read(config_path)

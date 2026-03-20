@@ -2,6 +2,6 @@
 # Learn more about testthat at https://testthat.r-lib.org
 
 library(testthat)
-library(orgauth)
+library(citeme)
 
-test_check("orgauth")
+test_check("citeme")

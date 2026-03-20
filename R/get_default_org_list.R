@@ -16,7 +16,7 @@ get_default_org_list <- function(x = ".") {
   remotes <- git_remote_list(repo = x)
   stopifnot("no git remote `origin` found" = any(remotes$name == "origin"))
   url <- ssh_http(remotes$url[remotes$name == "origin"])
-  org <- cache_org(url, config_folder = R_user_dir("citeme", "config"))
+  org <- cache_org(url, config_folder = R_user_dir("checklist", "config"))
   if (!is.null(org)) {
     return(org)
   }
@@ -101,7 +101,7 @@ org_list_from_url <- function(git) {
   ssh_http(git) |>
     gsub(pattern = "https://", replacement = "") |>
     tolower() -> config_name
-  config_folder <- R_user_dir("citeme", "config")
+  config_folder <- R_user_dir("checklist", "config")
   path(config_folder, config_name) -> config_path
   if (file_test("-d", config_path)) {
     return(org_list$new()$read(config_path))

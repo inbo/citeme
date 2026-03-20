@@ -18,7 +18,7 @@
 #' @family author
 #' @export
 use_author <- function(email, lang) {
-  root <- R_user_dir("citeme", which = "data")
+  root <- R_user_dir("checklist", which = "data")
   org <- org_list$new()$read()
   current <- stored_authors(root)
   assert_that(

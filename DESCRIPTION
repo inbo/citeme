@@ -32,7 +32,8 @@ Imports:
     utils,
     yaml
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    mockery
 Config/checklist/communities: inbo
 Config/checklist/keywords: organisation, author, standardisation
 Config/testthat/edition: 3

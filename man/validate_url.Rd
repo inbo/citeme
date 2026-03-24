@@ -18,6 +18,7 @@ pattern of a valid URL.
 }
 \seealso{
 Other validation: 
+\code{\link{validate_citation}()},
 \code{\link{validate_email}()},
 \code{\link{validate_language}()},
 \code{\link{validate_license}()},

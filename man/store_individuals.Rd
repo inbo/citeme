@@ -14,6 +14,7 @@ Store individual details for later usage
 }
 \seealso{
 Other individual: 
+\code{\link{add_individual}()},
 \code{\link{individual2df}()},
 \code{\link{use_individual}()}
 }

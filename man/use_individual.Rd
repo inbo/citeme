@@ -26,6 +26,7 @@ Allows to update existing individual information.
 }
 \seealso{
 Other individual: 
+\code{\link{add_individual}()},
 \code{\link{individual2df}()},
 \code{\link{store_individuals}()}
 }

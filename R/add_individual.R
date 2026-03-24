@@ -5,6 +5,7 @@
 #' One of `"aut"` (author), `"rev"` (reviewer), `"cph"` (copyright holder), or
 #' `"fnd"` (funder).
 #' @export
+#' @family individual
 add_individual <- function(path = ".", role = c("aut", "rev", "cph", "fnd")) {
   role <- match.arg(role)
   path <- determine_type(path)

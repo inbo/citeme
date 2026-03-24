@@ -15,7 +15,7 @@ contact:
   orcid: 0000-0001-8804-4216
 doi: ~
 license: GPL-3.0
-repository-code: https://github.com/inbo/orgauth/
+repository-code: https://github.com/inbo/citeme/
 type: software
 abstract: "Manage person and organisation information with validation and formatting
   capabilities. Provides R6 classes for managing organisations and their members,

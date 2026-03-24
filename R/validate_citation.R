@@ -4,6 +4,7 @@
 #' or an empty character vector if the metadata is valid.
 #' @export
 #' @importFrom assertthat assert_that
+#' @family validation
 validate_citation <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   org <- org_list$new()$read(meta$get_path)

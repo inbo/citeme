@@ -17,3 +17,10 @@ One of \code{"aut"} (author), \code{"rev"} (reviewer), \code{"cph"} (copyright h
 \description{
 Add an individual to a file
 }
+\seealso{
+Other individual: 
+\code{\link{individual2df}()},
+\code{\link{store_individuals}()},
+\code{\link{use_individual}()}
+}
+\concept{individual}

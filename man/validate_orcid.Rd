@@ -23,6 +23,7 @@ Empty strings are considered valid to allow optional \verb{ORCID iD}.
 \seealso{
 Other validation: 
 \code{\link{validate_email}()},
+\code{\link{validate_language}()},
 \code{\link{validate_license}()},
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}

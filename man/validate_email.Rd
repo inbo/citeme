@@ -17,6 +17,7 @@ It only checks the format of the text, not if the email address exists.
 }
 \seealso{
 Other validation: 
+\code{\link{validate_language}()},
 \code{\link{validate_license}()},
 \code{\link{validate_orcid}()},
 \code{\link{validate_ror}()},

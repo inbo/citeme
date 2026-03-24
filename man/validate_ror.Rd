@@ -25,6 +25,7 @@ with 2 digits.
 \seealso{
 Other validation: 
 \code{\link{validate_email}()},
+\code{\link{validate_language}()},
 \code{\link{validate_license}()},
 \code{\link{validate_orcid}()},
 \code{\link{validate_url}()}

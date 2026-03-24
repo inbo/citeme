@@ -22,6 +22,7 @@ Validate a license list
 \seealso{
 Other validation: 
 \code{\link{validate_email}()},
+\code{\link{validate_language}()},
 \code{\link{validate_orcid}()},
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}

@@ -8,7 +8,7 @@
 #' @importFrom utils write.table
 #' @family individual
 store_individuals <- function(x = ".") {
-  root <- R_user_dir("checklist", which = "data")
+  root <- R_user_dir("citeme", which = "data")
   current <- stored_individuals(root)
   current$ror <- ""
   if (file.exists(path(x, "DESCRIPTION"))) {

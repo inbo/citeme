@@ -254,10 +254,10 @@ org_list <- R6Class(
       stopifnot(
         "old style `organisation.yml` detected" = has_name(
           yaml,
-          "checklist version"
+          "citeme version"
         )
       )
-      yaml[!names(yaml) %in% c("checklist version", "git")] |>
+      yaml[!names(yaml) %in% c("citeme version", "git")] |>
         lapply(function(z) {
           z$license <- lapply(z$license, function(y) {
             unlist(y) |>
@@ -314,10 +314,10 @@ org_list <- R6Class(
         }
       ) -> yaml
       names(yaml) <- self$get_email
-      si <- session_info(pkgs = "checklist")
+      si <- session_info(pkgs = "citeme")
       c(
-        `checklist version` = si$packages$loadedversion[
-          si$packages$package == "checklist"
+        `citeme version` = si$packages$loadedversion[
+          si$packages$package == "citeme"
         ],
         git = private$git,
         yaml
@@ -752,7 +752,7 @@ git_org <- function(x = ".") {
   }
   gsub("https://", "", url) |>
     tolower() -> config_name
-  R_user_dir("checklist", "config") |>
+  R_user_dir("citeme", "config") |>
     path(config_name) -> config_path
   if (file.exists(path(config_path, "organisation.yml"))) {
     org <- org_list$new()$read(config_path)
@@ -765,7 +765,7 @@ git_org <- function(x = ".") {
     "See ?get_default_org_list. ",
     "\nYou can ignore this message when ",
     url,
-    "/checklist doesn't exists."
+    "/citeme doesn't exists."
   )
   if (file.exists(path(x, "organisation.yml"))) {
     return(org_list$new()$read(x))

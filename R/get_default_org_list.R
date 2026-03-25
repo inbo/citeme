@@ -1,7 +1,7 @@
 #' Get the default organization list
 #'
 #' This function retrieves the default organisation list from the
-#' `organisation.yml` file in the organisations `checklist` repository.
+#' `organisation.yml` file in the organisations `citeme` repository.
 #' The `origin` of the repository is used to determine the root URL of the
 #' organisation.
 #' @param x The path to the repository.
@@ -16,7 +16,7 @@ get_default_org_list <- function(x = ".") {
   remotes <- git_remote_list(repo = x)
   stopifnot("no git remote `origin` found" = any(remotes$name == "origin"))
   url <- ssh_http(remotes$url[remotes$name == "origin"])
-  org <- cache_org(url, config_folder = R_user_dir("checklist", "config"))
+  org <- cache_org(url, config_folder = R_user_dir("citeme", "config"))
   if (!is.null(org)) {
     return(org)
   }
@@ -38,61 +38,30 @@ cache_org <- function(url, config_folder) {
       dir.create(showWarnings = FALSE, recursive = TRUE)
     org <- inbo_org_list()
     org$write(config_path, license = TRUE)
-    system.file("package_template/pkgdown.css", package = "checklist") |>
-      file.copy(
-        to = path(config_path, "pkgdown.css"),
-        overwrite = TRUE
-      )
-    img_files <- c(
-      "flanders.woff",
-      "flanders.woff2",
-      "logo-en.png",
-      "background-pattern.png"
-    )
-    path("package_template", img_files) |>
-      system.file(package = "checklist") |>
-      file.copy(
-        to = path(config_path, "pkgdown"),
-        overwrite = TRUE
-      )
     return(org)
   }
-  paste0(url, "/checklist") |>
+  paste0(url, "/citeme") |>
     HEAD() -> url_head
   if (url_head$status_code != 200) {
     warning(
-      sprintf("no public `checklist` repo found at %s", url),
+      sprintf("no public `citeme` repo found at %s", url),
       immediate. = TRUE,
       call. = FALSE
     )
     return(invisible(NULL))
   }
-  target <- tempfile("checklist-organisation")
+  target <- tempfile("citeme-organisation")
   c(
     "clone",
     "--single-branch",
     "--branch=main",
     "--depth=1",
-    paste0(url, "/checklist"),
+    paste0(url, "/citeme"),
     target
   ) |>
     system2(command = "git", stderr = FALSE, stdout = FALSE)
   org <- org_list$new()$read(target)
-  path(config_path, "pkgdown") |>
-    dir_create(recurse = TRUE)
   org$write(config_path, license = TRUE)
-  list.files(target, "pkgdown.css", full.names = TRUE) |>
-    file.copy(
-      to = path(config_path, "pkgdown.css"),
-      overwrite = TRUE
-    )
-  path(target, "pkgdown") |>
-    list.files() -> to_do
-  file.copy(
-    from = path(target, "pkgdown", to_do),
-    to = path(config_path, "pkgdown", to_do),
-    overwrite = TRUE
-  )
   return(org)
 }
 
@@ -101,7 +70,7 @@ org_list_from_url <- function(git) {
   ssh_http(git) |>
     gsub(pattern = "https://", replacement = "") |>
     tolower() -> config_name
-  config_folder <- R_user_dir("checklist", "config")
+  config_folder <- R_user_dir("citeme", "config")
   path(config_folder, config_name) -> config_path
   if (file_test("-d", config_path)) {
     return(org_list$new()$read(config_path))

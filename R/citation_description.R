@@ -7,7 +7,7 @@ citation_description <- function(meta) {
   path(meta$get_path, "DESCRIPTION") |>
     description$new() -> descript
   org <- org_list$new()$read(meta$get_path)
-  descript$get_field("Config/checklist/keywords", default = character(0)) |>
+  descript$get_field("Config/citeme/keywords", default = character(0)) |>
     description_keywords() -> keywords
   description_communities(descript = descript, org = org) -> communities
   urls <- description_url(descript$get_urls())
@@ -84,7 +84,7 @@ description_keywords <- function(keywords) {
         meta = list(),
         errors = paste(
           "no keywords found in `DESCRIPTION`.",
-          "Please add them with `Config/checklist/keywords: keyword; second`"
+          "Please add them with `Config/citeme/keywords: keyword; second`"
         )
       )
     )
@@ -98,7 +98,7 @@ description_keywords <- function(keywords) {
 #' @importFrom assertthat assert_that
 description_communities <- function(descript, org) {
   assert_that(inherits(descript, "description"), inherits(org, "org_list"))
-  descript$get_field("Config/checklist/communities", default = character(0)) |>
+  descript$get_field("Config/citeme/communities", default = character(0)) |>
     split_community() -> communities
   descript$get_author("cph")$email |>
     c(descript$get_author("fnd")$email) |>
@@ -110,7 +110,7 @@ description_communities <- function(descript, org) {
         meta = list(),
         warnings = paste(
           "missing communities found in `DESCRIPTION`.",
-          "Please make sure to add `Config/checklist/communities:",
+          "Please make sure to add `Config/citeme/communities:",
           paste(required_communities, collapse = "; ")
         )
       )
@@ -120,7 +120,7 @@ description_communities <- function(descript, org) {
     meta = list(community = communities),
     warnings = paste(
       "missing communities found in `DESCRIPTION`.",
-      "Please make sure to add `Config/checklist/communities:",
+      "Please make sure to add `Config/citeme/communities:",
       paste(required_communities, collapse = "; ")
     )[!all(required_communities %in% communities)]
   )

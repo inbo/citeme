@@ -16,7 +16,7 @@ The function also stores the information in the user's R configuration.
 }
 \description{
 This function retrieves the default organisation list from the
-\code{organisation.yml} file in the organisations \code{checklist} repository.
+\code{organisation.yml} file in the organisations \code{citeme} repository.
 The \code{origin} of the repository is used to determine the root URL of the
 organisation.
 }

@@ -18,7 +18,7 @@
 #' @family individual
 #' @export
 use_individual <- function(email, lang) {
-  root <- R_user_dir("checklist", which = "data")
+  root <- R_user_dir("citeme", which = "data")
   org <- org_list$new()$read()
   current <- stored_individuals(root)
   assert_that(

@@ -315,7 +315,7 @@ citation_zenodo <- function(meta) {
   errors <- paste(
     citation_file,
     "is modified.",
-    "Run `checklist::update_citation()` locally."[!interactive()],
+    "Run `citeme::update_citation()` locally."[!interactive()],
     "Please commit changes."
   )[
     is_repository(meta$get_path) &&
@@ -438,7 +438,7 @@ citation_cff <- function(meta) {
   errors <- paste(
     citation_file,
     "is modified.",
-    "Run `checklist::update_citation()` locally."[!interactive()],
+    "Run `citeme::update_citation()` locally."[!interactive()],
     "Please commit changes."
   )[
     !is_tracked_not_modified(
@@ -470,23 +470,23 @@ citation_r <- function(meta) {
         "citHeader(\"To cite `%s` in publications please use:\")",
         gsub("^(.*?):.*", "\\1", cit_meta$title)
       ),
-      "# begin checklist entry",
-      "# end checklist entry"
+      "# begin citeme entry",
+      "# end citeme entry"
     )
   }
-  start <- grep("^# begin checklist entry", cit)
-  end <- grep("^# end checklist entry", cit)
+  start <- grep("^# begin citeme entry", cit)
+  end <- grep("^# end citeme entry", cit)
   errors <- c(
-    "No `# begin checklist entry` found in `inst/CITATION`"[length(start) == 0],
-    "No `# end checklist entry` found in `inst/CITATION`"[length(end) == 0],
-    "Multiple `# begin checklist entry` found in `inst/CITATION`"[
+    "No `# begin citeme entry` found in `inst/CITATION`"[length(start) == 0],
+    "No `# end citeme entry` found in `inst/CITATION`"[length(end) == 0],
+    "Multiple `# begin citeme entry` found in `inst/CITATION`"[
       length(start) > 1
     ],
-    "Multiple `# end checklist entry` found in `inst/CITATION`"[
+    "Multiple `# end citeme entry` found in `inst/CITATION`"[
       length(end) > 1
     ],
     paste(
-      "`# end checklist entry` before `# begin checklist entry` in",
+      "`# end citeme entry` before `# begin citeme entry` in",
       "`inst/CITATION`"
     )[
       head(start, length(end)) >= head(end, length(start))
@@ -562,7 +562,7 @@ citation_r <- function(meta) {
   errors <- paste(
     citation_file,
     "is modified.",
-    "Run `checklist::update_citation()` locally."[!interactive()],
+    "Run `citeme::update_citation()` locally."[!interactive()],
     "Please commit changes."
   )[
     !is_tracked_not_modified(

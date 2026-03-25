@@ -1,5 +1,5 @@
 get_available_organisations <- function() {
-  config_folder <- R_user_dir("checklist", which = "config")
+  config_folder <- R_user_dir("citeme", which = "config")
   list.files(
     config_folder,
     pattern = "organisation.yml",

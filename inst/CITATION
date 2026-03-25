@@ -1,5 +1,5 @@
 citHeader("To cite `citeme` in publications please use:")
-# begin checklist entry
+# begin citeme entry
 bibentry(
   bibtype = "Manual",
   title = "citeme: Manage Person and Organisation Information. Version 0.0.1",
@@ -10,4 +10,4 @@ bibentry(
   textVersion = "Onkelinx, Thierry (2026) citeme: Manage Person and Organisation Information. Version 0.0.1. https://github.com/inbo/citeme/",
   keywords = "organisation, author, standardisation",
 )
-# end checklist entry
+# end citeme entry

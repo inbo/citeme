@@ -28,6 +28,7 @@ Allows to update existing individual information.
 Other individual: 
 \code{\link{add_individual}()},
 \code{\link{individual2df}()},
+\code{\link{individual2person}()},
 \code{\link{store_individuals}()}
 }
 \concept{individual}

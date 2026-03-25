@@ -20,6 +20,7 @@ Persons with multiple roles will have the roles as a comma separated string.
 \seealso{
 Other individual: 
 \code{\link{add_individual}()},
+\code{\link{individual2person}()},
 \code{\link{store_individuals}()},
 \code{\link{use_individual}()}
 }

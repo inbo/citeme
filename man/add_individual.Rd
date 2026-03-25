@@ -20,6 +20,7 @@ Add an individual to a file
 \seealso{
 Other individual: 
 \code{\link{individual2df}()},
+\code{\link{individual2person}()},
 \code{\link{store_individuals}()},
 \code{\link{use_individual}()}
 }

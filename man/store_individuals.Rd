@@ -16,6 +16,7 @@ Store individual details for later usage
 Other individual: 
 \code{\link{add_individual}()},
 \code{\link{individual2df}()},
+\code{\link{individual2person}()},
 \code{\link{use_individual}()}
 }
 \concept{individual}

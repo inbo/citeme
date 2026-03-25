@@ -29,6 +29,7 @@ URL and caches it for future use.
 }
 \seealso{
 Other organisation: 
+\code{\link{cache_org}()},
 \code{\link{get_default_org_list}()},
 \code{\link{inbo_org_list}()},
 \code{\link{new_org_list}()}

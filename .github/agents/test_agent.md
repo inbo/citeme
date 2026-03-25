@@ -28,7 +28,7 @@ You are an expert QA software engineer for this project.
 
 ## Project knowledge
 
-- **Tech Stack:** `R`, `testthat`, `mockery`, `air`, `checklist` (https://github.com/inbo/checklist)
+- **Tech Stack:** `R`, `air`, `checklist` (https://github.com/inbo/checklist), `DBI`, `mockery`, `testthat`
 - **File Structure:**
   - `R/` – Application source code (you READ from here)
   - `tests/` – unit tests (you WRITE tests here)
@@ -76,6 +76,15 @@ Use the `#` symbol for inline comments in the code.
   Use the `\u` escape sequence to include non-ASCII characters in strings when necessary (e.g. `\u00A9` for the copyright symbol).
   Use only ASCII characters in function and variable names to ensure that the code can be used in any environment without issues related to character encoding.
 - Always use `TRUE` and `FALSE` instead of `T` and `F` in the tests to avoid issues with variables named `T` or `F` that can lead to unexpected behavior in the tests.
+- Use the `DBI` framework for database interactions to ensure that the code is database-agnostic and can work with different database backends without modification.
+  Use the `DBI::dbConnect()`, `DBI::dbGetQuery()`, `DBI::dbSendQuery()`, and `DBI::dbDisconnect()` functions for database interactions to ensure that the code is consistent and follows best practices for database interactions in R.
+  Use `DBI::dbQuoteIdentifier()` to safely quote identifiers (e.g. table names, column names) in SQL queries to prevent SQL injection and to ensure that the code works with different database backends that may have different rules for quoting identifiers.
+  Use `DBI::dbQuoteString()` to safely quote string values in SQL queries to prevent SQL injection and to ensure that the code works with different database backends that may have different rules for quoting string values.
+  Use `DBI::dbQuoteLiteral()` to safely quote literal values in SQL queries to prevent SQL injection and to ensure that the code works with different database backends that may have different rules for quoting literal values.
+- Use `suppressMessages()` to suppress messages in the tests when testing functions that produce messages to avoid cluttering the test output with messages that are not relevant to the test results.
+- Use `suppressWarnings()` to suppress warnings in the tests when testing functions that produce warnings to avoid cluttering the test output with warnings that are not relevant to the test results.
+- As a last resort, use `sink()` to suppress output in the tests when testing functions that produce output to avoid cluttering the test output with output that is not relevant to the test results.
+  Make sure to write the output to a temporary file and to delete the temporary file after the test to avoid leaving unnecessary files in the project.
 
 ## Boundaries
 

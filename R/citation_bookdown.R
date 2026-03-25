@@ -1,6 +1,5 @@
 #' @importFrom assertthat assert_that is.string
 #' @importFrom fs path
-#' @importFrom rmarkdown yaml_front_matter
 citation_bookdown <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "bookdown")
@@ -14,7 +13,7 @@ citation_bookdown <- function(meta) {
       )
     )
   }
-  yaml <- yaml_front_matter(index_file)
+  yaml <- get_yaml_header(index_file)
   cit_meta <- yaml_individual(yaml = yaml)
   description <- bookdown_description(meta$get_path)
   cit_meta$meta$description <- description$description

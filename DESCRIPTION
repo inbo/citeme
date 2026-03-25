@@ -26,14 +26,13 @@ Imports:
     jsonlite,
     knitr,
     R6,
-    rmarkdown,
     sessioninfo,
     tools,
     utils,
     yaml
 Suggests:
-    testthat (>= 3.0.0),
-    mockery
+    mockery,
+    testthat (>= 3.0.0)
 Config/checklist/communities: inbo
 Config/checklist/keywords: organisation, author, standardisation
 Config/testthat/edition: 3

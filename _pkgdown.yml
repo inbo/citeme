@@ -34,6 +34,9 @@ reference:
 - title: Validating input
   contents:
   - has_concept("validation")
+- title: License utilities
+  contents:
+  - has_concept("license")
 - title: Git utilities
   contents:
   - has_concept("git")

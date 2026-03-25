@@ -912,15 +912,6 @@ ol_check <- function(local_org, x) {
   )
 }
 
-license_local_remote <- function(license) {
-  data.frame(
-    local_file = gsub("[ -]", "_", names(license)) |>
-      tolower() |>
-      paste0(".md"),
-    remote_file = unname(license)
-  )
-}
-
 #' @importFrom utils download.file
 download_licenses <- function(listed_licenses, x) {
   if (length(listed_licenses) == 0) {

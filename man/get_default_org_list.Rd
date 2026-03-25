@@ -23,6 +23,7 @@ organisation.
 \seealso{
 Other organisation: 
 \code{\link{inbo_org_list}()},
-\code{\link{new_org_list}()}
+\code{\link{new_org_list}()},
+\code{\link{org_list_from_url}()}
 }
 \concept{organisation}

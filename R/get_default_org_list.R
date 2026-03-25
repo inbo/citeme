@@ -64,20 +64,3 @@ cache_org <- function(url, config_folder) {
   org$write(config_path, license = TRUE)
   return(org)
 }
-
-#' @importFrom utils file_test
-org_list_from_url <- function(git) {
-  ssh_http(git) |>
-    gsub(pattern = "https://", replacement = "") |>
-    tolower() -> config_name
-  config_folder <- R_user_dir("citeme", "config")
-  path(config_folder, config_name) -> config_path
-  if (file_test("-d", config_path)) {
-    return(org_list$new()$read(config_path))
-  }
-  org <- cache_org(url = ssh_http(git), config_folder = config_folder)
-  if (!is.null(org) || !interactive()) {
-    return(org)
-  }
-  return(new_org_list(git = git))
-}

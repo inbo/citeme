@@ -20,6 +20,7 @@ then the parent's parent, and so on.
 }
 \seealso{
 Other git: 
-\code{\link{is_tracked_not_modified}()}
+\code{\link{is_tracked_not_modified}()},
+\code{\link{ssh_http}()}
 }
 \concept{git}

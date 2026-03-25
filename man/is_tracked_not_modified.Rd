@@ -16,6 +16,7 @@ Check if a file is tracked and not modified
 }
 \seealso{
 Other git: 
-\code{\link{is_repository}()}
+\code{\link{is_repository}()},
+\code{\link{ssh_http}()}
 }
 \concept{git}

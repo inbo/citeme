@@ -726,14 +726,6 @@ ol_select_relevant_org <- function(
   relevant <- relevant[which_aff]
 }
 
-ssh_http <- function(url) {
-  if (!grepl("^https:\\/\\/", url)) {
-    url <- gsub("^git@(.*):", "https://\\1/", url, perl = TRUE)
-  }
-  url <- gsub("oauth2:.*?@", "", url)
-  gsub("(https:\\/\\/.+?\\/.+?)\\/.*", "\\1", url, perl = TRUE)
-}
-
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
     if (file.exists(path(x, "organisation.yml"))) {

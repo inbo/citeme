@@ -1,3 +1,13 @@
+#' Get the list of available organisations
+#'
+#' This function retrieves the list of available organisations from the local
+#' configuration files.
+#' It returns a list containing the names, languages, licenses, ORCID, Zenodo,
+#' ROR, website, and logo of the available organisations.
+#' @return A list containing the names, languages, licenses, ORCID, Zenodo, ROR,
+#' website, and logo of the available organisations.
+#' @export
+#' @family organisation
 get_available_organisations <- function() {
   config_folder <- R_user_dir("citeme", which = "config")
   list.files(

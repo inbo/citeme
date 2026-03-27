@@ -26,7 +26,6 @@ Imports:
     jsonlite,
     knitr,
     R6,
-    sessioninfo,
     tools,
     utils,
     yaml

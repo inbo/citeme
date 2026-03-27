@@ -301,7 +301,6 @@ org_list <- R6Class(
     #' @param license Whether to include license information.
     #' @return The path to the written `organisation.yml` file.
     #' @importFrom assertthat assert_that is.string noNA is.flag
-    #' @importFrom sessioninfo session_info
     #' @importFrom yaml write_yaml
     write = function(x = ".", license = FALSE) {
       assert_that(is.string(x), noNA(x), is.flag(license), noNA(license))
@@ -313,11 +312,8 @@ org_list <- R6Class(
         }
       ) -> yaml
       names(yaml) <- self$get_email
-      si <- session_info(pkgs = "citeme")
       c(
-        `citeme version` = si$packages$loadedversion[
-          si$packages$package == "citeme"
-        ],
+        `citeme version` = installed.packages()["citeme", "Version"],
         git = private$git,
         yaml
       ) |>

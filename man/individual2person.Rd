@@ -4,7 +4,7 @@
 \alias{individual2person}
 \title{Select the individual information to use as a \code{person} object}
 \usage{
-individual2person(role = "aut", lang)
+individual2person(individual, role = "aut", lang)
 }
 \arguments{
 \item{role}{The role to use for the \code{person} object.
@@ -13,7 +13,7 @@ Defaults to `"aut"`` (author).}
 \item{lang}{The language to use for the affiliation.}
 }
 \description{
-This function retrieves the individual information using \code{use_individual()}
+This function retrieves the individual information using \code{select_individual()}
 and converts it to a \code{person} object.
 }
 \seealso{
@@ -21,7 +21,7 @@ Other individual:
 \code{\link{add_individual}()},
 \code{\link{individual2badge}()},
 \code{\link{individual2df}()},
-\code{\link{store_individuals}()},
-\code{\link{use_individual}()}
+\code{\link{select_individual}()},
+\code{\link{store_individuals}()}
 }
 \concept{individual}

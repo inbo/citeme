@@ -18,6 +18,6 @@ Other individual:
 \code{\link{individual2badge}()},
 \code{\link{individual2df}()},
 \code{\link{individual2person}()},
-\code{\link{use_individual}()}
+\code{\link{select_individual}()}
 }
 \concept{individual}

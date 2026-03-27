@@ -37,7 +37,7 @@ determine_type <- function(path) {
 add_individual_quarto <- function(path, role = c("aut", "rev", "cph", "fnd")) {
   role <- match.arg(role)
   header <- get_yaml_header(path)
-  use_individual(lang = header$lang) |>
+  select_individual(lang = header$lang) |>
     individual2list() -> extra
   if ("flandersqmd" %in% names(header)) {
     element <- switch(

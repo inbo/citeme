@@ -22,7 +22,7 @@ Other individual:
 \code{\link{add_individual}()},
 \code{\link{individual2badge}()},
 \code{\link{individual2person}()},
-\code{\link{store_individuals}()},
-\code{\link{use_individual}()}
+\code{\link{select_individual}()},
+\code{\link{store_individuals}()}
 }
 \concept{individual}

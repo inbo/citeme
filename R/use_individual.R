@@ -1,4 +1,4 @@
-#' Which individual to use
+#' Select an individual from the local database or add a new individual.
 #'
 #' Reuse existing individual information or add a new individual.
 #' Allows to update existing individual information.
@@ -17,7 +17,7 @@
 #' @importFrom utils write.table
 #' @family individual
 #' @export
-use_individual <- function(email, lang) {
+select_individual <- function(email, lang) {
   root <- R_user_dir("citeme", which = "data")
   org <- org_list$new()$read()
   current <- stored_individuals(root)

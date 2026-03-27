@@ -1,9 +1,8 @@
 #' @importFrom assertthat assert_that is.string
-#' @importFrom fs path
 citation_bookdown <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "bookdown")
-  index_file <- path(meta$get_path, "index.Rmd")
+  index_file <- file.path(meta$get_path, "index.Rmd")
   if (!is_file(index_file)) {
     return(
       list(
@@ -216,7 +215,7 @@ string2date <- function(date) {
 }
 
 bookdown_description <- function(path) {
-  path(path, "index.Rmd") |>
+  file.path(path, "index.Rmd") |>
     readLines() |>
     list() |>
     setNames("text") |>

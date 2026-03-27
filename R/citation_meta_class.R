@@ -17,15 +17,15 @@ citation_meta <- R6Class(
       path <- path_real(path)
       assert_that(is_dir(path), msg = "path is not an existing directory")
       private$path <- path
-      if (is_file(path(path, "_bookdown.yml"))) {
+      if (is_file(file.path(path, "_bookdown.yml"))) {
         private$type <- "bookdown"
         meta <- citation_bookdown(self)
-      } else if (is_file(path(path, "_quarto.yml"))) {
+      } else if (is_file(file.path(path, "_quarto.yml"))) {
         private$type <- "quarto"
         meta <- citation_quarto(self)
       } else {
         private$type <- ifelse(
-          file_test("-f", file.path(path, "DESCIPTION")),
+          file_test("-f", file.path(path, "DESCRIPTION")),
           "package",
           "project"
         )
@@ -182,7 +182,7 @@ citation_print <- function(errors, meta, notes, path, person, warnings) {
 }
 
 #' @importFrom assertthat assert_that has_name
-#' @importFrom fs path path_rel
+#' @importFrom fs path_rel
 #' @importFrom jsonlite toJSON
 #' @importFrom knitr pandoc
 #' @importFrom gert git_find
@@ -307,7 +307,7 @@ citation_zenodo <- function(meta) {
     gsub(pattern = " +", replacement = " ") -> zenodo$description
 
   # Write .zenodo.json file
-  citation_file <- path(meta$get_path, ".zenodo.json")
+  citation_file <- file.path(meta$get_path, ".zenodo.json")
   toJSON(zenodo, pretty = TRUE, auto_unbox = TRUE) |>
     writeLines(citation_file)
 
@@ -433,7 +433,7 @@ citation_cff <- function(meta) {
   if (has_name(input, "version")) {
     cff$version <- as.character(input$version)
   }
-  citation_file <- path(meta$get_path, "CITATION.cff")
+  citation_file <- file.path(meta$get_path, "CITATION.cff")
   write_yaml(x = cff, file = citation_file, fileEncoding = "UTF-8")
   errors <- paste(
     citation_file,
@@ -450,7 +450,7 @@ citation_cff <- function(meta) {
 }
 
 #' @importFrom assertthat assert_that
-#' @importFrom fs dir_create is_file path
+#' @importFrom fs dir_create is_file
 #' @importFrom utils head person tail
 citation_r <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
@@ -459,7 +459,7 @@ citation_r <- function(meta) {
   }
   assert_that(length(meta$get_errors) == 0)
   cit_meta <- meta$get_meta
-  citation_file <- path(meta$get_path, "inst", "CITATION")
+  citation_file <- file.path(meta$get_path, "inst", "CITATION")
   if (is_file(citation_file)) {
     cit <- readLines(citation_file)
   } else {

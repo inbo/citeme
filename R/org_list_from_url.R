@@ -16,7 +16,7 @@ org_list_from_url <- function(git) {
     gsub(pattern = "https://", replacement = "") |>
     tolower() -> config_name
   config_folder <- R_user_dir("citeme", "config")
-  path(config_folder, config_name) -> config_path
+  file.path(config_folder, config_name) -> config_path
   if (file_test("-d", config_path)) {
     return(org_list$new()$read(config_path))
   }

@@ -13,7 +13,7 @@
 #' Defaults to the user's R configuration directory for `citeme`.
 #' @return The retrieved organisation list, or `NULL` if the URL is invalid or
 #' the repository.
-#' @importFrom fs dir_create path
+#' @importFrom fs dir_create
 #' @importFrom httr HEAD
 #' @importFrom tools R_user_dir
 #' @export
@@ -21,9 +21,9 @@
 cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   gsub("https://", "", url) |>
     tolower() -> config_name
-  config_path <- path(config_folder, config_name)
+  config_path <- file.path(config_folder, config_name)
   if (url == "https://github.com/inbo") {
-    path(config_path, "pkgdown") |>
+    file.path(config_path, "pkgdown") |>
       dir.create(showWarnings = FALSE, recursive = TRUE)
     org <- inbo_org_list()
     org$write(config_path, license = TRUE)

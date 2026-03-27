@@ -12,7 +12,6 @@
 #' When the affiliation is not available in that language,
 #' it will use the first available language.
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom fs path
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family individual
@@ -74,12 +73,15 @@ select_individual <- function(email, lang) {
   current$usage[selected] <- pmax(current$usage[selected], 0) + 1
   write.table(
     current,
-    file = path(root, "individual.txt"),
+    file = file.path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("individual information stored at ", path(root, "individual.txt"))
+  message(
+    "individual information stored at ",
+    file.path(root, "individual.txt")
+  )
   aff <- org$get_name_by_domain(current$email[selected], lang = lang)
   if (length(aff) == 1) {
     current$affiliation[selected] <- names(aff)
@@ -92,7 +94,6 @@ select_individual <- function(email, lang) {
   return(current[selected, ])
 }
 
-#' @importFrom fs path
 #' @importFrom utils menu write.table
 update_individual <- function(current, selected, root, org, lang) {
   original <- current
@@ -126,12 +127,15 @@ update_individual <- function(current, selected, root, org, lang) {
   }
   write.table(
     current,
-    file = path(root, "individual.txt"),
+    file = file.path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("individual information stored at ", path(root, "individual.txt"))
+  message(
+    "individual information stored at ",
+    file.path(root, "individual.txt")
+  )
   return(current)
 }
 
@@ -174,12 +178,15 @@ new_individual <- function(current, root, org, lang) {
   rbind(current, extra) -> current
   write.table(
     current,
-    file = path(root, "individual.txt"),
+    file = file.path(root, "individual.txt"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
-  message("individual information stored at ", path(root, "individual.txt"))
+  message(
+    "individual information stored at ",
+    file.path(root, "individual.txt")
+  )
   return(current)
 }
 

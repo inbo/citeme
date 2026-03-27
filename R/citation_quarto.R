@@ -1,10 +1,9 @@
 #' @importFrom assertthat assert_that is.string
-#' @importFrom fs path
 #' @importFrom yaml read_yaml
 citation_quarto <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "quarto")
-  index_file <- path(meta$get_path, "_quarto.yml")
+  index_file <- file.path(meta$get_path, "_quarto.yml")
   if (!is_file(index_file)) {
     return(
       list(

@@ -1,9 +1,8 @@
 #' @importFrom assertthat assert_that
-#' @importFrom fs path
 citation_readme <- function(meta, org, lang) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "project")
-  readme_file <- path(meta$get_path, "README.md")
+  readme_file <- file.path(meta$get_path, "README.md")
   if (!is_file(readme_file)) {
     return(
       list(

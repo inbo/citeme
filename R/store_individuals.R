@@ -2,7 +2,6 @@
 #' @param x Path to a project
 #' @export
 #' @importFrom desc description
-#' @importFrom fs path
 #' @importFrom stats aggregate
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
@@ -11,8 +10,8 @@ store_individuals <- function(x = ".") {
   root <- R_user_dir("citeme", which = "data")
   current <- stored_individuals(root)
   current$ror <- ""
-  if (file.exists(path(x, "DESCRIPTION"))) {
-    this_desc <- description$new(file = path(x, "DESCRIPTION"))
+  if (file.exists(file.path(x, "DESCRIPTION"))) {
+    this_desc <- description$new(file = file.path(x, "DESCRIPTION"))
     this_desc$get_individuals() |>
       individual2df() |>
       cbind(usage = 1) |>
@@ -33,7 +32,7 @@ store_individuals <- function(x = ".") {
     data = new_individual_df
   ) |>
     write.table(
-      file = path(root, "individual.txt"),
+      file = file.path(root, "individual.txt"),
       sep = "\t",
       row.names = FALSE,
       fileEncoding = "UTF8"
@@ -166,7 +165,7 @@ coalesce <- function(...) {
 }
 
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom fs dir_create is_dir is_file path
+#' @importFrom fs dir_create is_dir is_file
 #' @importFrom utils read.table
 stored_individuals <- function(root) {
   assert_that(is.string(root), noNA(root))
@@ -183,8 +182,8 @@ stored_individuals <- function(root) {
       )
     )
   }
-  if (is_file(path(root, "individual.txt"))) {
-    path(root, "individual.txt") |>
+  if (is_file(file.path(root, "individual.txt"))) {
+    file.path(root, "individual.txt") |>
       read.table(
         header = TRUE,
         sep = "\t",

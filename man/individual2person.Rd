@@ -19,6 +19,7 @@ and converts it to a \code{person} object.
 \seealso{
 Other individual: 
 \code{\link{add_individual}()},
+\code{\link{individual2badge}()},
 \code{\link{individual2df}()},
 \code{\link{store_individuals}()},
 \code{\link{use_individual}()}

@@ -27,6 +27,7 @@ Allows to update existing individual information.
 \seealso{
 Other individual: 
 \code{\link{add_individual}()},
+\code{\link{individual2badge}()},
 \code{\link{individual2df}()},
 \code{\link{individual2person}()},
 \code{\link{store_individuals}()}

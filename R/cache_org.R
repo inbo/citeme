@@ -32,12 +32,21 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   paste0(url, "/citeme") |>
     HEAD() -> url_head
   if (url_head$status_code != 200) {
+    paste0(url, "/checklist") |>
+      HEAD() -> url_head
+    if (url_head$status_code != 200) {
+      warning(
+        sprintf("no public `citeme` repo found at %s", url),
+        immediate. = TRUE,
+        call. = FALSE
+      )
+      return(invisible(NULL))
+    }
     warning(
-      sprintf("no public `citeme` repo found at %s", url),
+      sprintf("using old style public `checklist` repo from %s", url),
       immediate. = TRUE,
       call. = FALSE
     )
-    return(invisible(NULL))
   }
   target <- tempfile("citeme-organisation")
   c(

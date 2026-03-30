@@ -252,12 +252,11 @@ org_list <- R6Class(
       file.path(x, "organisation.yml") |>
         read_yaml() -> yaml
       stopifnot(
-        "old style `organisation.yml` detected" = has_name(
-          yaml,
-          "citeme version"
+        "old style `organisation.yml` detected" = any(
+          c("citeme version", "checklist version") %in% names(yaml)
         )
       )
-      yaml[!names(yaml) %in% c("citeme version", "git")] |>
+      yaml[!names(yaml) %in% c("citeme version", "checklist version", "git")] |>
         lapply(function(z) {
           z$license <- lapply(z$license, function(y) {
             unlist(y) |>
@@ -312,6 +311,7 @@ org_list <- R6Class(
         }
       ) -> yaml
       names(yaml) <- self$get_email
+      dir.create(x, showWarnings = FALSE, recursive = TRUE)
       c(
         `citeme version` = installed.packages()["citeme", "Version"],
         git = private$git,

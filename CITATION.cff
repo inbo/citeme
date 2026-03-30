@@ -7,7 +7,7 @@ authors:
   affiliation: Research Institute for Nature and Forest (INBO)
   orcid: 0000-0001-8804-4216
 keywords:
-- organisation, author, standardisation
+- organisation, author, standardisation, inbo_version
 contact:
 - given-names: Thierry
   family-names: Onkelinx

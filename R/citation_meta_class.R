@@ -477,8 +477,8 @@ citation_r <- function(meta) {
       "# end citeme entry"
     )
   }
-  start <- grep("^# begin citeme entry", cit)
-  end <- grep("^# end citeme entry", cit)
+  start <- grep("^# begin (citeme|checklist) entry", cit)
+  end <- grep("^# end (citeme|checklist) entry", cit)
   errors <- c(
     "No `# begin citeme entry` found in `inst/CITATION`"[length(start) == 0],
     "No `# end citeme entry` found in `inst/CITATION`"[length(end) == 0],
@@ -527,7 +527,7 @@ citation_r <- function(meta) {
       cit_meta$title,
       cit_meta$version
     ),
-    individual = sprintf("c(%s)", individuals_bibtex),
+    author = sprintf("c(%s)", individuals_bibtex),
     year = format(Sys.Date(), "%Y"),
     url = c(cit_meta$url, cit_meta$source) |>
       head(1) |>

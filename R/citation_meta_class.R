@@ -250,7 +250,10 @@ citation_zenodo <- function(meta) {
 
   # Extract language (ISO 639-3)
   if (has_name(zenodo, "language")) {
-    zenodo$language <- validate_language(zenodo$language)
+    zenodo$language <- iso639_3$alpha_3[
+      iso639_3$alpha_2 ==
+        gsub("^(.{2}).*", "\\1", validate_language(zenodo$language))
+    ]
   }
 
   # Extract publisher
@@ -415,7 +418,7 @@ citation_cff <- function(meta) {
     `cff-version` = "1.2.0",
     message = "If you use this software, please cite it using these metadata.",
     title = input$title,
-    individuals = individuals,
+    authors = individuals,
     keywords = as.list(input$keywords),
     contact = contact,
     doi = input$doi,

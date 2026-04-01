@@ -7,14 +7,22 @@
 individual2person(individual, role = "aut", lang)
 }
 \arguments{
+\item{individual}{An optional \code{individual} object to convert to a \code{person}
+object.
+If not provided, the function will prompt the user to select an individual.}
+
 \item{role}{The role to use for the \code{person} object.
 Defaults to `"aut"`` (author).}
 
 \item{lang}{The language to use for the affiliation.}
 }
 \description{
-This function retrieves the individual information using \code{select_individual()}
-and converts it to a \code{person} object.
+This function retrieves the individual information using
+\code{select_individual()} and converts it to a \code{person} object.
+If the \code{individual} argument is not provided, it will prompt the user to
+select an individual.
+The \code{person} object will include the given name, family name, email, ORCID,
+and affiliation (if available) of the selected individual.
 }
 \seealso{
 Other individual: 

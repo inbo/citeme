@@ -1,7 +1,14 @@
 #' Select the individual information to use as a `person` object
 #'
-#' This function retrieves the individual information using `select_individual()`
-#' and converts it to a `person` object.
+#' This function retrieves the individual information using
+#' `select_individual()` and converts it to a `person` object.
+#' If the `individual` argument is not provided, it will prompt the user to
+#' select an individual.
+#' The `person` object will include the given name, family name, email, ORCID,
+#' and affiliation (if available) of the selected individual.
+#' @param individual An optional `individual` object to convert to a `person`
+#' object.
+#' If not provided, the function will prompt the user to select an individual.
 #' @param role The role to use for the `person` object.
 #' Defaults to `"aut"`` (author).
 #' @param lang The language to use for the affiliation.

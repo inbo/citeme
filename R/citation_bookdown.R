@@ -1,9 +1,10 @@
 #' @importFrom assertthat assert_that is.string
+#' @importFrom utils file_test
 citation_bookdown <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "bookdown")
   index_file <- file.path(meta$get_path, "index.Rmd")
-  if (!is_file(index_file)) {
+  if (!file_test("-f", index_file)) {
     return(
       list(
         errors = paste(index_file, "not found"),

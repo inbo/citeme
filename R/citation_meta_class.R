@@ -2,6 +2,7 @@
 #' @description A class which contains citation information.
 #' @export
 #' @importFrom R6 R6Class
+#' @importFrom utils file_test
 #' @family class
 citation_meta <- R6Class(
   "citation_meta",
@@ -10,17 +11,13 @@ citation_meta <- R6Class(
     #' @description Initialize a new `citation_meta` object.
     #' @param path The path to the root of the project.
     #' @importFrom assertthat assert_that is.flag is.string noNA
-    #' @importFrom fs is_dir is_file path_real
-    #' @importFrom utils file_test
     initialize = function(path = ".") {
       assert_that(is.string(path), noNA(path))
-      path <- path_real(path)
-      assert_that(is_dir(path), msg = "path is not an existing directory")
-      private$path <- path
-      if (is_file(file.path(path, "_bookdown.yml"))) {
+      private$path <- normalizePath(path, winslash = "/", mustWork = TRUE)
+      if (file_test("-f", file.path(path, "_bookdown.yml"))) {
         private$type <- "bookdown"
         meta <- citation_bookdown(self)
-      } else if (is_file(file.path(path, "_quarto.yml"))) {
+      } else if (file_test("-f", file.path(path, "_quarto.yml"))) {
         private$type <- "quarto"
         meta <- citation_quarto(self)
       } else {
@@ -182,7 +179,6 @@ citation_print <- function(errors, meta, notes, path, person, warnings) {
 }
 
 #' @importFrom assertthat assert_that has_name
-#' @importFrom fs path_rel
 #' @importFrom jsonlite toJSON
 #' @importFrom knitr pandoc
 #' @importFrom gert git_find
@@ -313,20 +309,7 @@ citation_zenodo <- function(meta) {
   citation_file <- file.path(meta$get_path, ".zenodo.json")
   toJSON(zenodo, pretty = TRUE, auto_unbox = TRUE) |>
     writeLines(citation_file)
-
-  # Check repository status
-  errors <- paste(
-    citation_file,
-    "is modified.",
-    "Run `citeme::update_citation()` locally."[!interactive()],
-    "Please commit changes."
-  )[
-    is_repository(meta$get_path) &&
-      !is_tracked_not_modified(
-        path_rel(citation_file, git_find(meta$get_path)),
-        meta$get_path
-      )
-  ]
+  errors <- modified_citation_file(citation_file, meta$get_path)
   return(errors)
 }
 
@@ -438,23 +421,11 @@ citation_cff <- function(meta) {
   }
   citation_file <- file.path(meta$get_path, "CITATION.cff")
   write_yaml(x = cff, file = citation_file, fileEncoding = "UTF-8")
-  errors <- paste(
-    citation_file,
-    "is modified.",
-    "Run `citeme::update_citation()` locally."[!interactive()],
-    "Please commit changes."
-  )[
-    !is_tracked_not_modified(
-      path_rel(citation_file, meta$get_path),
-      meta$get_path
-    )
-  ]
-  return(errors)
+  return(modified_citation_file(citation_file, meta$get_path))
 }
 
 #' @importFrom assertthat assert_that
-#' @importFrom fs dir_create is_file
-#' @importFrom utils head person tail
+#' @importFrom utils file_test head person tail
 citation_r <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   if (meta$get_type != "package") {
@@ -463,11 +434,11 @@ citation_r <- function(meta) {
   assert_that(length(meta$get_errors) == 0)
   cit_meta <- meta$get_meta
   citation_file <- file.path(meta$get_path, "inst", "CITATION")
-  if (is_file(citation_file)) {
+  if (file_test("-f", citation_file)) {
     cit <- readLines(citation_file)
   } else {
     dirname(citation_file) |>
-      dir_create()
+      dir.create(recursive = TRUE, showWarnings = FALSE)
     cit <- c(
       sprintf(
         "citHeader(\"To cite `%s` in publications please use:\")",
@@ -569,9 +540,10 @@ citation_r <- function(meta) {
     "Please commit changes."
   )[
     !is_tracked_not_modified(
-      path_rel(citation_file, meta$get_path),
+      paste0("/", meta$get_path) |>
+        gsub("", citation_file),
       meta$get_path
     )
   ]
-  return(errors = errors)
+  return(modified_citation_file(citation_file, meta$get_path))
 }

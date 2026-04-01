@@ -1,10 +1,11 @@
 #' @importFrom assertthat assert_that is.string
+#' @importFrom utils file_test
 #' @importFrom yaml read_yaml
 citation_quarto <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "quarto")
   index_file <- file.path(meta$get_path, "_quarto.yml")
-  if (!is_file(index_file)) {
+  if (!file_test("-f", index_file)) {
     return(
       list(
         errors = paste(index_file, "not found"),
@@ -117,9 +118,13 @@ citation_quarto <- function(meta) {
   return(cit_meta)
 }
 
-#' @importFrom fs dir_ls
 quarto_description <- function(path) {
-  for (i in dir_ls(path, regexp = "\\.q?md$", recurse = TRUE)) {
+  for (i in list.files(
+    path,
+    pattern = "\\.q?md$",
+    recursive = TRUE,
+    full.names = TRUE
+  )) {
     readLines(i) |>
       list() |>
       setNames("text") |>

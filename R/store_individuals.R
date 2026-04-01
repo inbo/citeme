@@ -165,12 +165,11 @@ coalesce <- function(...) {
 }
 
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom fs dir_create is_dir is_file
-#' @importFrom utils read.table
+#' @importFrom utils file_test read.table
 stored_individuals <- function(root) {
   assert_that(is.string(root), noNA(root))
-  if (!is_dir(root)) {
-    dir_create(root)
+  if (!file_test("-d", root)) {
+    dir.create(root, recursive = TRUE, showWarnings = FALSE)
     return(
       data.frame(
         given = character(0),
@@ -182,7 +181,7 @@ stored_individuals <- function(root) {
       )
     )
   }
-  if (is_file(file.path(root, "individual.txt"))) {
+  if (file_test("-f", file.path(root, "individual.txt"))) {
     file.path(root, "individual.txt") |>
       read.table(
         header = TRUE,

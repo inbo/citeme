@@ -13,7 +13,6 @@
 #' Defaults to the user's R configuration directory for `citeme`.
 #' @return The retrieved organisation list, or `NULL` if the URL is invalid or
 #' the repository.
-#' @importFrom fs dir_create
 #' @importFrom httr HEAD
 #' @importFrom tools R_user_dir
 #' @export

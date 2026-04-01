@@ -16,6 +16,7 @@ add_individual <- function(path = ".", role = c("aut", "rev", "cph", "fnd")) {
   )
 }
 
+#' @importFrom utils file_test
 determine_type <- function(path) {
   stopifnot(
     "`path` must be a single string" = length(path) == 1,

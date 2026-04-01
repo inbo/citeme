@@ -1,9 +1,10 @@
 #' @importFrom assertthat assert_that
+#' @importFrom utils file_test
 citation_readme <- function(meta, org, lang) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "project")
   readme_file <- file.path(meta$get_path, "README.md")
-  if (!is_file(readme_file)) {
+  if (!file_test("-f", readme_file)) {
     return(
       list(
         errors = paste(readme_file, "not found"),

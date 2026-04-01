@@ -242,10 +242,14 @@ org_list <- R6Class(
     #' @description  Read the `org_list` object from an `organisation.yml` file.
     #' @param x The path to the directory where the `organisation.yml` file
     #' is stored.
-    #' @importFrom fs is_dir
+    #' @importFrom utils file_test
     #' @importFrom yaml read_yaml
     read = function(x = ".") {
-      stopifnot("`x` is not an existing directory" = is_dir(x))
+      stopifnot(
+        "`x` is not a string" = inherits(x, "character"),
+        "`x` is not a string" = length(x) == 1,
+        "`x` is not an existing directory" = file_test("-d", x)
+      )
       if (!file.exists(file.path(x, "organisation.yml"))) {
         return(git_org(x))
       }

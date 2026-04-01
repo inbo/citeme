@@ -20,7 +20,6 @@ Depends:
 Imports:
     assertthat,
     desc,
-    fs,
     gert,
     httr,
     jsonlite,

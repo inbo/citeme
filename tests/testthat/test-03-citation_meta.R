@@ -15,11 +15,9 @@ test_that("citation_meta initialises with valid project path", {
 })
 
 test_that("citation_meta fails with non-existent path", {
-  # fs::path_real throws an ENOENT error for non-existent paths
-  # Use a relative path to avoid absolute path linter warning
   expect_error(
     citation_meta$new("non_existent_path_that_does_not_exist"),
-    "no such file|not an existing directory"
+    "No such file or directory"
   )
 })
 

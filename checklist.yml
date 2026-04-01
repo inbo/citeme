@@ -29,4 +29,5 @@ spelling:
   - .github
   - docs
   - LICENSE.md
+  - inst/licenses
 pak: []

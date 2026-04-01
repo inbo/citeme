@@ -14,7 +14,7 @@ The converted HTTP URL.
 }
 \description{
 This function converts a git SSH URL to an HTTP URL.
-It also removes any OAuth2 tokens from the URL.
+It also removes any \code{OAuth2} tokens from the URL.
 The resulting URL is used to determine the root URL of the organisation for
 retrieving the organisation list.
 }

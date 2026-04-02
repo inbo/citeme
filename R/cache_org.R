@@ -15,6 +15,7 @@
 #' the repository.
 #' @importFrom httr HEAD
 #' @importFrom tools R_user_dir
+#' @importFrom utils installed.packages
 #' @export
 #' @family organisation
 cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
@@ -26,6 +27,19 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
       dir.create(showWarnings = FALSE, recursive = TRUE)
     org <- inbo_org_list()
     org$write(config_path, license = TRUE)
+    if ("checklist" %in% rownames(installed.packages())) {
+      system.file("package_template/pkgdown.css", package = "checklist") |>
+        file.copy(to = file.path(config_path, "pkgdown.css"), overwrite = TRUE)
+      img_files <- c(
+        "flanders.woff",
+        "flanders.woff2",
+        "logo-en.png",
+        "background-pattern.png"
+      )
+      file.path("package_template", img_files) |>
+        system.file(package = "checklist") |>
+        file.copy(to = file.path(config_path, "pkgdown"), overwrite = TRUE)
+    }
     return(org)
   }
   paste0(url, "/citeme") |>
@@ -57,6 +71,13 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
     target
   ) |>
     system2(command = "git", stderr = FALSE, stdout = FALSE)
+  to_do <- list.files(target, recursive = TRUE)
+  dirname(to_do) |>
+    unique() -> dirs
+  file.path(config_path, dirs[dirs != "."]) |>
+    dir.create(showWarnings = FALSE, recursive = TRUE)
+  file.path(target, to_do) |>
+    file.copy(to = file.path(config_path, to_do))
   org <- org_list$new()$read(target)
   org$write(config_path, license = TRUE)
   return(org)

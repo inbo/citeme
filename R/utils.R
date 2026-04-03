@@ -13,18 +13,6 @@ set_non_empty <- function(x, fun, prompt) {
   return(x)
 }
 
-coalesce <- function(...) {
-  dots <- list(...)
-  i <- 1
-  while (i <= length(dots)) {
-    if (!is.null(dots[[i]])) {
-      return(dots[[i]])
-    }
-    i <- i + 1
-  }
-  return(NULL)
-}
-
 first_non_null <- function(...) {
   dots <- list(...)
   if (length(dots) == 0) {

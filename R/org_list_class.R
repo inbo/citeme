@@ -44,10 +44,10 @@ org_list <- R6Class(
       type = c("package", "project", "data", "all")
     ) {
       type <- match.arg(type)
-      assert_that(is.character(email), noNA(email))
-      if (length(email) == 0) {
+      if (is.null(email) || length(email) == 0) {
         email <- names(private$items)
       }
+      assert_that(is.character(email), noNA(email))
       vapply(
         private$items[email],
         FUN.VALUE = vector(mode = "list", 1),

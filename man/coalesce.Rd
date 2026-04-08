@@ -15,4 +15,8 @@ The first non-NULL argument, or NULL if all arguments are NULL.
 \description{
 Return the first non-NULL argument.
 }
+\seealso{
+Other utils: 
+\code{\link{add_badges}()}
+}
 \concept{utils}

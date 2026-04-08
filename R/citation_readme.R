@@ -1,6 +1,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom utils file_test
-citation_readme <- function(meta, org, lang) {
+citation_readme <- function(meta, org) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "project")
   readme_file <- file.path(meta$get_path, "README.md")
@@ -16,7 +16,7 @@ citation_readme <- function(meta, org, lang) {
   readme <- readLines(readme_file)
   readme_badges(readme) |>
     readme_title() |>
-    readme_individual(org = org, lang = lang) |>
+    readme_individual(org = org) |>
     readme_version() |>
     readme_community() |>
     readme_description() |>
@@ -132,6 +132,31 @@ readme_badges <- function(text) {
     meta$url <- gsub(website_regexp, "\\2", badges[website_line])
   }
   meta$access_right <- "open"
+
+  paste0(
+    "!\\[Language: .*?\\]",
+    "\\(https:\\/\\/img.shields.io\\/badge\\/language\\-(.*?)\\-\\w+\\)"
+  ) -> language_regexp
+  language_line <- grep(language_regexp, badges)
+  errors <- c(
+    errors,
+    "multiple language badges found in README.md"[length(language_line) > 1]
+  )
+  notes <- c(
+    notes,
+    "no language badge found in README.md"[length(language_line) == 0]
+  )
+  if (length(language_line) == 1) {
+    meta$language <- gsub(language_regexp, "\\1", badges[language_line])
+    errors <- c(
+      errors,
+      "`language` must be in xx-YY format. e.g. 'en-GB', 'nl-BE'"[inherits(
+        try(validate_language(meta$language)),
+        "try-error"
+      )]
+    )
+  }
+
   list(
     errors = errors,
     notes = notes,
@@ -182,7 +207,7 @@ strip_markdown <- function(text) {
 
 #' @importFrom stats setNames
 #' @importFrom utils person
-readme_individual <- function(text, org, lang) {
+readme_individual <- function(text, org) {
   text$text <- remove_empty_line(text$text, top = TRUE)
   if (length(text$text) == 0) {
     text$errors <- c(text$errors, "No individual information in README.md")
@@ -192,6 +217,7 @@ readme_individual <- function(text, org, lang) {
     head(1) -> empty_line
   text$text[seq_len(empty_line - 1)] |>
     gsub(pattern = ";\\s*$", replacement = "") -> individuals
+  # detect individuals with affiliation as markdown footnote
   orgs <- individuals
   orgs[!grepl("\\[\\^.*\\]", orgs)] <- ""
   gsub(".*?\\[\\^(.*?)\\]", "\\1;", orgs) |>
@@ -201,23 +227,26 @@ readme_individual <- function(text, org, lang) {
   unlist(orgs) |>
     unique() |>
     sprintf(fmt = "\\[\\^%s\\]") -> to_remove
+  # detect roles per individual as markdown footnote
   roles <- individuals
   for (pattern in to_remove) {
     gsub(pattern = pattern, "", roles) -> roles
   }
   gsub(".*?\\[\\^(.*)\\]", "\\1", roles) |>
     strsplit("\\]\\[\\^") -> roles
+  # detect ORCID
   individuals <- gsub("\\[\\^.*\\]", "", individuals)
-  c(
+  paste0(
     "^\\[(.*?)!\\[ORCID logo\\]",
-    "\\(https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png\\)",
+    "\\(https:\\/\\/info\\.orcid\\.org\\/wp-content\\/uploads\\/2019\\/11\\/",
+    "orcid_16x16\\.png\\)",
     "\\]",
-    "\\(https://orcid.org/(.+)\\)$"
-  ) |>
-    paste(collapse = "") -> orcid_grep
+    "\\(https:\\/\\/orcid\\.org\\/(.+)\\)$"
+  ) -> orcid_grep
   ifelse(grepl(orcid_grep, individuals), individuals, "") |>
     gsub(pattern = orcid_grep, replacement = "\\2") -> individuals_orcid
   individuals <- gsub(orcid_grep, "\\1", individuals)
+  # extract email
   email_grep <- "\\[(.*?)\\]\\((mailto:)+(.+?(@|%40){1}.+?)\\)"
   ifelse(grepl(email_grep, individuals), individuals, "") |>
     gsub(pattern = email_grep, replacement = "\\3") |>
@@ -278,6 +307,9 @@ readme_individual <- function(text, org, lang) {
   )
 
   text$text <- text$text[!grepl("\\[\\^.*?\\]:", text$text)]
+  if (is.null(text$language)) {
+    return(text)
+  }
   vapply(
     seq_along(individuals),
     FUN.VALUE = vector("list", 1),
@@ -306,7 +338,7 @@ readme_individual <- function(text, org, lang) {
     }
   ) |>
     do.call(what = c) |>
-    org$validate_person(lang = lang) -> text$person
+    org$validate_person(lang = text$language) -> text$person
   return(text)
 }
 

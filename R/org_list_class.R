@@ -516,6 +516,14 @@ required_rule <- function(which_person, type, person) {
 }
 
 ol_validate_persons <- function(person, lang, items) {
+  if (is.null(person)) {
+    updated_person <- person()
+    attr(
+      updated_person,
+      "errors"
+    ) <- "No persons found. Did you set the language?"
+    return(updated_person)
+  }
   assert_that(inherits(person, "person"))
   vapply(
     person,

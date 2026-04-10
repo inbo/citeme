@@ -229,7 +229,7 @@ bookdown_description <- function(path) {
       )
     )
   }
-  for (i in list.files(path, pattern = "\\.R?md$")) {
+  for (i in list.files(path, pattern = "\\.R?md$", full.names = TRUE)) {
     readLines(i) |>
       list() |>
       setNames("text") |>

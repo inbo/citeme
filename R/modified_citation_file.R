@@ -4,8 +4,6 @@ modified_citation_file <- function(citation_file, base_path) {
     is_tracked_not_modified(base_path) -> unchanged
   paste(
     citation_file,
-    "is modified.",
-    "Run `citeme::update_citation()` locally."[!interactive()],
-    "Please commit changes."
+    "is modified. Please commit changes."
   )[!unchanged]
 }

@@ -536,7 +536,6 @@ citation_r <- function(meta) {
   errors <- paste(
     citation_file,
     "is modified.",
-    "Run `citeme::update_citation()` locally."[!interactive()],
     "Please commit changes."
   )[
     !is_tracked_not_modified(

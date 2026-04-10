@@ -21,6 +21,7 @@ Other organisation:
 \code{\link{cache_org}()},
 \code{\link{get_default_org_list}()},
 \code{\link{inbo_org_list}()},
+\code{\link{new_org_item}()},
 \code{\link{new_org_list}()},
 \code{\link{org_list_from_url}()},
 \code{\link{select_license}()}

@@ -1,3 +1,9 @@
+#' Create a new org item
+#' @param languages A character vector of language codes.
+#' @param licenses A list of license items.
+#' @return An org item.
+#' @family organisation
+#' @export
 new_org_item <- function(languages, licenses) {
   email <- ask_email("The organisations' email address: ")
   name <- readline(prompt = "The organisations' name: ")

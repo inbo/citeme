@@ -17,7 +17,7 @@ test_that("citation_meta initialises with valid project path", {
 test_that("citation_meta fails with non-existent path", {
   expect_error(
     citation_meta$new("non_existent_path_that_does_not_exist"),
-    "No such file or directory"
+    "(No such file or directory|The system cannot find the file specified)"
   )
 })
 

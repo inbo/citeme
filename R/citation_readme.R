@@ -17,7 +17,6 @@ citation_readme <- function(meta, org) {
   readme_badges(readme) |>
     readme_title() |>
     readme_individual(org = org) |>
-    readme_version() |>
     readme_community() |>
     readme_description() |>
     readme_keywords() -> cit_meta
@@ -98,6 +97,29 @@ readme_badges <- function(text) {
     meta <- list(doi = doi)
   }
 
+  paste0(
+    "!\\[version: (.+?)\\]\\(https:\\/\\/img\\.shields\\.io\\/badge\\/",
+    "version-(.+?)-(.+?)\\)"
+  ) -> version_regexp
+  version_line <- grep(version_regexp, badges)
+  errors <- c(
+    errors,
+    "multiple version badges found in README.md"[length(version_line) > 1]
+  )
+  notes <- "no version badge found in README.md"[length(version_line) == 0]
+  if (length(version_line) != 1) {
+    meta <- list()
+  } else {
+    version <- gsub(version_regexp, "\\1", badges[version_line])
+    errors <- c(
+      errors,
+      "version badge in README refers to different version"[
+        version != gsub(version_regexp, "\\2", badges[version_line])
+      ]
+    )
+    meta$version <- version
+  }
+
   license_regexp <- paste0(
     "\\[\\!\\[(.*?)\\]\\(https:\\/\\/img\\.shields\\.io\\/badge\\/",
     "License-.*?-brightgreen\\)\\]\\(.*?\\)"
@@ -134,7 +156,7 @@ readme_badges <- function(text) {
   meta$access_right <- "open"
 
   paste0(
-    "!\\[Language: .*?\\]",
+    "!\\[Language: (.*)?\\]",
     "\\(https:\\/\\/img.shields.io\\/badge\\/language\\-(.*?)\\-\\w+\\)"
   ) -> language_regexp
   language_line <- grep(language_regexp, badges)
@@ -148,12 +170,17 @@ readme_badges <- function(text) {
   )
   if (length(language_line) == 1) {
     meta$language <- gsub(language_regexp, "\\1", badges[language_line])
+    gsub(language_regexp, "\\2", badges[language_line]) |>
+      gsub(pattern = "--", replacement = "-") -> second_language
     errors <- c(
       errors,
       "`language` must be in xx-YY format. e.g. 'en-GB', 'nl-BE'"[inherits(
         try(validate_language(meta$language)),
         "try-error"
-      )]
+      )],
+      "mismatch between language in badge and in the URL in README.md"[
+        meta$language != second_language
+      ]
     )
   }
 
@@ -307,7 +334,7 @@ readme_individual <- function(text, org) {
   )
 
   text$text <- text$text[!grepl("\\[\\^.*?\\]:", text$text)]
-  if (is.null(text$language)) {
+  if (is.null(text$meta$language)) {
     return(text)
   }
   vapply(
@@ -338,26 +365,7 @@ readme_individual <- function(text, org) {
     }
   ) |>
     do.call(what = c) |>
-    org$validate_person(lang = text$language) -> text$person
-  return(text)
-}
-
-readme_version <- function(text) {
-  version_regexp <- "<!-- version: (.*?) -->"
-  version_line <- grep(version_regexp, text$text)
-  text$notes <- c(
-    text$notes,
-    "No version information found in README.md"[length(version_line) == 0]
-  )
-  text$errors <- c(
-    text$errors,
-    "Multiple version information found in README.md"[length(version_line) > 1]
-  )
-  if (length(version_line) == 1) {
-    gsub(version_regexp, "\\1", text$text[version_line]) |>
-      package_version() -> text$meta$version
-    text$text <- text$text[-version_line]
-  }
+    org$validate_person(lang = text$meta$language) -> text$person
   return(text)
 }
 

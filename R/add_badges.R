@@ -59,7 +59,7 @@ add_badges <- function(readme_path = ".", ...) {
     url =
       "[![website](https://img.shields.io/badge/website-%1$s-c04384)](%1$s)",
     version =
-      "[![version](https://img.shields.io/badge/version-%1$s-c04384)(%1$s)]"
+      "![version: %1$s](https://img.shields.io/badge/version-%1$s-c04384)"
   )
   dots <- dots[names(dots) %in% names(formats)]
   formats <- formats[names(dots)]

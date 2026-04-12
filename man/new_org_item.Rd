@@ -2,7 +2,7 @@
 % Please edit documentation in R/new_org_item.R
 \name{new_org_item}
 \alias{new_org_item}
-\title{Create a new org item}
+\title{Interactively create a new \code{org_item}}
 \usage{
 new_org_item(languages, licenses)
 }
@@ -12,10 +12,10 @@ new_org_item(languages, licenses)
 \item{licenses}{A list of license items.}
 }
 \value{
-An org item.
+An \code{org_item} object.
 }
 \description{
-Create a new org item
+Interactively create a new \code{org_item}
 }
 \seealso{
 Other organisation: 

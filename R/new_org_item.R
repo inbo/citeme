@@ -1,7 +1,7 @@
-#' Create a new org item
+#' Interactively create a new `org_item`
 #' @param languages A character vector of language codes.
 #' @param licenses A list of license items.
-#' @return An org item.
+#' @return An `org_item` object.
 #' @family organisation
 #' @export
 new_org_item <- function(languages, licenses) {

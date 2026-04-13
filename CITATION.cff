@@ -24,4 +24,4 @@ abstract: "Manage person and organisation information with validation and format
   capabilities. Provides R6 classes for managing organisations and their members,
   with support for multiple languages, ORCID identifiers, ROR identifiers, licensing
   requirements, and integration with citation management systems."
-version: 0.0.1
+version: 0.1.0

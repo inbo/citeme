@@ -431,7 +431,7 @@ org_list <- R6Class(
         c("en-GB") |>
         unique()
     },
-    #' @field which_funder The required rightsholders.
+    #' @field which_funder The required funders.
     which_funder = function() {
       type <- vapply(
         private$items,

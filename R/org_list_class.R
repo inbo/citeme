@@ -44,10 +44,10 @@ org_list <- R6Class(
       type = c("package", "project", "data", "all")
     ) {
       type <- match.arg(type)
-      assert_that(is.character(email), noNA(email))
-      if (length(email) == 0) {
+      if (is.null(email) || length(email) == 0) {
         email <- names(private$items)
       }
+      assert_that(is.character(email), noNA(email))
       vapply(
         private$items[email],
         FUN.VALUE = vector(mode = "list", 1),
@@ -69,6 +69,7 @@ org_list <- R6Class(
     #' @param email The email address of the organisation.
     #' @param role The role of the person to return.
     #' @param lang The language to return the organisation name in.
+    #' @importFrom utils person
     get_person = function(email, role = c("cph", "fnd"), lang) {
       if (!email %in% self$get_email) {
         return(person(email = email, role = role))
@@ -241,22 +242,25 @@ org_list <- R6Class(
     #' @description  Read the `org_list` object from an `organisation.yml` file.
     #' @param x The path to the directory where the `organisation.yml` file
     #' is stored.
-    #' @importFrom fs is_dir path
+    #' @importFrom utils file_test
     #' @importFrom yaml read_yaml
     read = function(x = ".") {
-      stopifnot("`x` is not an existing directory" = is_dir(x))
-      if (!file_exists(path(x, "organisation.yml"))) {
+      stopifnot(
+        "`x` is not a string" = inherits(x, "character"),
+        "`x` is not a string" = length(x) == 1,
+        "`x` is not an existing directory" = file_test("-d", x)
+      )
+      if (!file.exists(file.path(x, "organisation.yml"))) {
         return(git_org(x))
       }
-      path(x, "organisation.yml") |>
+      file.path(x, "organisation.yml") |>
         read_yaml() -> yaml
       stopifnot(
-        "old style `organisation.yml` detected" = has_name(
-          yaml,
-          "checklist version"
+        "old style `organisation.yml` detected" = any(
+          c("citeme version", "checklist version") %in% names(yaml)
         )
       )
-      yaml[!names(yaml) %in% c("checklist version", "git")] |>
+      yaml[!names(yaml) %in% c("citeme version", "checklist version", "git")] |>
         lapply(function(z) {
           z$license <- lapply(z$license, function(y) {
             unlist(y) |>
@@ -277,6 +281,7 @@ org_list <- R6Class(
     #' @description Validate the rules for the rightsholder and funder.
     #' @param rightsholder The rightsholders as a `person` object.
     #' @param funder The funders as a `person` object.
+    #' @importFrom utils person
     validate_rules = function(rightsholder = person(), funder = person()) {
       ol_validate_rules(
         person = rightsholder,
@@ -299,8 +304,6 @@ org_list <- R6Class(
     #' @param license Whether to include license information.
     #' @return The path to the written `organisation.yml` file.
     #' @importFrom assertthat assert_that is.string noNA is.flag
-    #' @importFrom fs path
-    #' @importFrom sessioninfo session_info
     #' @importFrom yaml write_yaml
     write = function(x = ".", license = FALSE) {
       assert_that(is.string(x), noNA(x), is.flag(license), noNA(license))
@@ -312,20 +315,18 @@ org_list <- R6Class(
         }
       ) -> yaml
       names(yaml) <- self$get_email
-      si <- session_info(pkgs = "checklist")
+      dir.create(x, showWarnings = FALSE, recursive = TRUE)
       c(
-        `checklist version` = si$packages$loadedversion[
-          si$packages$package == "checklist"
-        ],
+        `citeme version` = installed.packages()["citeme", "Version"],
         git = private$git,
         yaml
       ) |>
-        write_yaml(file = path(x, "organisation.yml"))
+        write_yaml(file = file.path(x, "organisation.yml"))
       if (!license) {
-        return(path(x, "organisation.yml"))
+        return(file.path(x, "organisation.yml"))
       }
       download_licenses(self$get_listed_licenses, x)
-      return(path(x, "organisation.yml"))
+      return(file.path(x, "organisation.yml"))
     }
   ),
   active = list(
@@ -458,6 +459,7 @@ ol_valid_rules <- function(rules) {
   all(rules %in% c("shared", "optional"))
 }
 
+#' @importFrom utils person
 ol_validate_rules <- function(
   person = person(),
   which_person,
@@ -514,6 +516,14 @@ required_rule <- function(which_person, type, person) {
 }
 
 ol_validate_persons <- function(person, lang, items) {
+  if (is.null(person)) {
+    updated_person <- person()
+    attr(
+      updated_person,
+      "errors"
+    ) <- "No persons found. Did you set the language?"
+    return(updated_person)
+  }
   assert_that(inherits(person, "person"))
   vapply(
     person,
@@ -557,6 +567,7 @@ first_valid <- function(choices, x) {
   return(x)
 }
 
+#' @importFrom utils person
 ol_validate_org <- function(person, this_org, lang) {
   person_name <- format(person, c("given", "family"))
   lang <- first_valid(choices = names(this_org$name), x = lang)
@@ -602,6 +613,7 @@ ol_validate_org <- function(person, this_org, lang) {
   return(updated_person)
 }
 
+#' @importFrom utils person
 ol_validate_person <- function(person, lang, items) {
   if (is.null(person$email)) {
     updated_person <- person
@@ -721,17 +733,9 @@ ol_select_relevant_org <- function(
   relevant <- relevant[which_aff]
 }
 
-ssh_http <- function(url) {
-  if (!grepl("^https:\\/\\/", url)) {
-    url <- gsub("^git@(.*):", "https://\\1/", url, perl = TRUE)
-  }
-  url <- gsub("oauth2:.*?@", "", url)
-  gsub("(https:\\/\\/.+?\\/.+?)\\/.*", "\\1", url, perl = TRUE)
-}
-
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
-    if (file_exists(path(x, "organisation.yml"))) {
+    if (file.exists(file.path(x, "organisation.yml"))) {
       return(org_list$new()$read(x))
     }
     return(org_list$new(org_item$new(email = "info@inbo.be")))
@@ -747,9 +751,9 @@ git_org <- function(x = ".") {
   }
   gsub("https://", "", url) |>
     tolower() -> config_name
-  R_user_dir("orgauth", "config") |>
-    path(config_name) -> config_path
-  if (file_exists(path(config_path, "organisation.yml"))) {
+  R_user_dir("citeme", "config") |>
+    file.path(config_name) -> config_path
+  if (file.exists(file.path(config_path, "organisation.yml"))) {
     org <- org_list$new()$read(config_path)
     org$write(x)
     return(org)
@@ -760,9 +764,9 @@ git_org <- function(x = ".") {
     "See ?get_default_org_list. ",
     "\nYou can ignore this message when ",
     url,
-    "/checklist doesn't exists."
+    "/citeme doesn't exists."
   )
-  if (file_exists(path(x, "organisation.yml"))) {
+  if (file.exists(file.path(x, "organisation.yml"))) {
     return(org_list$new()$read(x))
   }
   return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))
@@ -770,7 +774,7 @@ git_org <- function(x = ".") {
 
 #' The INBO organisation list
 #' @export
-#' @family utils
+#' @family organisation
 inbo_org_list <- function() {
   org_list$new(
     git = "https://github.com/inbo",
@@ -915,15 +919,6 @@ ol_check <- function(local_org, x) {
   )
 }
 
-license_local_remote <- function(license) {
-  data.frame(
-    local_file = gsub("[ -]", "_", names(license)) |>
-      tolower() |>
-      paste0(".md"),
-    remote_file = unname(license)
-  )
-}
-
 #' @importFrom utils download.file
 download_licenses <- function(listed_licenses, x) {
   if (length(listed_licenses) == 0) {
@@ -935,7 +930,7 @@ download_licenses <- function(listed_licenses, x) {
       FUN = function(z, x) {
         download.file(
           url = z["remote_file"],
-          destfile = path(x, z["local_file"]),
+          destfile = file.path(x, z["local_file"]),
           quiet = TRUE,
           mode = "wb"
         )

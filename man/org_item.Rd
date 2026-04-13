@@ -8,6 +8,7 @@ A class containing a single organisation
 }
 \seealso{
 Other class: 
+\code{\link{citation_meta}},
 \code{\link{org_list}}
 }
 \concept{class}

@@ -8,6 +8,7 @@ A class containing a list of organisations
 }
 \seealso{
 Other class: 
+\code{\link{citation_meta}},
 \code{\link{org_item}}
 }
 \concept{class}

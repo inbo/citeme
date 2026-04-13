@@ -16,18 +16,18 @@ The function also stores the information in the user's R configuration.
 }
 \description{
 This function retrieves the default organisation list from the
-\code{organisation.yml} file in the organisations \code{checklist} repository.
+\code{organisation.yml} file in the organisations \code{citeme} repository.
 The \code{origin} of the repository is used to determine the root URL of the
 organisation.
 }
 \seealso{
-Other utils: 
-\code{\link{author2df}()},
+Other organisation: 
+\code{\link{cache_org}()},
+\code{\link{get_available_organisations}()},
 \code{\link{inbo_org_list}()},
-\code{\link{menu_first}()},
-\code{\link{store_authors}()},
-\code{\link{use_author}()},
-\code{\link{validate_email}()},
-\code{\link{validate_orcid}()}
+\code{\link{new_org_item}()},
+\code{\link{new_org_list}()},
+\code{\link{org_list_from_url}()},
+\code{\link{select_license}()}
 }
-\concept{utils}
+\concept{organisation}

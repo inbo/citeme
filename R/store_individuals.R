@@ -1,38 +1,38 @@
-#' Store author details for later usage
-#' @param x Projh
+#' Store individual details for later usage
+#' @param x Path to a project
 #' @export
 #' @importFrom desc description
-#' @importFrom fs path
+#' @importFrom stats aggregate
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
-#' @family utils
-store_authors <- function(x = ".") {
-  root <- R_user_dir("orgauth", which = "data")
-  current <- stored_authors(root)
+#' @family individual
+store_individuals <- function(x = ".") {
+  root <- R_user_dir("citeme", which = "data")
+  current <- stored_individuals(root)
   current$ror <- ""
-  if (file_exists(path(x, "DESCRIPTION"))) {
-    this_desc <- description$new(file = path(x, "DESCRIPTION"))
-    this_desc$get_authors() |>
-      author2df() |>
+  if (file.exists(file.path(x, "DESCRIPTION"))) {
+    this_desc <- description$new(file = file.path(x, "DESCRIPTION"))
+    this_desc$get_individuals() |>
+      individual2df() |>
       cbind(usage = 1) |>
-      rbind(cbind(current, role = "")) -> new_author_df
+      rbind(cbind(current, role = "")) -> new_individual_df
   } else {
     citation_meta$new(x)$get_person |>
-      author2df() |>
+      individual2df() |>
       cbind(usage = 1, email = "") -> cit_meta
     cit_meta <- cit_meta[
       cit_meta$family != "",
       c("given", "family", "email", "orcid", "ror", "affiliation", "usage")
     ]
-    new_author_df <- rbind(current, cit_meta)
+    new_individual_df <- rbind(current, cit_meta)
   }
   aggregate(
     usage ~ given + family + email + orcid + affiliation,
     FUN = sum,
-    data = new_author_df
+    data = new_individual_df
   ) |>
     write.table(
-      file = path(root, "author.txt"),
+      file = file.path(root, "individual.txt"),
       sep = "\t",
       row.names = FALSE,
       fileEncoding = "UTF8"
@@ -49,21 +49,21 @@ store_authors <- function(x = ".") {
 #' @param person The person object or a list of person objects, `NA` or `NULL`.
 #' Any `"character"` is converted to a person object using `as.person()` with a
 #' warning.
-#' @family utils
+#' @family individual
 #' @export
-author2df <- function(person) {
-  UseMethod("author2df", person)
+individual2df <- function(person) {
+  UseMethod("individual2df", person)
 }
 
 #' @export
-author2df.default <- function(person) {
-  stop("`author2df()` is not implemented for ", class(person))
+individual2df.default <- function(person) {
+  stop("`individual2df()` is not implemented for ", class(person))
 }
 
 #' @export
-author2df.logical <- function(person) {
+individual2df.logical <- function(person) {
   stopifnot(
-    "`author2df()` is not implemented for `TRUE` or `FALSE`" = is.na(person)
+    "`individual2df()` is not implemented for `TRUE` or `FALSE`" = is.na(person)
   )
   data.frame(
     given = character(0),
@@ -77,7 +77,7 @@ author2df.logical <- function(person) {
 }
 
 #' @export
-author2df.NULL <- function(person) {
+individual2df.NULL <- function(person) {
   data.frame(
     given = character(0),
     family = character(0),
@@ -91,21 +91,21 @@ author2df.NULL <- function(person) {
 
 #' @export
 #' @importFrom utils as.person
-author2df.character <- function(person) {
+individual2df.character <- function(person) {
   warning(
-    "`author2df()` converted a character to a person using `as.person()`",
+    "`individual2df()` converted a character to a person using `as.person()`",
     immediate. = TRUE,
     call. = FALSE
   )
-  author2df(as.person(person))
+  individual2df(as.person(person))
 }
 
 #' @export
-author2df.list <- function(person) {
+individual2df.list <- function(person) {
   vapply(
     person,
     function(x) {
-      list(author2df(x))
+      list(individual2df(x))
     },
     vector(mode = "list", 1)
   ) |>
@@ -114,14 +114,14 @@ author2df.list <- function(person) {
 
 #' @export
 #' @importFrom assertthat assert_that has_name
-author2df.person <- function(person) {
+individual2df.person <- function(person) {
   assert_that(inherits(person, "person"))
   if (length(person) > 1) {
     return(
       vapply(
         person,
         function(x) {
-          list(author2df(x))
+          list(individual2df(x))
         },
         vector(mode = "list", 1)
       ) |>
@@ -165,12 +165,11 @@ coalesce <- function(...) {
 }
 
 #' @importFrom assertthat assert_that is.string noNA
-#' @importFrom fs dir_create is_dir is_file path
-#' @importFrom utils read.table
-stored_authors <- function(root) {
+#' @importFrom utils file_test read.table
+stored_individuals <- function(root) {
   assert_that(is.string(root), noNA(root))
-  if (!is_dir(root)) {
-    dir_create(root)
+  if (!file_test("-d", root)) {
+    dir.create(root, recursive = TRUE, showWarnings = FALSE)
     return(
       data.frame(
         given = character(0),
@@ -182,8 +181,8 @@ stored_authors <- function(root) {
       )
     )
   }
-  if (is_file(path(root, "author.txt"))) {
-    path(root, "author.txt") |>
+  if (file_test("-f", file.path(root, "individual.txt"))) {
+    file.path(root, "individual.txt") |>
       read.table(
         header = TRUE,
         sep = "\t",

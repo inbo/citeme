@@ -10,13 +10,13 @@ inbo_org_list()
 The INBO organisation list
 }
 \seealso{
-Other utils: 
-\code{\link{author2df}()},
+Other organisation: 
+\code{\link{cache_org}()},
+\code{\link{get_available_organisations}()},
 \code{\link{get_default_org_list}()},
-\code{\link{menu_first}()},
-\code{\link{store_authors}()},
-\code{\link{use_author}()},
-\code{\link{validate_email}()},
-\code{\link{validate_orcid}()}
+\code{\link{new_org_item}()},
+\code{\link{new_org_list}()},
+\code{\link{org_list_from_url}()},
+\code{\link{select_license}()}
 }
-\concept{utils}
+\concept{organisation}

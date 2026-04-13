@@ -1,0 +1,13 @@
+citHeader("To cite `citeme` in publications please use:")
+# begin citeme entry
+bibentry(
+  bibtype = "Manual",
+  title = "citeme: Manage Person and Organisation Information. Version 0.1.0",
+  author = c(person(given = "Thierry", family = "Onkelinx")),
+  year = 2026,
+  url = "https://github.com/inbo/citeme/",
+  abstract = "Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, and integration with citation management systems.",
+  textVersion = "Onkelinx, Thierry (2026) citeme: Manage Person and Organisation Information. Version 0.1.0. https://github.com/inbo/citeme/",
+  keywords = "organisation; author; standardisation; inbo_version",
+)
+# end citeme entry

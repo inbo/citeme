@@ -1,0 +1,51 @@
+template:
+  bootstrap: 5
+  light-switch: false
+navbar:
+  title: ~
+  type: default
+  structure:
+    left:  [intro, reference, articles, tutorials, news, contributing]
+    right: [search, github]
+  components:
+    news:
+      text: Changelog
+      href: news/index.html
+    contributing:
+      text: Contributing
+      menu:
+      - text: Contributing
+        href: CONTRIBUTING.html
+      - text: Code of conduct
+        href: CODE_OF_CONDUCT.html
+reference:
+- title: R6 classes
+  contents:
+  - has_concept("class")
+- title: Helper functions for individuals
+  contents:
+  - has_concept("individual")
+- title: Helper functions for organisations
+  contents:
+  - has_concept("organisation")
+- title: Interactively asking for input
+  contents:
+  - has_concept("question")
+- title: Validating input
+  contents:
+  - has_concept("validation")
+- title: License utilities
+  contents:
+  - has_concept("license")
+- title: Git utilities
+  contents:
+  - has_concept("git")
+- title: Utils
+  contents:
+  - has_concept("utils")
+authors:
+  Research Institute for Nature and Forest (INBO):
+    href: "https://www.vlaanderen.be/inbo/en-gb"
+    html: "<img src='https://inbo.github.io/checklist/reference/figures/logo-en.png' height=24 alt='Research Institute for Nature and Forest (INBO)'>"
+
+url: https://inbo.github.io/citeme

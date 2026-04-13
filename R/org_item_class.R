@@ -184,6 +184,7 @@ org_item <- R6Class(
     #' @param lang The language to use for the organisation name.
     #' Defaults to the first language in the `name` vector.
     #' @param role The role of the person in the organisation.
+    #' @importFrom utils person
     as_person = function(
       lang = names(private$name)[1],
       role = c("cph", "fnd")
@@ -363,45 +364,6 @@ org_item <- R6Class(
     logo = ""
   )
 )
-
-validate_license <- function(license) {
-  stopifnot(
-    "`license` must be a list" = inherits(license, "list"),
-    # fmt:skip
-    "`license` must contain `package`, `project`, and `data`" =
-      all(c("package", "project", "data") %in% names(license)),
-    "`license` must contain character vectors" = all(
-      vapply(license, is.character, FUN.VALUE = logical(1))
-    ),
-    "`license` must contain named vectors" = all(
-      vapply(
-        license,
-        function(x) {
-          length(x) == 0 || (!is.null(names(x)) && all(names(x) != ""))
-        },
-        FUN.VALUE = logical(1)
-      )
-    ),
-    "`license` must contain uniquely named vectors" = all(
-      vapply(
-        license,
-        function(x) {
-          length(x) == 0 || anyDuplicated(names(x)) == 0
-        },
-        FUN.VALUE = logical(1)
-      )
-    ),
-    "`license` must contain vectors with unique licenses" = all(
-      vapply(
-        license,
-        function(x) {
-          length(x) == 0 || anyDuplicated(x) == 0
-        },
-        FUN.VALUE = logical(1)
-      )
-    )
-  )
-}
 
 set_non_empty <- function(x, fun, prompt) {
   if (x == "") {

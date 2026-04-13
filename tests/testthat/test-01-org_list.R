@@ -209,3 +209,120 @@ test_that("org_list which_funder returns correct organisation emails", {
   expect_true("test1@example.org" %in% result$required)
   expect_false("test2@example.org" %in% result$required)
 })
+
+test_that("org_list which_publisher returns correct organisation emails", {
+  item1 <- org_item$new(
+    name = c("en-GB" = "Test Org One"),
+    email = "test1@example.org",
+    publisher = "shared"
+  )
+  item2 <- org_item$new(
+    name = c("en-GB" = "Test Org Two"),
+    email = "test2@example.org",
+    publisher = "optional"
+  )
+  ol <- org_list$new(item1, item2)
+  result <- ol$which_publisher
+  expect_true("test1@example.org" %in% result$required)
+  expect_false("test2@example.org" %in% result$required)
+})
+
+test_that("org_list get_default_publisher returns required publishers", {
+  item1 <- org_item$new(
+    name = c("en-GB" = "Test Org One"),
+    email = "test1@example.org",
+    publisher = "shared"
+  )
+  item2 <- org_item$new(
+    name = c("en-GB" = "Test Org Two"),
+    email = "test2@example.org",
+    publisher = "optional"
+  )
+  ol <- org_list$new(item1, item2)
+  result <- ol$get_default_publisher
+  expect_equal(result, "test1@example.org")
+})
+
+test_that(
+  "org_list get_default_publisher returns alternative when no required",
+  {
+  item1 <- org_item$new(
+    name = c("en-GB" = "Test Org One"),
+    email = "test1@example.org",
+    publisher = "when no other"
+  )
+  item2 <- org_item$new(
+    name = c("en-GB" = "Test Org Two"),
+    email = "test2@example.org",
+    publisher = "optional"
+  )
+  ol <- org_list$new(item1, item2)
+  result <- ol$get_default_publisher
+  expect_equal(result, "test1@example.org")
+})
+
+test_that("org_list fails with incompatible publisher rules", {
+  item1 <- org_item$new(
+    name = c("en-GB" = "Test Org One"),
+    email = "test1@example.org",
+    publisher = "single"
+  )
+  item2 <- org_item$new(
+    name = c("en-GB" = "Test Org Two"),
+    email = "test2@example.org",
+    publisher = "shared"
+  )
+  expect_error(org_list$new(item1, item2), "not compatible")
+})
+
+test_that("org_list fails with multiple single publisher rules", {
+  item1 <- org_item$new(
+    name = c("en-GB" = "Test Org One"),
+    email = "test1@example.org",
+    publisher = "single"
+  )
+  item2 <- org_item$new(
+    name = c("en-GB" = "Test Org Two"),
+    email = "test2@example.org",
+    publisher = "single"
+  )
+  expect_error(
+    org_list$new(item1, item2),
+    "more than one organisation with `single`"
+  )
+})
+
+test_that("org_list validate_rules validates publisher rules", {
+  item <- org_item$new(
+    name = c("en-GB" = "Test Org"),
+    email = "test@example.org",
+    publisher = "shared"
+  )
+  ol <- org_list$new(item)
+  # test without publisher: should report missing
+
+  result <- ol$validate_rules(
+    rightsholder = person(email = "test@example.org", role = "cph"),
+    funder = person(email = "test@example.org", role = "fnd"),
+    publisher = person()
+  )
+  expect_true(any(grepl("publisher", result)))
+})
+
+test_that("org_list validate_rules passes with valid publisher", {
+  item <- org_item$new(
+    name = c("en-GB" = "Test Org"),
+    email = "test@example.org",
+    publisher = "shared",
+    rightsholder = "shared",
+    funder = "shared"
+  )
+  ol <- org_list$new(item)
+  result <- ol$validate_rules(
+    rightsholder = person(email = "test@example.org", role = "cph"),
+    funder = person(email = "test@example.org", role = "fnd"),
+    publisher = person(email = "test@example.org", role = "pbl")
+  )
+  # Should not have publisher-related errors
+  expect_false(any(grepl("publisher", result)))
+})

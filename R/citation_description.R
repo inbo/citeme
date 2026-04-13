@@ -101,6 +101,7 @@ description_communities <- function(descript, org) {
     split_community() -> communities
   descript$get_author("cph")$email |>
     c(descript$get_author("fnd")$email) |>
+    c(descript$get_author("pbl")$email) |>
     unlist() |>
     org$get_zenodo_by_email() -> required_communities
   if (length(communities) == 0 && length(required_communities) > 0) {

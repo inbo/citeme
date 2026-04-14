@@ -1,6 +1,6 @@
 # citeme 0.1.1
 
-* Add `publisher` field to `org_item` class with role "pbl" (#6).
+* Add `publisher` field to `org_item` class with role `"pbl"` (#6).
   Similar to `funder`, this allows organisations to specify publisher
   requirements.
 * Add `which_publisher` and `get_default_publisher` active bindings to

@@ -826,7 +826,8 @@ inbo_org_list <- function() {
     org_item$new(
       email = "info@inbo.be",
       rightsholder = "share",
-      funder = "when no other"
+      funder = "when no other",
+      publisher = "when no other"
     ),
     org_item$new(
       name = c(

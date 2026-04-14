@@ -243,9 +243,7 @@ test_that("org_list get_default_publisher returns required publishers", {
   expect_equal(result, "test1@example.org")
 })
 
-test_that(
-  "org_list get_default_publisher returns alternative when no required",
-  {
+test_that("org_list get_default_publisher returns alternative", {
   item1 <- org_item$new(
     name = c("en-GB" = "Test Org One"),
     email = "test1@example.org",

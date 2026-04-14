@@ -23,7 +23,9 @@ test_that("ask_orcid retries on invalid orcid", {
 
 test_that("ask_orcid handles multiple retries", {
   readline_mock <- mockery::mock(
-    "bad", "0000-0000-0000-0000", "0000-0002-1825-0097"
+    "bad",
+    "0000-0000-0000-0000",
+    "0000-0002-1825-0097"
   )
   mockery::stub(ask_orcid, "readline", readline_mock)
   expect_warning(

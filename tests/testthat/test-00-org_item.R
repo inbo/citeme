@@ -109,8 +109,9 @@ test_that("org_item get_license returns correct licenses by type", {
   )
   package_license <- item$get_license("package")
   expect_true(length(package_license) > 0)
-  expect_true("GPL-3.0" %in% names(package_license) ||
-                "GPL-3" %in% names(package_license))
+  expect_true(
+    "GPL-3.0" %in% names(package_license) || "GPL-3" %in% names(package_license)
+  )
 })
 
 test_that("org_item as_list returns correct structure", {

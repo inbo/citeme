@@ -150,6 +150,12 @@ yaml_individual <- function(yaml) {
         FUN = yaml_individual_format,
         role = "cph",
         FUN.VALUE = vector(mode = "list", 1)
+      ),
+      vapply(
+        X = yaml$publisher,
+        FUN = yaml_individual_format,
+        role = "pbl",
+        FUN.VALUE = vector(mode = "list", 1)
       )
     ) -> individuals
   list(

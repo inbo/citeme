@@ -82,8 +82,6 @@ test_that("description_keywords handles single keyword", {
 
 # Tests for description_communities helper
 test_that("description_communities warns on missing communities", {
-  skip_if_not_installed("desc")
-
   # Create a mock description object
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
@@ -119,8 +117,6 @@ test_that("description_communities requires description object", {
 })
 
 test_that("description_communities requires org_list object", {
-  skip_if_not_installed("desc")
-
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 

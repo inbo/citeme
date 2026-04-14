@@ -113,8 +113,6 @@ test_that("citation_quarto requires quarto type", {
 })
 
 test_that("citation_quarto returns error when _quarto.yml missing", {
-  skip_if_not_installed("yaml")
-
   # Create temporary directory without _quarto.yml
 
   temp_dir <- tempfile()
@@ -132,8 +130,6 @@ test_that("citation_quarto returns error when _quarto.yml missing", {
 })
 
 test_that("citation_quarto processes valid quarto project", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto()
 
   # Create mock citation_meta object
@@ -154,8 +150,6 @@ test_that("citation_quarto processes valid quarto project", {
 })
 
 test_that("citation_quarto extracts title with subtitle", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(
     title = "Main Title",
     subtitle = "A Subtitle"
@@ -171,8 +165,6 @@ test_that("citation_quarto extracts title with subtitle", {
 })
 
 test_that("citation_quarto extracts title without subtitle", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(title = "Simple Title")
 
   meta <- structure(
@@ -185,8 +177,6 @@ test_that("citation_quarto extracts title without subtitle", {
 })
 
 test_that("citation_quarto extracts shorttitle", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(
     title = "Very Long Title",
     shorttitle = "Short"
@@ -202,8 +192,6 @@ test_that("citation_quarto extracts shorttitle", {
 })
 
 test_that("citation_quarto extracts license", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(license = "GPL-3.0")
 
   meta <- structure(
@@ -216,8 +204,6 @@ test_that("citation_quarto extracts license", {
 })
 
 test_that("citation_quarto returns error when license missing", {
-  skip_if_not_installed("yaml")
-
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -245,8 +231,6 @@ test_that("citation_quarto returns error when license missing", {
 })
 
 test_that("citation_quarto extracts publication_date", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(publication_date = "2024-01-15")
 
   meta <- structure(
@@ -259,8 +243,6 @@ test_that("citation_quarto extracts publication_date", {
 })
 
 test_that("citation_quarto handles embargo date", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(embargo = "2025-06-01")
 
   meta <- structure(
@@ -276,8 +258,6 @@ test_that("citation_quarto handles embargo date", {
 })
 
 test_that("citation_quarto sets open access when no embargo", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto()
 
   meta <- structure(
@@ -290,8 +270,6 @@ test_that("citation_quarto sets open access when no embargo", {
 })
 
 test_that("citation_quarto extracts language", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(lang = "nl-BE")
 
   meta <- structure(
@@ -304,8 +282,6 @@ test_that("citation_quarto extracts language", {
 })
 
 test_that("citation_quarto extracts keywords", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(keywords = c("keyword1", "keyword2"))
 
   meta <- structure(
@@ -318,8 +294,6 @@ test_that("citation_quarto extracts keywords", {
 })
 
 test_that("citation_quarto notes missing keywords", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(keywords = NULL)
 
   # Manually remove keywords from the yml
@@ -338,8 +312,6 @@ test_that("citation_quarto notes missing keywords", {
 })
 
 test_that("citation_quarto notes missing publisher", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(publisher = NULL)
 
   # Manually remove publisher from the yml
@@ -358,8 +330,6 @@ test_that("citation_quarto notes missing publisher", {
 })
 
 test_that("citation_quarto validates publication_type", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(publication_type = "invalid-type")
 
   meta <- structure(
@@ -372,8 +342,6 @@ test_that("citation_quarto validates publication_type", {
 })
 
 test_that("citation_quarto notes missing publication_type", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(publication_type = NULL)
 
   # Manually remove publication_type from the yml
@@ -392,8 +360,6 @@ test_that("citation_quarto notes missing publication_type", {
 })
 
 test_that("citation_quarto processes flandersqmd structure", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(use_flandersqmd = TRUE)
 
   meta <- structure(
@@ -407,8 +373,6 @@ test_that("citation_quarto processes flandersqmd structure", {
 })
 
 test_that("citation_quarto processes book structure", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(use_book = TRUE)
 
   meta <- structure(
@@ -422,8 +386,6 @@ test_that("citation_quarto processes book structure", {
 })
 
 test_that("citation_quarto extracts doi", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(doi = "10.5281/zenodo.1234567")
 
   meta <- structure(
@@ -436,8 +398,6 @@ test_that("citation_quarto extracts doi", {
 })
 
 test_that("citation_quarto sets upload_type to publication", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto()
 
   meta <- structure(
@@ -450,8 +410,6 @@ test_that("citation_quarto sets upload_type to publication", {
 })
 
 test_that("citation_quarto extracts community", {
-  skip_if_not_installed("yaml")
-
   quarto_dir <- create_temp_quarto(community = "test-community")
 
   meta <- structure(
@@ -465,8 +423,6 @@ test_that("citation_quarto extracts community", {
 
 # Test quarto_description helper
 test_that("quarto_description extracts description from qmd files", {
-  skip_if_not_installed("yaml")
-
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -487,8 +443,6 @@ Other content.
 })
 
 test_that("quarto_description returns error when no description found", {
-  skip_if_not_installed("yaml")
-
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -500,8 +454,6 @@ test_that("quarto_description returns error when no description found", {
 })
 
 test_that("quarto_description searches recursively", {
-  skip_if_not_installed("yaml")
-
   temp_dir <- tempfile()
   dir.create(file.path(temp_dir, "chapters"), recursive = TRUE)
 

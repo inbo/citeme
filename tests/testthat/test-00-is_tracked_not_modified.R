@@ -14,13 +14,10 @@ test_that("is_tracked_not_modified returns TRUE for non-repository", {
   temp_file <- file.path(temp_dir, "test.txt")
   writeLines("test", temp_file)
   # Should return TRUE since no repository found
-  result <- is_tracked_not_modified("test.txt", repo = temp_dir)
-  expect_true(result)
+  expect_true(is_tracked_not_modified("test.txt", repo = temp_dir))
 })
 
 test_that("is_tracked_not_modified returns FALSE for untracked file", {
-  skip_on_ci()
-  skip_on_cran()
   # Create a temporary git repository
   temp_repo <- tempfile("test_repo")
   dir.create(temp_repo)
@@ -38,13 +35,10 @@ test_that("is_tracked_not_modified returns FALSE for untracked file", {
   untracked_file <- file.path(temp_repo, "untracked.txt")
   writeLines("untracked content", untracked_file)
   # Test untracked file
-  result <- is_tracked_not_modified("untracked.txt", repo = temp_repo)
-  expect_false(result)
+  expect_false(is_tracked_not_modified("untracked.txt", repo = temp_repo))
 })
 
 test_that("is_tracked_not_modified returns TRUE for tracked unmodified file", {
-  skip_on_ci()
-  skip_on_cran()
   # Create a temporary git repository
   temp_repo <- tempfile("test_repo")
   dir.create(temp_repo)
@@ -59,13 +53,10 @@ test_that("is_tracked_not_modified returns TRUE for tracked unmodified file", {
   gert::git_add("tracked.txt", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)
   # Test tracked unmodified file
-  result <- is_tracked_not_modified("tracked.txt", repo = temp_repo)
-  expect_true(result)
+  expect_true(is_tracked_not_modified("tracked.txt", repo = temp_repo))
 })
 
 test_that("is_tracked_not_modified returns FALSE for modified file", {
-  skip_on_ci()
-  skip_on_cran()
   # Create a temporary git repository
   temp_repo <- tempfile("test_repo")
   dir.create(temp_repo)
@@ -82,6 +73,5 @@ test_that("is_tracked_not_modified returns FALSE for modified file", {
   # Modify the file
   writeLines("modified content", tracked_file)
   # Test modified file
-  result <- is_tracked_not_modified("tracked.txt", repo = temp_repo)
-  expect_false(result)
+  expect_false(is_tracked_not_modified("tracked.txt", repo = temp_repo))
 })

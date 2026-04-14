@@ -1,6 +1,5 @@
 # Test citation_meta initialisation and accessors
 test_that("citation_meta initialises with valid project path", {
-  skip_if_not_installed("fs")
   # Test with current directory (the package root)
   # Suppress expected warnings about missing citation metadata
   meta <- suppressWarnings(citation_meta$new("."))

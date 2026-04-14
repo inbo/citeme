@@ -25,6 +25,8 @@ Other class:
 
 \item{\code{get_funder}}{The funder rules.}
 
+\item{\code{get_publisher}}{The publisher rules.}
+
 \item{\code{get_name}}{The organisation names.}
 
 \item{\code{get_orcid}}{The ORCID rules.}
@@ -57,6 +59,7 @@ Initialize a new \code{org_item} object.
   orcid = FALSE,
   rightsholder = c("optional", "single", "shared", "when no other"),
   funder = c("optional", "single", "shared", "when no other"),
+  publisher = c("optional", "single", "shared", "when no other"),
   license = list(package = c(`GPL-3.0` =
     paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
     "inst/generic_template/gplv3.md", sep = "/"), MIT =
@@ -103,6 +106,9 @@ the organisation must be the copyright holder.}
 \item{\code{funder}}{The required funder status for the organisation.
 The categories are the same as for \code{rightsholder}.}
 
+\item{\code{publisher}}{The required publisher status for the organisation.
+The categories are the same as for \code{rightsholder}.}
+
 \item{\code{license}}{A list with the allowed licenses by the organisation.
 The list may contain the following items:
 \code{package}, \code{project}, and \code{data}.
@@ -134,7 +140,10 @@ require a specific license for that item.
 \subsection{Method \code{as_person()}}{
 as_person The organisation as a person.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$as_person(lang = names(private$name)[1], role = c("cph", "fnd"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{org_item$as_person(
+  lang = names(private$name)[1],
+  role = c("cph", "fnd", "pbl")
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

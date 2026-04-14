@@ -21,6 +21,8 @@ Other class:
 
 \item{\code{get_default_funder}}{The default funder.}
 
+\item{\code{get_default_publisher}}{The default publisher.}
+
 \item{\code{get_default_rightsholder}}{The default rightsholder.}
 
 \item{\code{get_email}}{The organisations email.}
@@ -31,7 +33,9 @@ Other class:
 
 \item{\code{get_languages}}{The different languages of the organisations.}
 
-\item{\code{which_funder}}{The required rightsholders.}
+\item{\code{which_funder}}{The required funders.}
+
+\item{\code{which_publisher}}{The required publishers.}
 
 \item{\code{which_rightsholder}}{The required rightsholders.}
 }
@@ -298,9 +302,14 @@ Validate a \code{person} object given the \code{org_list} object.
 \if{html}{\out{<a id="method-org_list-validate_rules"></a>}}
 \if{latex}{\out{\hypertarget{method-org_list-validate_rules}{}}}
 \subsection{Method \code{validate_rules()}}{
-Validate the rules for the rightsholder and funder.
+Validate the rules for the rightsholder, funder and
+publisher.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_list$validate_rules(rightsholder = person(), funder = person())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{org_list$validate_rules(
+  rightsholder = person(),
+  funder = person(),
+  publisher = person()
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -309,6 +318,8 @@ Validate the rules for the rightsholder and funder.
 \item{\code{rightsholder}}{The rightsholders as a \code{person} object.}
 
 \item{\code{funder}}{The funders as a \code{person} object.}
+
+\item{\code{publisher}}{The publishers as a \code{person} object.}
 }
 \if{html}{\out{</div>}}
 }

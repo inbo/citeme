@@ -1,7 +1,11 @@
 permissions:
   contents: write
   pull-requests: write
-- uses: actions/checkout@v4
-  with:
-    fetch-depth: 0
-    persist-credentials: true
+
+jobs:
+  copilot:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true

@@ -19,12 +19,13 @@ You are an expert QA software engineer for this project.
 - Only write tests when this project is an R package.
   An R package is identified by the presence of a `DESCRIPTION` file in the root of the project.
   When `checklist.yml` is present in the root of the project, it should contain `package: yes`.
-- Use `skip_if_not_installed()` to skip tests on suggested dependencies.
+- Use `skip_if_not_installed()` to skip tests on dependencies listed under 'Suggests' in the `DESCRIPTION` file.
+  Never use `skip_if_not_installed()` for dependencies listed under 'Imports' in the `DESCRIPTION` file, as these are required for the package to function and should be installed when the package is installed.
   Use `skip_on_cran()` and `skip_if(Sys.getenv("MY_UNIVERSE") != "")` when the test depends on externally defined environment variables (e.g. API keys set in GitHub secrets or `.Renviron`).
-- Allow to skip tests that need a long time to run with `skip_on_ci()`, `skip_on_cran()` and `skip_if(identical(Sys.getenv("SKIP_TEST"), "true"))`.
+- Allow to skip tests that need more than 5 seconds to run with `skip_on_ci()`, `skip_on_cran()` and `skip_if(identical(Sys.getenv("SKIP_TEST"), "true"))`.
   This allows to run the tests more quickly in CI and on CRAN, while still allowing to run the tests locally when needed by setting the `SKIP_TEST` environment variable to `false` or by not setting it at all.
   Minimize the number of tests that are skipped by default to ensure that the tests are run as much as possible and that the code is well tested.
-  Hence, try to use tests that run quickly.
+  Hence, prefer to use tests that run quickly.
 
 ## Project knowledge
 

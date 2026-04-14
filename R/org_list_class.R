@@ -25,6 +25,10 @@ org_list <- R6Class(
         x$get_funder
       }) |>
         compatible_rules()
+      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
+        x$get_publisher
+      }) |>
+        compatible_rules()
       return(self)
     },
     #' @description Check if the organisation list is compatible with the
@@ -201,6 +205,10 @@ org_list <- R6Class(
         x$get_funder
       }) |>
         compatible_rules()
+      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
+        x$get_publisher
+      }) |>
+        compatible_rules()
       vapply(
         dots,
         FUN.VALUE = vector(mode = "list", length = 1),
@@ -278,11 +286,17 @@ org_list <- R6Class(
     validate_person = function(person, lang) {
       ol_validate_persons(person, lang, items = private$items)
     },
-    #' @description Validate the rules for the rightsholder and funder.
+    #' @description Validate the rules for the rightsholder, funder and
+    #' publisher.
     #' @param rightsholder The rightsholders as a `person` object.
     #' @param funder The funders as a `person` object.
+    #' @param publisher The publishers as a `person` object.
     #' @importFrom utils person
-    validate_rules = function(rightsholder = person(), funder = person()) {
+    validate_rules = function(
+      rightsholder = person(),
+      funder = person(),
+      publisher = person()
+    ) {
       ol_validate_rules(
         person = rightsholder,
         which_person = self$which_rightsholder,
@@ -294,6 +308,14 @@ org_list <- R6Class(
             person = funder,
             which_person = self$which_funder,
             type = "funder",
+            items = private$items
+          )
+        ) |>
+        c(
+          ol_validate_rules(
+            person = publisher,
+            which_person = self$which_publisher,
+            type = "publisher",
             items = private$items
           )
         )
@@ -355,6 +377,14 @@ org_list <- R6Class(
       }
       funder$alternative
     },
+    #' @field get_default_publisher The default publisher.
+    get_default_publisher = function() {
+      publisher <- self$which_publisher
+      if (length(publisher$required) > 0) {
+        return(publisher$required)
+      }
+      publisher$alternative
+    },
     #' @field get_default_rightsholder The default rightsholder.
     get_default_rightsholder = function() {
       rightsholder <- self$which_rightsholder
@@ -401,13 +431,27 @@ org_list <- R6Class(
         c("en-GB") |>
         unique()
     },
-    #' @field which_funder The required rightsholders.
+    #' @field which_funder The required funders.
     which_funder = function() {
       type <- vapply(
         private$items,
         FUN.VALUE = character(1),
         FUN = function(x) {
           x$get_funder
+        }
+      )
+      list(
+        required = names(type)[type %in% c("single", "shared")],
+        alternative = names(type)[type == "when no other"]
+      )
+    },
+    #' @field which_publisher The required publishers.
+    which_publisher = function() {
+      type <- vapply(
+        private$items,
+        FUN.VALUE = character(1),
+        FUN = function(x) {
+          x$get_publisher
         }
       )
       list(
@@ -464,7 +508,7 @@ ol_validate_rules <- function(
   person = person(),
   which_person,
   items,
-  type = c("rightsholder", "funder")
+  type = c("rightsholder", "funder", "publisher")
 ) {
   type <- match.arg(type)
   if (length(person) == 0) {
@@ -490,7 +534,8 @@ ol_validate_rules <- function(
           switch(
             type,
             "rightsholder" = items[[i]]$get_rightsholder,
-            items[[i]]$get_funder
+            "funder" = items[[i]]$get_funder,
+            "publisher" = items[[i]]$get_publisher
           ) |>
             ol_valid_rules()
         },

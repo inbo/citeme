@@ -31,7 +31,7 @@ validate_citation <- function(meta) {
     FUN.VALUE = logical(1)
   )]
   contact <- any("cre" %in% unlist(persons$role))
-  c(rightsholder$email, funder$email) |>
+  c(rightsholder$email, funder$email, publisher$email) |>
     unlist() |>
     unique() |>
     org$get_zenodo_by_email() -> required_communities

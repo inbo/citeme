@@ -23,6 +23,13 @@ validate_citation <- function(meta) {
     },
     FUN.VALUE = logical(1)
   )]
+  publisher <- persons[vapply(
+    persons$role,
+    FUN = function(x) {
+      "pbl" %in% x
+    },
+    FUN.VALUE = logical(1)
+  )]
   contact <- any("cre" %in% unlist(persons$role))
   c(rightsholder$email, funder$email) |>
     unlist() |>
@@ -31,7 +38,11 @@ validate_citation <- function(meta) {
   org$validate_person(persons, lang = meta$get_meta$language) |>
     attr("errors") |>
     c(
-      org$validate_rules(rightsholder = rightsholder, funder = funder),
+      org$validate_rules(
+        rightsholder = rightsholder,
+        funder = funder,
+        publisher = publisher
+      ),
       sprintf(
         "missing required Zenodo community `%s`",
         paste(required_communities, collapse = ", ")

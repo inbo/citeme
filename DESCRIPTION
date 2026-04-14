@@ -21,7 +21,6 @@ Imports:
     assertthat,
     desc,
     gert,
-    httr,
     jsonlite,
     knitr,
     R6,

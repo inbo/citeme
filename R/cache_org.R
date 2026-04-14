@@ -13,7 +13,6 @@
 #' Defaults to the user's R configuration directory for `citeme`.
 #' @return The retrieved organisation list, or `NULL` if the URL is invalid or
 #' the repository.
-#' @importFrom httr HEAD
 #' @importFrom tools R_user_dir
 #' @importFrom utils installed.packages
 #' @export
@@ -42,12 +41,22 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
     }
     return(org)
   }
-  paste0(url, "/citeme") |>
-    HEAD() -> url_head
-  if (url_head$status_code != 200) {
-    paste0(url, "/checklist") |>
-      HEAD() -> url_head
-    if (url_head$status_code != 200) {
+  try(
+    suppressWarnings(
+      paste0(url, "/citeme") |>
+        download.file(destfile = tempfile(), quiet = TRUE)
+    ),
+    silent = TRUE
+  ) -> url_head
+  if (inherits(url_head, "try-error")) {
+    try(
+      suppressWarnings(
+        paste0(url, "/checklist") |>
+          download.file(destfile = tempfile(), quiet = TRUE)
+      ),
+      silent = TRUE
+    ) -> url_head
+    if (inherits(url_head, "try-error")) {
       warning(
         sprintf("no public `citeme` repo found at %s", url),
         immediate. = TRUE,

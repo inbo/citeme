@@ -1,9 +1,9 @@
-# citeme 0.2.0
+# citeme 0.1.1
 
 * Add `publisher` field to `org_item` class with role "pbl" (#6).
-  Similar to `funder`, this allows organisations to specify publisher 
+  Similar to `funder`, this allows organisations to specify publisher
   requirements.
-* Add `which_publisher` and `get_default_publisher` active bindings to 
+* Add `which_publisher` and `get_default_publisher` active bindings to
   `org_list`.
 * Update `validate_rules()` to validate publisher requirements.
 * Update `citation_description.R` to include publisher in community detection.

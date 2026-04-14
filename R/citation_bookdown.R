@@ -113,17 +113,6 @@ citation_bookdown <- function(meta) {
   return(cit_meta)
 }
 
-#' @importFrom assertthat assert_that
-split_community <- function(community) {
-  if (is.null(community)) {
-    return(NULL)
-  }
-  assert_that(is.character(community))
-  strsplit(community, split = "\\s*;\\s*") |>
-    unlist() |>
-    unique()
-}
-
 #' @importFrom assertthat has_name
 yaml_individual <- function(yaml) {
   vapply(
@@ -226,7 +215,7 @@ bookdown_description <- function(path) {
     readLines() |>
     list() |>
     setNames("text") |>
-    readme_description() -> description
+    extract_description() -> description
   if (has_name(description, "meta") || length(description$errors) > 0) {
     return(
       list(
@@ -239,7 +228,7 @@ bookdown_description <- function(path) {
     readLines(i) |>
       list() |>
       setNames("text") |>
-      readme_description() -> description
+      extract_description() -> description
     if (has_name(description, "meta") || length(description$errors) > 0) {
       break
     }

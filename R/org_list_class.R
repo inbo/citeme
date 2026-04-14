@@ -11,24 +11,10 @@ org_list <- R6Class(
     #' @param ... One or more `org_item` objects.
     add_item = function(...) {
       dots <- list(...)
-      vapply(dots, inherits, logical(1), what = "org_item") |>
-        as.list() -> ok
-      names(ok) <- sprintf("element %i is not an `org_item`", seq_along(dots))
-      do.call(stopifnot, ok)
+      inherits_org_item(dots)
       private$items <- c(private$items, dots)
       names(private$items) <- self$get_email
-      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_rightsholder
-      }) |>
-        compatible_rules()
-      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_funder
-      }) |>
-        compatible_rules()
-      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_publisher
-      }) |>
-        compatible_rules()
+      check_compatible_rules(private$items)
       return(self)
     },
     #' @description Check if the organisation list is compatible with the
@@ -47,27 +33,7 @@ org_list <- R6Class(
       email = character(0),
       type = c("package", "project", "data", "all")
     ) {
-      type <- match.arg(type)
-      if (is.null(email) || length(email) == 0) {
-        email <- names(private$items)
-      }
-      assert_that(is.character(email), noNA(email))
-      vapply(
-        private$items[email],
-        FUN.VALUE = vector(mode = "list", 1),
-        type = type,
-        FUN = function(x, type) {
-          list(x$get_license(type = type))
-        }
-      ) |>
-        unname() -> licenses
-      licenses <- licenses[lengths(licenses) > 0]
-      # fmt: skip
-      stopifnot(
-        "multiple rightholders with license requirements not yet handled" =
-          length(licenses) <= 1
-      )
-      return(unlist(licenses))
+      return(list_licenses(private$items, email = email, type = type))
     },
     #' @description Return the organisation with matching email as a `person()`.
     #' @param email The email address of the organisation.
@@ -193,22 +159,8 @@ org_list <- R6Class(
         )
       )
       dots <- list(...)
-      vapply(dots, inherits, logical(1), what = "org_item") |>
-        as.list() -> ok
-      names(ok) <- sprintf("element %i is not an `org_item`", seq_along(dots))
-      do.call(stopifnot, ok)
-      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_rightsholder
-      }) |>
-        compatible_rules()
-      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_funder
-      }) |>
-        compatible_rules()
-      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_publisher
-      }) |>
-        compatible_rules()
+      inherits_org_item(dots)
+      check_compatible_rules(dots)
       vapply(
         dots,
         FUN.VALUE = vector(mode = "list", length = 1),
@@ -478,22 +430,6 @@ org_list <- R6Class(
   ),
   private = list(items = list(), git = character(0))
 )
-
-compatible_rules <- function(rules) {
-  if (length(rules) < 2) {
-    return(TRUE)
-  }
-  # fmt: skip
-  stopifnot(
-    "more than one organisation with `single`" = sum(rules == "single") <= 1,
-    "`single` is not compatible with `shared`" =
-      !(any(rules == "single") && any(rules == "shared")),
-    "`single` is not compatible with `when no other`" =
-      !(any(rules == "single") && any(rules == "when no other")),
-    "more than one organisation with `when no other`" =
-      sum(rules == "when no other") <= 1
-  )
-}
 
 ol_valid_rules <- function(rules) {
   assert_that(is.character(rules), noNA(rules))

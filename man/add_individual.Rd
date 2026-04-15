@@ -4,15 +4,25 @@
 \alias{add_individual}
 \title{Add an individual to a file}
 \usage{
-add_individual(path = ".", role = c("aut", "rev", "cph", "fnd"))
+add_individual(
+  path = ".",
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+)
 }
 \arguments{
 \item{path}{A path to a file or directory.
-The file must be a quarto file (e.g. \verb{_quarto.yml} or \verb{*.qmd}).}
+Supported file types:
+\itemize{
+\item Quarto files (\verb{_quarto.yml} or \verb{*.qmd})
+\item R package DESCRIPTION files
+\item README files (\code{README.md} or \code{README.Rmd})
+\item Bookdown index files (\code{index.md} or \code{index.Rmd})
+}}
 
 \item{role}{The role of the person to add.
-One of \code{"aut"} (author), \code{"rev"} (reviewer), \code{"cph"} (copyright holder), or
-\code{"fnd"} (funder).}
+One of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
+(contributor), \code{"rev"} (reviewer), \code{"cph"} (copyright holder),
+\code{"fnd"} (funder), or \code{"pbl"} (publisher).}
 }
 \description{
 Add an individual to a file

@@ -96,7 +96,10 @@ test_that("readme_badges detects end before start", {
 test_that("readme_badges extracts DOI badge", {
   text <- c(
     "<!-- badges: start -->",
-    "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.123.svg)](https://doi.org/10.5281/zenodo.123)",
+    paste0(
+      "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.123.svg)]",
+      "(https://doi.org/10.5281/zenodo.123)"
+    ),
     "<!-- badges: end -->"
   )
   result <- citeme:::readme_badges(text)
@@ -107,8 +110,14 @@ test_that("readme_badges extracts DOI badge", {
 test_that("readme_badges detects multiple DOI badges", {
   text <- c(
     "<!-- badges: start -->",
-    "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.123.svg)](https://doi.org/10.5281/zenodo.123)",
-    "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.456.svg)](https://doi.org/10.5281/zenodo.456)",
+    paste0(
+      "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.123.svg)]",
+      "(https://doi.org/10.5281/zenodo.123)"
+    ),
+    paste0(
+      "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.456.svg)]",
+      "(https://doi.org/10.5281/zenodo.456)"
+    ),
     "<!-- badges: end -->"
   )
   result <- citeme:::readme_badges(text)

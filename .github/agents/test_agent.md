@@ -86,6 +86,8 @@ Use the `#` symbol for inline comments in the code.
 - Use `suppressWarnings()` to suppress warnings in the tests when testing functions that produce warnings to avoid cluttering the test output with warnings that are not relevant to the test results.
 - As a last resort, use `sink()` to suppress output in the tests when testing functions that produce output to avoid cluttering the test output with output that is not relevant to the test results.
   Make sure to write the output to a temporary file and to delete the temporary file after the test to avoid leaving unnecessary files in the project.
+- Only use the `package::function()` syntax to call unimported functions from packages that are listed under "Imported" or "Suggests" in the `DESCRIPTION`.
+  Never use the `package::function()` syntax to call imported or exported functions as listed in NAMESPACE, as these functions should be imported and available without the `package::` prefix.
 
 ## Boundaries
 

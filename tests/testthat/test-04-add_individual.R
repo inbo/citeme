@@ -36,7 +36,7 @@ test_that("add_individual() works with a DESCRIPTION", {
   file.path(desc_path, "DESCRIPTION") |> writeLines(text = old_desc)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
   expect_message(
-    results <- suppressWarnings(add_individual(path = desc_path, role = "ctb"))
+    suppressWarnings(add_individual(path = desc_path, role = "ctb"))
   )
   file.path(desc_path, "DESCRIPTION") |> readLines() -> new_desc
   expect_equal(head(old_desc, 4), head(new_desc, 4))
@@ -60,9 +60,7 @@ test_that("add_individual() works with a README", {
   old_readme <- "Some text"
   file.path(readme_path, "README.md") |> writeLines(text = old_readme)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
-  expect_message(
-    results <- suppressWarnings(add_individual(path = readme_path))
-  )
+  expect_message(suppressWarnings(add_individual(path = readme_path)))
   file.path(readme_path, "README.md") |> readLines() -> new_readme
   expect_equal(
     head(new_readme, 1),
@@ -74,12 +72,10 @@ test_that("add_individual() works with a README", {
   old_readme <- c("# Title", "Some text")
   file.path(readme_path, "README.md") |> writeLines(text = old_readme)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
-  expect_message(
-    results <- suppressWarnings(add_individual(
-      path = readme_path,
-      role = "ctb"
-    ))
-  )
+  expect_message(suppressWarnings(add_individual(
+    path = readme_path,
+    role = "ctb"
+  )))
   file.path(readme_path, "README.md") |> readLines() -> new_readme
   expect_equal(
     new_readme[3],
@@ -96,7 +92,7 @@ test_that("add_individual() works with a README", {
   file.path(readme_path, "README.md") |> writeLines(text = old_readme)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
   expect_message(
-    results <- suppressWarnings(add_individual(
+    suppressWarnings(add_individual(
       path = readme_path,
       role = "rev"
     ))
@@ -122,7 +118,7 @@ test_that("add_individual() works with a quarto document", {
   file.path(quarto_path, "test.qmd") |> writeLines(text = old_quarto)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
   expect_message(
-    results <- suppressWarnings(add_individual(path = quarto_path))
+    suppressWarnings(add_individual(path = quarto_path))
   )
   expect_equal(
     get_yaml_header(file.path(quarto_path, "_quarto.yml")),
@@ -144,7 +140,7 @@ test_that("add_individual() works with a quarto document", {
   file.remove(file.path(quarto_path, "_quarto.yml"))
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
   expect_message(
-    results <- suppressWarnings(add_individual(path = quarto_path))
+    suppressWarnings(add_individual(path = quarto_path))
   )
 
   expect_equal(

@@ -222,9 +222,9 @@ test_that("determine_type prioritises DESCRIPTION over README.md", {
   expect_equal(names(result), "description")
 })
 
-# Tests for find_individual_insert_position() ---------------------------------
+# Tests for find_individual_insert() ---------------------------------
 
-test_that("find_individual_insert_position finds role footnotes", {
+test_that("find_individual_insert finds role footnotes", {
   content <- c(
     "# Title",
     "",
@@ -232,12 +232,12 @@ test_that("find_individual_insert_position finds role footnotes", {
     "",
     "Some content"
   )
-  result <- citeme:::find_individual_insert_position(content)
+  result <- citeme:::find_individual_insert(content)
   # Should return the line after the author line (line 4)
   expect_equal(result, 3)
 })
 
-test_that("find_individual_insert_position finds last role footnote", {
+test_that("find_individual_insert finds last role footnote", {
   content <- c(
     "# Title",
     "",
@@ -247,26 +247,26 @@ test_that("find_individual_insert_position finds last role footnote", {
     "",
     "Some content"
   )
-  result <- citeme:::find_individual_insert_position(content)
+  result <- citeme:::find_individual_insert(content)
   # Should return the line after the last author line (line 6)
   expect_equal(result, 5)
 })
 
-test_that("find_individual_insert_position returns 0 when no roles found", {
+test_that("find_individual_insert returns 0 when no roles found", {
   content <- c(
     "# Title",
     "",
     "Some content without authors"
   )
-  result <- citeme:::find_individual_insert_position(content)
+  result <- citeme:::find_individual_insert(content)
   expect_equal(result, 0)
 })
 
-test_that("find_individual_insert_position recognises all role types", {
+test_that("find_individual_insert recognises all role types", {
   roles <- c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
   for (role in roles) {
     content <- c("# Title", sprintf("Name[^%s]", role), "Content")
-    result <- citeme:::find_individual_insert_position(content)
+    result <- citeme:::find_individual_insert(content)
     expect_equal(result, 2, info = sprintf("Failed for role: %s", role))
   }
 })

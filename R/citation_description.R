@@ -3,8 +3,7 @@
 citation_description <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "package")
-  file.path(meta$get_path, "DESCRIPTION") |>
-    description$new() -> descript
+  descript <- description$new(meta$get_path)
   org <- org_list$new()$read(meta$get_path)
   descript$get_field("Config/citeme/keywords", default = character(0)) |>
     description_keywords() -> keywords

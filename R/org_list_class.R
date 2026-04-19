@@ -253,14 +253,16 @@ org_list <- R6Class(
         person = rightsholder,
         which_person = self$which_rightsholder,
         type = "rightsholder",
-        items = private$items
+        items = private$items,
+        mandatory = length(self$get_default_rightsholder) > 0
       ) |>
         c(
           ol_validate_rules(
             person = funder,
             which_person = self$which_funder,
             type = "funder",
-            items = private$items
+            items = private$items,
+            mandatory = length(self$get_default_funder) > 0
           )
         ) |>
         c(
@@ -268,7 +270,8 @@ org_list <- R6Class(
             person = publisher,
             which_person = self$which_publisher,
             type = "publisher",
-            items = private$items
+            items = private$items,
+            mandatory = length(self$get_default_publisher) > 0
           )
         )
     },
@@ -444,11 +447,12 @@ ol_validate_rules <- function(
   person = person(),
   which_person,
   items,
-  type = c("rightsholder", "funder", "publisher")
+  type = c("rightsholder", "funder", "publisher"),
+  mandatory = TRUE
 ) {
   type <- match.arg(type)
   if (length(person) == 0) {
-    return(sprintf("no %s listed", type))
+    return(sprintf("no %s listed", type)[isTRUE(mandatory)])
   }
   if (!inherits(person, "person")) {
     return(sprintf("`%s` is not a `person` object", type))

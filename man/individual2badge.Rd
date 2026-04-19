@@ -30,9 +30,11 @@ It also adds a footnote with the individual's role and affiliation.
 \seealso{
 Other individual: 
 \code{\link{add_individual}()},
+\code{\link{has_person_role}()},
 \code{\link{individual2df}()},
 \code{\link{individual2person}()},
 \code{\link{select_individual}()},
+\code{\link{select_person_role}()},
 \code{\link{store_individuals}()}
 }
 \concept{individual}

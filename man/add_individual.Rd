@@ -20,19 +20,25 @@ Supported file types:
 }}
 
 \item{role}{The role of the person to add.
-One or muliplte of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
+One or multiple of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
 (contributor), \code{"rev"} (reviewer), \code{"cph"} (copyright holder),
-\code{"fnd"} (funder), or \code{"pbl"} (publisher).}
+\code{"fnd"} (funder), or \code{"pbl"} (publisher).
+Unless you want to an individual to a Quarto or bookdown document.
+Then you can only specify one role, and \code{"aut"} will be added to the \code{author}
+field, #' \code{"rev"} to the \code{reviewer} field, \code{"cph"} to the \code{rightsholder}
+field, \code{"fnd"} to the \code{funder} field, and \code{"pbl"} to the \code{publisher} field.}
 }
 \description{
 Add an individual to a file
 }
 \seealso{
 Other individual: 
+\code{\link{has_person_role}()},
 \code{\link{individual2badge}()},
 \code{\link{individual2df}()},
 \code{\link{individual2person}()},
 \code{\link{select_individual}()},
+\code{\link{select_person_role}()},
 \code{\link{store_individuals}()}
 }
 \concept{individual}

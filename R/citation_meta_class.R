@@ -202,26 +202,14 @@ citation_zenodo <- function(meta) {
   }
 
   # Extract package contributors
-  person[vapply(
-    person$role,
-    FUN = function(x) {
-      any(c("ctb", "cph", "cre", "rev") %in% x)
-    },
-    FUN.VALUE = logical(1)
-  )] |>
+  select_person_role(person, c("ctb", "cph", "cre", "rev")) |>
     vapply(
       FUN = format_zenodo,
       FUN.VALUE = vector("list", 1)
     ) -> zenodo$contributors
 
   # Extract package creators (individuals)
-  person[vapply(
-    person$role,
-    FUN = function(x) {
-      "aut" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )] |>
+  select_person_role(person, "aut") |>
     vapply(
       FUN = format_zenodo,
       type = FALSE,
@@ -366,24 +354,12 @@ citation_cff <- function(meta) {
   }
   assert_that(length(meta$get_errors) == 0)
   person <- meta$get_person
-  person[vapply(
-    person$role,
-    FUN = function(x) {
-      "aut" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )] |>
+  select_person_role(person, "aut") |>
     vapply(
       FUN = format_cff,
       FUN.VALUE = vector(mode = "list", 1)
     ) -> individuals
-  person[vapply(
-    person$role,
-    FUN = function(x) {
-      "cre" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )] |>
+  select_person_role(person, "cre") |>
     vapply(
       FUN = format_cff,
       FUN.VALUE = vector(mode = "list", 1)

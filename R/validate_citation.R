@@ -9,28 +9,10 @@ validate_citation <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   org <- org_list$new()$read(meta$get_path)
   persons <- meta$get_person
-  rightsholder <- persons[vapply(
-    persons$role,
-    FUN = function(x) {
-      "cph" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )]
-  funder <- persons[vapply(
-    persons$role,
-    FUN = function(x) {
-      "fnd" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )]
-  publisher <- persons[vapply(
-    persons$role,
-    FUN = function(x) {
-      "pbl" %in% x
-    },
-    FUN.VALUE = logical(1)
-  )]
-  contact <- any("cre" %in% unlist(persons$role))
+  rightsholder <- select_person_role(persons, "cph")
+  funder <- select_person_role(persons, "fnd")
+  publisher <- select_person_role(persons, "pbl")
+  contact <- any(has_person_role(persons, "cre"))
   c(rightsholder$email, funder$email, publisher$email) |>
     unlist() |>
     unique() |>

@@ -27,9 +27,11 @@ and affiliation (if available) of the selected individual.
 \seealso{
 Other individual: 
 \code{\link{add_individual}()},
+\code{\link{has_person_role}()},
 \code{\link{individual2badge}()},
 \code{\link{individual2df}()},
 \code{\link{select_individual}()},
+\code{\link{select_person_role}()},
 \code{\link{store_individuals}()}
 }
 \concept{individual}

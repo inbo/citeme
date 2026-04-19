@@ -60,7 +60,10 @@ test_that("add_individual() works with a README", {
   old_readme <- "Some text"
   file.path(readme_path, "README.md") |> writeLines(text = old_readme)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
-  expect_message(suppressWarnings(add_individual(path = readme_path)))
+  expect_message(suppressWarnings(add_individual(
+    path = readme_path,
+    role = "aut"
+  )))
   file.path(readme_path, "README.md") |> readLines() -> new_readme
   expect_equal(
     head(new_readme, 1),
@@ -118,7 +121,7 @@ test_that("add_individual() works with a quarto document", {
   file.path(quarto_path, "test.qmd") |> writeLines(text = old_quarto)
   stub(add_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 3)
   expect_message(
-    suppressWarnings(add_individual(path = quarto_path))
+    suppressWarnings(add_individual(path = quarto_path, role = "aut"))
   )
   expect_equal(
     get_yaml_header(file.path(quarto_path, "_quarto.yml")),

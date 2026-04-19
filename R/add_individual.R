@@ -6,9 +6,13 @@
 #' - README files (`README.md` or `README.Rmd`)
 #' - Bookdown index files (`index.md` or `index.Rmd`)
 #' @param role The role of the person to add.
-#' One or muliplte of `"aut"` (author), `"cre"` (creator/maintainer), `"ctb"`
+#' One or multiple of `"aut"` (author), `"cre"` (creator/maintainer), `"ctb"`
 #' (contributor), `"rev"` (reviewer), `"cph"` (copyright holder),
 #' `"fnd"` (funder), or `"pbl"` (publisher).
+#' Unless you want to an individual to a Quarto or bookdown document.
+#' Then you can only specify one role, and `"aut"` will be added to the `author`
+#' field, #' `"rev"` to the `reviewer` field, `"cph"` to the `rightsholder`
+#' field, `"fnd"` to the `funder` field, and `"pbl"` to the `publisher` field.
 #' @export
 #' @family individual
 add_individual <- function(
@@ -24,11 +28,12 @@ add_individual <- function(
     readme = add_individual_readme(path, role = role),
     stop("`path` type is not supported")
   )
+  return(invisible(TRUE))
 }
 
 #' @importFrom stats setNames
 #' @importFrom utils file_test head
-determine_type <- function(path) {
+determine_type <- function(path = ".") {
   stopifnot(
     "`path` must be a single string" = length(path) == 1,
     "`path` must be a single string" = inherits(path, "character"),
@@ -70,7 +75,11 @@ determine_type <- function(path) {
 }
 
 #' @importFrom desc description
-add_individual_description <- function(path, role) {
+add_individual_description <- function(
+  path = ".",
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+) {
+  role <- match.arg(role, several.ok = TRUE)
   meta <- citation_meta$new(dirname(path))
   descript <- description$new(file = path)
   individual <- select_individual(lang = meta$get_meta$language)
@@ -92,7 +101,11 @@ add_individual_description <- function(path, role) {
 }
 
 #' @importFrom utils head tail
-add_individual_readme <- function(path, role) {
+add_individual_readme <- function(
+  path = ".",
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+) {
+  role <- match.arg(role, several.ok = TRUE)
   meta <- citation_meta$new(path)
   content <- readLines(path)
   individual <- select_individual(lang = meta$get_meta$language)
@@ -160,8 +173,8 @@ find_individual_insert <- function(content) {
 }
 
 add_individual_quarto <- function(
-  path,
-  role = c("aut", "rev", "cph", "fnd", "pbl")
+  path = ".",
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
 ) {
   meta <- citation_meta$new(dirname(path))
   role <- match.arg(role)

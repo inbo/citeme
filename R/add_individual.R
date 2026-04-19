@@ -6,7 +6,7 @@
 #' - README files (`README.md` or `README.Rmd`)
 #' - Bookdown index files (`index.md` or `index.Rmd`)
 #' @param role The role of the person to add.
-#' One of `"aut"` (author), `"cre"` (creator/maintainer), `"ctb"`
+#' One or muliplte of `"aut"` (author), `"cre"` (creator/maintainer), `"ctb"`
 #' (contributor), `"rev"` (reviewer), `"cph"` (copyright holder),
 #' `"fnd"` (funder), or `"pbl"` (publisher).
 #' @export
@@ -15,7 +15,7 @@ add_individual <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
 ) {
-  role <- match.arg(role)
+  role <- match.arg(role, several.ok = TRUE)
   path <- determine_type(path)
   switch(
     names(path),
@@ -98,7 +98,7 @@ add_individual_readme <- function(path, role) {
   individual <- select_individual(lang = meta$get_meta$language)
   individual_line <- individuals2badge(individual, role = role)
   # Find the position to insert the individual
-  insert_position <- find_individual_insert_position(content)
+  insert_position <- find_individual_insert(content)
   # Insert the individual line
   if (insert_position > 0) {
     content <- c(
@@ -148,7 +148,7 @@ add_individual_readme <- function(path, role) {
 #' @param content Character vector of README content lines.
 #' @return The line number where to insert, or 0 if not found.
 #' @noRd
-find_individual_insert_position <- function(content) {
+find_individual_insert <- function(content) {
   # Look for existing individual lines (lines with role footnotes)
   role_pattern <- "\\[\\^(aut|cre|ctb|rev|cph|fnd|pbl)\\]"
   individual_lines <- grep(role_pattern, content)

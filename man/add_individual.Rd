@@ -20,7 +20,7 @@ Supported file types:
 }}
 
 \item{role}{The role of the person to add.
-One of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
+One or muliplte of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
 (contributor), \code{"rev"} (reviewer), \code{"cph"} (copyright holder),
 \code{"fnd"} (funder), or \code{"pbl"} (publisher).}
 }

@@ -1,60 +1,67 @@
-test_that("validate_license validates correct license list", {
+test_that("validate_license_list validates correct license list", {
   valid_license <- list(
     package = c("MIT" = "MIT"),
     project = c("CC-BY-4.0" = "CC BY 4.0"),
     data = c("CC0-1.0" = "CC0 1.0")
   )
-  expect_silent(validate_license(valid_license))
+  expect_silent(validate_license_list(valid_license))
 })
 
-test_that("validate_license accepts empty vectors", {
+test_that("validate_license_list accepts empty vectors", {
   valid_license <- list(
     package = character(0),
     project = character(0),
     data = character(0)
   )
-  expect_silent(validate_license(valid_license))
+  expect_silent(validate_license_list(valid_license))
 })
 
-test_that("validate_license rejects non-list input", {
+test_that("validate_license_list rejects non-list input", {
   expect_error(
-    validate_license("not a list"),
+    validate_license_list("not a list"),
     "`license` must be a list"
   )
   expect_error(
-    validate_license(c(package = "MIT")),
+    validate_license_list(c(package = "MIT")),
     "`license` must be a list"
   )
 })
 
-test_that("validate_license rejects missing required elements", {
+test_that("validate_license_list rejects missing required elements", {
   expect_error(
-    validate_license(list(package = c("MIT" = "MIT"))),
+    validate_license_list(list(package = c("MIT" = "MIT"))),
     "`license` must contain `package`, `project`, and `data`"
   )
   expect_error(
-    validate_license(list(package = c("MIT" = "MIT"), project = c("a" = "b"))),
+    validate_license_list(list(
+      package = c("MIT" = "MIT"),
+      project = c("a" = "b")
+    )),
     "`license` must contain `package`, `project`, and `data`"
   )
 })
 
-test_that("validate_license rejects non-character vectors", {
+test_that("validate_license_list rejects non-character vectors", {
   expect_error(
-    validate_license(list(package = 1, project = 2, data = 3)),
+    validate_license_list(list(package = 1, project = 2, data = 3)),
     "`license` must contain character vectors"
   )
 })
 
-test_that("validate_license rejects unnamed vectors", {
+test_that("validate_license_list rejects unnamed vectors", {
   expect_error(
-    validate_license(list(package = "MIT", project = "CC-BY", data = "CC0")),
+    validate_license_list(list(
+      package = "MIT",
+      project = "CC-BY",
+      data = "CC0"
+    )),
     "`license` must contain named vectors"
   )
 })
 
-test_that("validate_license rejects duplicate names", {
+test_that("validate_license_list rejects duplicate names", {
   expect_error(
-    validate_license(list(
+    validate_license_list(list(
       package = c("MIT" = "MIT", "MIT" = "MIT2"),
       project = c("a" = "b"),
       data = c("c" = "d")
@@ -63,9 +70,9 @@ test_that("validate_license rejects duplicate names", {
   )
 })
 
-test_that("validate_license rejects duplicate license values", {
+test_that("validate_license_list rejects duplicate license values", {
   expect_error(
-    validate_license(list(
+    validate_license_list(list(
       package = c("MIT1" = "MIT", "MIT2" = "MIT"),
       project = c("a" = "b"),
       data = c("c" = "d")

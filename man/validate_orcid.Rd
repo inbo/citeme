@@ -25,7 +25,7 @@ Other validation:
 \code{\link{validate_citation}()},
 \code{\link{validate_email}()},
 \code{\link{validate_language}()},
-\code{\link{validate_license}()},
+\code{\link{validate_license_list}()},
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}
 }

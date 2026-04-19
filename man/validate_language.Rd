@@ -23,7 +23,7 @@ For example, \code{en-GB} for English (United Kingdom) and \code{nl-BE} for Dutc
 Other validation: 
 \code{\link{validate_citation}()},
 \code{\link{validate_email}()},
-\code{\link{validate_license}()},
+\code{\link{validate_license_list}()},
 \code{\link{validate_orcid}()},
 \code{\link{validate_ror}()},
 \code{\link{validate_url}()}

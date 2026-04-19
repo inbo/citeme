@@ -155,7 +155,7 @@ org_item <- R6Class(
         "`orcid` must be `TRUE` or `FALSE`" = is.flag(orcid),
         "`orcid` cannot be `NA`" = noNA(orcid)
       )
-      validate_license(license)
+      validate_license_list(license)
       private$name <- name
       private$orcid <- orcid
       private$email <- email

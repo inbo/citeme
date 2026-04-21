@@ -12,11 +12,13 @@ has_person_role <- function(individual, role) {
     "`role` must have length greater than 0" = length(role) > 0L
   )
   if (length(individual) > 1L) {
-    vapply(
-      individual,
-      FUN = has_person_role,
-      FUN.VALUE = logical(1),
-      role = role
+    return(
+      vapply(
+        individual,
+        FUN = has_person_role,
+        FUN.VALUE = logical(1),
+        role = role
+      )
     )
   }
   any(role %in% individual$role)

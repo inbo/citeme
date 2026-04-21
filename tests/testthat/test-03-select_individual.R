@@ -18,7 +18,7 @@ test_that("select_individual() returns correct individual", {
       row.names = FALSE,
       fileEncoding = "UTF8"
     )
-  stub(select_individual, "R_user_dir", mock_r_user_dir(config_dir))
+  stub(select_individual, "R_user_dir", mock_r_user_dir(config_dir), depth = 2)
   expect_message(result <- select_individual(lang = "en-GB"))
   expect_equal(result[, -6], new_person[, -6])
 })

@@ -19,7 +19,7 @@
 select_individual <- function(email, lang) {
   root <- R_user_dir("citeme", which = "data")
   org <- org_list$new()$read()
-  current <- stored_individuals(root)
+  current <- stored_individuals()
   assert_that(
     interactive() || nrow(current) > 0,
     msg = "No available individuals in a non-interactive session."
@@ -194,6 +194,18 @@ validate_individual <- function(current, selected, org, lang) {
   assert_that(inherits(org, "org_list"))
   affiliation <- org$get_name_by_domain(current$email[selected], lang = lang)
   if (length(affiliation) == 0) {
+    cat(
+      "given name: ",
+      current$given[selected],
+      "\nfamily name:",
+      current$family[selected],
+      "\ne-mail:     ",
+      current$email[selected],
+      "\norcid:      ",
+      current$orcid[selected],
+      "\naffiliation:",
+      current$affiliation[selected]
+    )
     return(current)
   }
   if (!current$affiliation[selected] %in% names(affiliation)) {

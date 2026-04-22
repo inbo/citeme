@@ -52,7 +52,8 @@ Initialize a new \code{citation_meta} object.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{The path to the root of the project.}
+\item{\code{path}}{The path to the root of the project or the file from which to
+extract citation metadata.}
 }
 \if{html}{\out{</div>}}
 }

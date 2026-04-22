@@ -88,7 +88,7 @@ test_that("citation_bookdown returns error when index.Rmd missing", {
 
   # Create mock citation_meta object
   meta <- structure(
-    list(get_type = "bookdown", get_path = temp_dir),
+    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
     class = "citation_meta"
   )
 
@@ -102,7 +102,10 @@ test_that("citation_bookdown processes valid bookdown project", {
 
   # Create mock citation_meta object
   meta <- structure(
-    list(get_type = "bookdown", get_path = bookdown_dir),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(bookdown_dir, "index.Rmd")
+    ),
     class = "citation_meta"
   )
 
@@ -120,7 +123,10 @@ test_that("citation_bookdown extracts title from YAML", {
   bookdown_dir <- create_temp_bookdown()
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = bookdown_dir),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(bookdown_dir, "index.Rmd")
+    ),
     class = "citation_meta"
   )
 
@@ -134,7 +140,10 @@ test_that("citation_bookdown sets upload_type to publication", {
   bookdown_dir <- create_temp_bookdown()
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = bookdown_dir),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(bookdown_dir, "index.Rmd")
+    ),
     class = "citation_meta"
   )
 
@@ -147,7 +156,10 @@ test_that("citation_bookdown handles publication_date", {
   bookdown_dir <- create_temp_bookdown()
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = bookdown_dir),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(bookdown_dir, "index.Rmd")
+    ),
     class = "citation_meta"
   )
 
@@ -188,7 +200,7 @@ Content
   writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = temp_dir),
+    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
     class = "citation_meta"
   )
 
@@ -202,7 +214,10 @@ test_that("citation_bookdown sets access_right to open when no embargo", {
   bookdown_dir <- create_temp_bookdown()
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = bookdown_dir),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(bookdown_dir, "index.Rmd")
+    ),
     class = "citation_meta"
   )
 
@@ -235,7 +250,7 @@ Content
   writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = temp_dir),
+    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
     class = "citation_meta"
   )
 
@@ -273,7 +288,7 @@ Content
   writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = temp_dir),
+    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
     class = "citation_meta"
   )
 
@@ -311,7 +326,7 @@ Content
   writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = temp_dir),
+    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
     class = "citation_meta"
   )
 

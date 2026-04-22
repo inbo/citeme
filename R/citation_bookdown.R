@@ -3,17 +3,16 @@
 citation_bookdown <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "bookdown")
-  index_file <- file.path(meta$get_path, "index.Rmd")
-  if (!file_test("-f", index_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(index_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  yaml <- get_yaml_header(index_file)
+  yaml <- get_yaml_header(meta$get_path)
   cit_meta <- yaml_individual(yaml = yaml)
   description <- bookdown_description(meta$get_path)
   cit_meta$meta$description <- description$description
@@ -211,8 +210,7 @@ string2date <- function(date) {
 }
 
 bookdown_description <- function(path) {
-  file.path(path, "index.Rmd") |>
-    readLines() |>
+  readLines(path) |>
     list() |>
     setNames("text") |>
     extract_description() -> description
@@ -224,7 +222,11 @@ bookdown_description <- function(path) {
       )
     )
   }
-  for (i in list.files(path, pattern = "\\.R?md$", full.names = TRUE)) {
+  for (i in list.files(
+    dirname(path),
+    pattern = "\\.R?md$",
+    full.names = TRUE
+  )) {
     readLines(i) |>
       list() |>
       setNames("text") |>

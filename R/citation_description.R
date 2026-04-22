@@ -4,7 +4,7 @@ citation_description <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "package")
   descript <- description$new(meta$get_path)
-  org <- org_list$new()$read(meta$get_path)
+  org <- org_list$new()$read(dirname(meta$get_path))
   descript$get_field("Config/citeme/keywords", default = character(0)) |>
     description_keywords() -> keywords
   description_communities(descript = descript, org = org) -> communities

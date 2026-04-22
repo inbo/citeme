@@ -7,7 +7,7 @@
 #' @family validation
 validate_citation <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
-  org <- org_list$new()$read(meta$get_path)
+  org <- org_list$new()$read(dirname(meta$get_path))
   persons <- meta$get_person
   rightsholder <- select_person_role(persons, "cph")
   funder <- select_person_role(persons, "fnd")

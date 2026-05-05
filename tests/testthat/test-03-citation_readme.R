@@ -34,7 +34,7 @@ test_that("citation_readme returns error when README.md missing", {
 
   result <- citeme:::citation_readme(meta, org)
   expect_true(length(result$errors) > 0)
-  expect_match(result$errors[1], "README.md.*not found")
+  expect_match(result$errors[1], "not found")
 })
 
 # Tests for readme_badges

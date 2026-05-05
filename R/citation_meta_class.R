@@ -16,6 +16,11 @@ citation_meta <- R6Class(
       assert_that(is.string(path), noNA(path))
       normalizePath(path, winslash = "/", mustWork = TRUE) |>
         determine_type() -> private$path
+      if (length(private$path) == 0) {
+        private$path <- normalizePath(path, winslash = "/", mustWork = FALSE)
+        private$errors <- "no supported file found in `path`"
+        return(invisible(self))
+      }
       switch(
         names(private$path),
         quarto = {
@@ -35,7 +40,7 @@ citation_meta <- R6Class(
           private$type <- "project"
           meta <- citation_readme(
             self,
-            org = org_list$new()$read(private$path)
+            org = org_list$new()$read(dirname(private$path))
           )
         },
         stop("`path` type is not supported")

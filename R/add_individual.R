@@ -21,6 +21,7 @@ add_individual <- function(
 ) {
   role <- match.arg(role, several.ok = TRUE)
   path <- determine_type(path)
+  stopifnot("no supported file found in `path`" = length(path) == 1)
   switch(
     names(path),
     quarto = add_individual_quarto(path, role = role),

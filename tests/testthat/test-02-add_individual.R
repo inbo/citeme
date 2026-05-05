@@ -107,10 +107,7 @@ test_that("determine_type errors on unsupported file type", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   unsupported <- file.path(temp_dir, "script.R")
   writeLines("x <- 1", unsupported)
-  expect_error(
-    citeme:::determine_type(unsupported),
-    "no supported file found in `path`"
-  )
+  expect_equal(citeme:::determine_type(unsupported), character(0))
 })
 
 test_that("determine_type finds DESCRIPTION in directory", {
@@ -183,10 +180,7 @@ test_that("determine_type errors on empty directory", {
   temp_dir <- tempfile("citeme_test")
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  expect_error(
-    citeme:::determine_type(temp_dir),
-    "no supported file found"
-  )
+  expect_equal(citeme:::determine_type(temp_dir), character(0))
 })
 
 test_that("determine_type prioritises quarto over other files", {

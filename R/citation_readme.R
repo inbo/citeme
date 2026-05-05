@@ -3,17 +3,16 @@
 citation_readme <- function(meta, org) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "project")
-  readme_file <- file.path(meta$get_path, "README.md")
-  if (!file_test("-f", readme_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(readme_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  readme <- readLines(readme_file)
+  readme <- readLines(meta$get_path)
   readme_badges(readme) |>
     readme_title() |>
     readme_individual(org = org) |>
@@ -81,8 +80,12 @@ readme_individual <- function(text, org) {
   }
   grep("^\\s*$", text$text) |>
     head(1) -> empty_line
-  text$text[seq_len(empty_line - 1)] |>
-    gsub(pattern = ";\\s*$", replacement = "") -> individuals
+  if (length(empty_line) == 0) {
+    individuals <- text$text
+  } else {
+    individuals <- text$text[seq_len(empty_line - 1)]
+  }
+  individuals <- gsub(pattern = ";\\s*$", replacement = "", individuals)
   # detect individuals with affiliation as markdown footnote
   orgs <- individuals
   orgs[!grepl("\\[\\^.*\\]", orgs)] <- ""
@@ -119,7 +122,7 @@ readme_individual <- function(text, org) {
     gsub(pattern = "%40", replacement = "@") -> individuals_email
   individuals <- gsub(email_grep, "\\1", individuals)
 
-  if (empty_line > 0) {
+  if (length(empty_line) && empty_line > 0) {
     tail(text$text, -empty_line) |>
       remove_empty_line(top = TRUE) -> text$text
   }

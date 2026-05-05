@@ -22,7 +22,9 @@ determine_type <- function(path = ".") {
     "README.md"["README.md" %in% basename(path)]
   ) |>
     head(1) -> type
-  stopifnot("no supported file found in `path`" = length(type) == 1)
+  if (length(type) == 0) {
+    return(character(0))
+  }
   if (type == "quarto.qmd") {
     return(c(quarto = path))
   }

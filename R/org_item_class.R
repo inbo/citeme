@@ -57,28 +57,27 @@ org_item <- R6Class(
       license = list(
         package = c(
           `GPL-3.0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/gplv3.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/gplv3.md",
             sep = "/"
           ),
           MIT = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/mit.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/mit.md",
             sep = "/"
           )
         ),
         project = c(
           `CC BY 4.0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/cc_by_4_0.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/cc_by_4_0.md",
             sep = "/"
           )
         ),
         data = c(
           `CC0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist",
-            "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template",
-            "cc0.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/cc0.md",
             sep = "/"
           )
         )
@@ -113,35 +112,34 @@ org_item <- R6Class(
         private$license <- list(
           package = c(
             `GPL-3` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/gplv3.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/gplv3.md",
               sep = "/"
             ),
             MIT = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/mit.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/mit.md",
               sep = "/"
             )
           ),
           project = c(
             `CC BY 4.0` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/cc_by_4_0.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/cc_by_4_0.md",
               sep = "/"
             )
           ),
           data = c(
             `CC0` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist",
-              "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template",
-              "cc0.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+              "inst/licenses/cc0.md",
               sep = "/"
             )
           )
         )
         private$website <- "https://www.vlaanderen.be/inbo/en-gb"
         private$logo <- paste0(
-          "https://inbo.github.io/checklist/reference/figures/logo-en.png"
+          "https://inbo.github.io/citeme/reference/figures/logo-en.png"
         )
         return(self)
       }

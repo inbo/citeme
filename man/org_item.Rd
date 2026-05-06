@@ -62,16 +62,15 @@ Other class:
   funder = c("optional", "single", "shared", "when no other"),
   publisher = c("optional", "single", "shared", "when no other"),
   license = list(package = c(`GPL-3.0` =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/gplv3.md", sep = "/"), MIT =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/mit.md", sep = "/")), project = c(`CC BY 4.0` =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/cc_by_4_0.md", sep = "/")), data = c(CC0 =
-    paste("https://raw.githubusercontent.com/inbo/checklist",
-    "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template", 
-     "cc0.md", sep
-    = "/"))),
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/gplv3.md", sep = "/"), MIT =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/mit.md", sep = "/")), project = c(`CC BY 4.0` =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/cc_by_4_0.md", sep = "/")), data = c(CC0 =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/cc0.md", 
+     sep = "/"))),
   ror = "",
   zenodo = "",
   website = "",

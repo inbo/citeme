@@ -12,18 +12,21 @@ website, and logo of the available organisations.
 }
 \description{
 This function retrieves the list of available organisations from the local
-configuration files.
+configuration files and locally stored organisations.
 It returns a list containing the names, languages, licenses, ORCID, Zenodo,
 ROR, website, and logo of the available organisations.
 }
 \seealso{
-Other organisation: 
+Other organisation:
 \code{\link[=cache_org]{cache_org()}},
 \code{\link[=get_default_org_list]{get_default_org_list()}},
 \code{\link[=inbo_org_list]{inbo_org_list()}},
 \code{\link[=new_org_item]{new_org_item()}},
 \code{\link[=new_org_list]{new_org_list()}},
 \code{\link[=org_list_from_url]{org_list_from_url()}},
-\code{\link[=select_license]{select_license()}}
+\code{\link[=organisation2df]{organisation2df()}},
+\code{\link[=select_license]{select_license()}},
+\code{\link[=store_organisations]{store_organisations()}},
+\code{\link[=stored_organisations]{stored_organisations()}}
 }
 \concept{organisation}

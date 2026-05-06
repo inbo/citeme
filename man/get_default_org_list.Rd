@@ -28,6 +28,9 @@ Other organisation:
 \code{\link[=new_org_item]{new_org_item()}},
 \code{\link[=new_org_list]{new_org_list()}},
 \code{\link[=org_list_from_url]{org_list_from_url()}},
-\code{\link[=select_license]{select_license()}}
+\code{\link[=organisation2df]{organisation2df()}},
+\code{\link[=select_license]{select_license()}},
+\code{\link[=store_organisations]{store_organisations()}},
+\code{\link[=stored_organisations]{stored_organisations()}}
 }
 \concept{organisation}

@@ -29,7 +29,10 @@ Imports:
     yaml
 Suggests:
     mockery,
+    quarto,
     testthat (>= 3.0.0)
+VignetteBuilder:
+    quarto
 Config/citeme/communities: inbo
 Config/citeme/keywords: organisation; author; standardisation;
     inbo_version

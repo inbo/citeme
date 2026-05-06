@@ -19,8 +19,8 @@ The resulting URL is used to determine the root URL of the organisation for
 retrieving the organisation list.
 }
 \seealso{
-Other git: 
-\code{\link{is_repository}()},
-\code{\link{is_tracked_not_modified}()}
+Other git:
+\code{\link[=is_repository]{is_repository()}},
+\code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}}
 }
 \concept{git}

@@ -16,7 +16,7 @@ The first non-NULL argument, or NULL if all arguments are NULL.
 Return the first non-NULL argument.
 }
 \seealso{
-Other utils: 
-\code{\link{add_badges}()}
+Other utils:
+\code{\link[=add_badges]{add_badges()}}
 }
 \concept{utils}

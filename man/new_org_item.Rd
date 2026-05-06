@@ -18,13 +18,13 @@ An \code{org_item} object.
 Interactively create a new \code{org_item}
 }
 \seealso{
-Other organisation: 
-\code{\link{cache_org}()},
-\code{\link{get_available_organisations}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{new_org_list}()},
-\code{\link{org_list_from_url}()},
-\code{\link{select_license}()}
+Other organisation:
+\code{\link[=cache_org]{cache_org()}},
+\code{\link[=get_available_organisations]{get_available_organisations()}},
+\code{\link[=get_default_org_list]{get_default_org_list()}},
+\code{\link[=inbo_org_list]{inbo_org_list()}},
+\code{\link[=new_org_list]{new_org_list()}},
+\code{\link[=org_list_from_url]{org_list_from_url()}},
+\code{\link[=select_license]{select_license()}}
 }
 \concept{organisation}

@@ -20,12 +20,12 @@ throws an error.
 Validate a license list
 }
 \seealso{
-Other validation: 
-\code{\link{validate_citation}()},
-\code{\link{validate_email}()},
-\code{\link{validate_language}()},
-\code{\link{validate_orcid}()},
-\code{\link{validate_ror}()},
-\code{\link{validate_url}()}
+Other validation:
+\code{\link[=validate_citation]{validate_citation()}},
+\code{\link[=validate_email]{validate_email()}},
+\code{\link[=validate_language]{validate_language()}},
+\code{\link[=validate_orcid]{validate_orcid()}},
+\code{\link[=validate_ror]{validate_ror()}},
+\code{\link[=validate_url]{validate_url()}}
 }
 \concept{validation}

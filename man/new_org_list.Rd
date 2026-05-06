@@ -18,13 +18,13 @@ Reuses available organisations where possible.
 \seealso{
 \code{\link{org_list}}, \code{\link{org_item}}
 
-Other organisation: 
-\code{\link{cache_org}()},
-\code{\link{get_available_organisations}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{new_org_item}()},
-\code{\link{org_list_from_url}()},
-\code{\link{select_license}()}
+Other organisation:
+\code{\link[=cache_org]{cache_org()}},
+\code{\link[=get_available_organisations]{get_available_organisations()}},
+\code{\link[=get_default_org_list]{get_default_org_list()}},
+\code{\link[=inbo_org_list]{inbo_org_list()}},
+\code{\link[=new_org_item]{new_org_item()}},
+\code{\link[=org_list_from_url]{org_list_from_url()}},
+\code{\link[=select_license]{select_license()}}
 }
 \concept{organisation}

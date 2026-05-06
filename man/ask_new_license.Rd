@@ -18,13 +18,13 @@ Must be one of \code{"package"}, \code{"project"} or \code{"data"}.}
 Ask one or more licenses.
 }
 \seealso{
-Other question: 
-\code{\link{ask_email}()},
-\code{\link{ask_language}()},
-\code{\link{ask_orcid}()},
-\code{\link{ask_ror}()},
-\code{\link{ask_url}()},
-\code{\link{ask_yes_no}()},
-\code{\link{menu_first}()}
+Other question:
+\code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_language]{ask_language()}},
+\code{\link[=ask_orcid]{ask_orcid()}},
+\code{\link[=ask_ror]{ask_ror()}},
+\code{\link[=ask_url]{ask_url()}},
+\code{\link[=ask_yes_no]{ask_yes_no()}},
+\code{\link[=menu_first]{menu_first()}}
 }
 \concept{question}

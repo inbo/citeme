@@ -25,13 +25,13 @@ The \code{person} object will include the given name, family name, email, ORCID,
 and affiliation (if available) of the selected individual.
 }
 \seealso{
-Other individual: 
-\code{\link{add_individual}()},
-\code{\link{has_person_role}()},
-\code{\link{individual2badge}()},
-\code{\link{individual2df}()},
-\code{\link{select_individual}()},
-\code{\link{select_person_role}()},
-\code{\link{store_individuals}()}
+Other individual:
+\code{\link[=add_individual]{add_individual()}},
+\code{\link[=has_person_role]{has_person_role()}},
+\code{\link[=individual2badge]{individual2badge()}},
+\code{\link[=individual2df]{individual2df()}},
+\code{\link[=select_individual]{select_individual()}},
+\code{\link[=select_person_role]{select_person_role()}},
+\code{\link[=store_individuals]{store_individuals()}}
 }
 \concept{individual}

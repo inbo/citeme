@@ -19,13 +19,13 @@ specified roles.
 Select the person object with a given role
 }
 \seealso{
-Other individual: 
-\code{\link{add_individual}()},
-\code{\link{has_person_role}()},
-\code{\link{individual2badge}()},
-\code{\link{individual2df}()},
-\code{\link{individual2person}()},
-\code{\link{select_individual}()},
-\code{\link{store_individuals}()}
+Other individual:
+\code{\link[=add_individual]{add_individual()}},
+\code{\link[=has_person_role]{has_person_role()}},
+\code{\link[=individual2badge]{individual2badge()}},
+\code{\link[=individual2df]{individual2df()}},
+\code{\link[=individual2person]{individual2person()}},
+\code{\link[=select_individual]{select_individual()}},
+\code{\link[=store_individuals]{store_individuals()}}
 }
 \concept{individual}

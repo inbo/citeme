@@ -18,12 +18,12 @@ ROR, website, and logo of the available organisations.
 }
 \seealso{
 Other organisation: 
-\code{\link{cache_org}()},
-\code{\link{get_default_org_list}()},
-\code{\link{inbo_org_list}()},
-\code{\link{new_org_item}()},
-\code{\link{new_org_list}()},
-\code{\link{org_list_from_url}()},
-\code{\link{select_license}()}
+\code{\link[=cache_org]{cache_org()}},
+\code{\link[=get_default_org_list]{get_default_org_list()}},
+\code{\link[=inbo_org_list]{inbo_org_list()}},
+\code{\link[=new_org_item]{new_org_item()}},
+\code{\link[=new_org_list]{new_org_list()}},
+\code{\link[=org_list_from_url]{org_list_from_url()}},
+\code{\link[=select_license]{select_license()}}
 }
 \concept{organisation}

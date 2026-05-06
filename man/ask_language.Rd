@@ -16,13 +16,13 @@ ask_language(org, prompt = "Which language?")
 Ask for a language
 }
 \seealso{
-Other question: 
-\code{\link{ask_email}()},
-\code{\link{ask_new_license}()},
-\code{\link{ask_orcid}()},
-\code{\link{ask_ror}()},
-\code{\link{ask_url}()},
-\code{\link{ask_yes_no}()},
-\code{\link{menu_first}()}
+Other question:
+\code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_new_license]{ask_new_license()}},
+\code{\link[=ask_orcid]{ask_orcid()}},
+\code{\link[=ask_ror]{ask_ror()}},
+\code{\link[=ask_url]{ask_url()}},
+\code{\link[=ask_yes_no]{ask_yes_no()}},
+\code{\link[=menu_first]{menu_first()}}
 }
 \concept{question}

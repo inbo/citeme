@@ -16,12 +16,12 @@ A logical vector.
 It only checks the format of the text, not if the email address exists.
 }
 \seealso{
-Other validation: 
-\code{\link{validate_citation}()},
-\code{\link{validate_language}()},
-\code{\link{validate_license_list}()},
-\code{\link{validate_orcid}()},
-\code{\link{validate_ror}()},
-\code{\link{validate_url}()}
+Other validation:
+\code{\link[=validate_citation]{validate_citation()}},
+\code{\link[=validate_language]{validate_language()}},
+\code{\link[=validate_license_list]{validate_license_list()}},
+\code{\link[=validate_orcid]{validate_orcid()}},
+\code{\link[=validate_ror]{validate_ror()}},
+\code{\link[=validate_url]{validate_url()}}
 }
 \concept{validation}

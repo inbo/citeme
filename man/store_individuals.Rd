@@ -13,13 +13,13 @@ store_individuals(x = ".")
 Store individual details for later usage
 }
 \seealso{
-Other individual: 
-\code{\link{add_individual}()},
-\code{\link{has_person_role}()},
-\code{\link{individual2badge}()},
-\code{\link{individual2df}()},
-\code{\link{individual2person}()},
-\code{\link{select_individual}()},
-\code{\link{select_person_role}()}
+Other individual:
+\code{\link[=add_individual]{add_individual()}},
+\code{\link[=has_person_role]{has_person_role()}},
+\code{\link[=individual2badge]{individual2badge()}},
+\code{\link[=individual2df]{individual2df()}},
+\code{\link[=individual2person]{individual2person()}},
+\code{\link[=select_individual]{select_individual()}},
+\code{\link[=select_person_role]{select_person_role()}}
 }
 \concept{individual}

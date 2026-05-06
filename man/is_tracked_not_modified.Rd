@@ -15,8 +15,8 @@ is_tracked_not_modified(file, repo = ".")
 Check if a file is tracked and not modified
 }
 \seealso{
-Other git: 
-\code{\link{is_repository}()},
-\code{\link{ssh_http}()}
+Other git:
+\code{\link[=is_repository]{is_repository()}},
+\code{\link[=ssh_http]{ssh_http()}}
 }
 \concept{git}

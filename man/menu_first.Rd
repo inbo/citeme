@@ -22,13 +22,13 @@ This is useful when you want to ask a question with only one choice and you
 want to return a logical value.
 }
 \seealso{
-Other question: 
-\code{\link{ask_email}()},
-\code{\link{ask_language}()},
-\code{\link{ask_new_license}()},
-\code{\link{ask_orcid}()},
-\code{\link{ask_ror}()},
-\code{\link{ask_url}()},
-\code{\link{ask_yes_no}()}
+Other question:
+\code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_language]{ask_language()}},
+\code{\link[=ask_new_license]{ask_new_license()}},
+\code{\link[=ask_orcid]{ask_orcid()}},
+\code{\link[=ask_ror]{ask_ror()}},
+\code{\link[=ask_url]{ask_url()}},
+\code{\link[=ask_yes_no]{ask_yes_no()}}
 }
 \concept{question}

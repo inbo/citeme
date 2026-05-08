@@ -119,7 +119,7 @@ org_item_to_row <- function(item) {
 #' @family organisation
 stored_organisations <- function() {
   root <- R_user_dir("citeme", which = "data")
-  org_file <- file.path(root, "organisation.txt")
+  org_file <- file.path(root, "organisation.txt", fsep = "/")
   if (file_test("-f", org_file)) {
     org_file |>
       read.table(
@@ -164,7 +164,7 @@ stored_organisations <- function() {
 write_organisations <- function(org_df) {
   root <- R_user_dir("citeme", which = "data")
   dir.create(root, recursive = TRUE, showWarnings = FALSE)
-  org_file <- file.path(root, "organisation.txt")
+  org_file <- file.path(root, "organisation.txt", fsep = "/")
   write.table(
     org_df,
     file = org_file,

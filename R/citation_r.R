@@ -8,7 +8,7 @@ citation_r <- function(meta) {
   assert_that(length(meta$get_errors) == 0)
   cit_meta <- meta$get_meta
   dirname(meta$get_path) |>
-    file.path("inst", "CITATION") -> citation_file
+    file.path("inst", "CITATION", fsep = "/") -> citation_file
   if (file_test("-f", citation_file)) {
     cit <- readLines(citation_file)
   } else {

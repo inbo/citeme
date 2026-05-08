@@ -9,7 +9,7 @@ title: Test Book
 output:
   bookdown::pdf_book: default
 "
-  writeLines(bookdown_config, file.path(temp_dir, "_bookdown.yml"))
+  writeLines(bookdown_config, file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   # Create index.Rmd with proper YAML front matter and description
   index_rmd <- "---
@@ -53,7 +53,7 @@ This is a test book description for testing purposes.
 
 Content here.
 "
-  writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
+  writeLines(index_rmd, file.path(temp_dir, "index.Rmd", fsep = "/"))
 
   temp_dir
 }
@@ -84,11 +84,14 @@ test_that("citation_bookdown returns error when index.Rmd missing", {
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
   # Create _bookdown.yml to make it a bookdown project
-  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml"))
+  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   # Create mock citation_meta object
   meta <- structure(
-    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(temp_dir, "index.Rmd", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -104,7 +107,7 @@ test_that("citation_bookdown processes valid bookdown project", {
   meta <- structure(
     list(
       get_type = "bookdown",
-      get_path = file.path(bookdown_dir, "index.Rmd")
+      get_path = file.path(bookdown_dir, "index.Rmd", fsep = "/")
     ),
     class = "citation_meta"
   )
@@ -125,7 +128,7 @@ test_that("citation_bookdown extracts title from YAML", {
   meta <- structure(
     list(
       get_type = "bookdown",
-      get_path = file.path(bookdown_dir, "index.Rmd")
+      get_path = file.path(bookdown_dir, "index.Rmd", fsep = "/")
     ),
     class = "citation_meta"
   )
@@ -142,7 +145,7 @@ test_that("citation_bookdown sets upload_type to publication", {
   meta <- structure(
     list(
       get_type = "bookdown",
-      get_path = file.path(bookdown_dir, "index.Rmd")
+      get_path = file.path(bookdown_dir, "index.Rmd", fsep = "/")
     ),
     class = "citation_meta"
   )
@@ -158,7 +161,7 @@ test_that("citation_bookdown handles publication_date", {
   meta <- structure(
     list(
       get_type = "bookdown",
-      get_path = file.path(bookdown_dir, "index.Rmd")
+      get_path = file.path(bookdown_dir, "index.Rmd", fsep = "/")
     ),
     class = "citation_meta"
   )
@@ -174,7 +177,7 @@ test_that("citation_bookdown handles embargo dates", {
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
   # Create _bookdown.yml
-  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml"))
+  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   # Create index.Rmd with embargo
   index_rmd <- "---
@@ -197,10 +200,13 @@ Test description.
 
 Content
 "
-  writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
+  writeLines(index_rmd, file.path(temp_dir, "index.Rmd", fsep = "/"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(temp_dir, "index.Rmd", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -216,7 +222,7 @@ test_that("citation_bookdown sets access_right to open when no embargo", {
   meta <- structure(
     list(
       get_type = "bookdown",
-      get_path = file.path(bookdown_dir, "index.Rmd")
+      get_path = file.path(bookdown_dir, "index.Rmd", fsep = "/")
     ),
     class = "citation_meta"
   )
@@ -230,7 +236,7 @@ test_that("citation_bookdown requires license", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
-  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml"))
+  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   index_rmd <- "---
 title: Book
@@ -247,10 +253,13 @@ Test description.
 
 Content
 "
-  writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
+  writeLines(index_rmd, file.path(temp_dir, "index.Rmd", fsep = "/"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(temp_dir, "index.Rmd", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -263,7 +272,7 @@ test_that("citation_bookdown handles subtitle", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
-  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml"))
+  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   index_rmd <- "---
 title: Main Title
@@ -285,10 +294,13 @@ Test description.
 
 Content
 "
-  writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
+  writeLines(index_rmd, file.path(temp_dir, "index.Rmd", fsep = "/"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(temp_dir, "index.Rmd", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -301,7 +313,7 @@ test_that("citation_bookdown handles shorttitle", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
-  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml"))
+  writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
   index_rmd <- "---
 title: A Very Long Book Title
@@ -323,10 +335,13 @@ Test description.
 
 Content
 "
-  writeLines(index_rmd, file.path(temp_dir, "index.Rmd"))
+  writeLines(index_rmd, file.path(temp_dir, "index.Rmd", fsep = "/"))
 
   meta <- structure(
-    list(get_type = "bookdown", get_path = file.path(temp_dir, "index.Rmd")),
+    list(
+      get_type = "bookdown",
+      get_path = file.path(temp_dir, "index.Rmd", fsep = "/")
+    ),
     class = "citation_meta"
   )
 

@@ -97,9 +97,13 @@ test_that("description_communities warns on missing communities", {
     ),
     "Description: A test package."
   )
-  writeLines(desc_content, file.path(temp_dir, "DESCRIPTION"))
+  writeLines(desc_content, file.path(temp_dir, "DESCRIPTION", fsep = "/"))
 
-  descript <- desc::description$new(file.path(temp_dir, "DESCRIPTION"))
+  descript <- desc::description$new(file.path(
+    temp_dir,
+    "DESCRIPTION",
+    fsep = "/"
+  ))
   org <- citeme::org_list$new()
 
   result <- citeme:::description_communities(descript, org)
@@ -130,9 +134,13 @@ test_that("description_communities requires org_list object", {
     ),
     "Description: A test package."
   )
-  writeLines(desc_content, file.path(temp_dir, "DESCRIPTION"))
+  writeLines(desc_content, file.path(temp_dir, "DESCRIPTION", fsep = "/"))
 
-  descript <- desc::description$new(file.path(temp_dir, "DESCRIPTION"))
+  descript <- desc::description$new(file.path(
+    temp_dir,
+    "DESCRIPTION",
+    fsep = "/"
+  ))
 
   expect_error(
     citeme:::description_communities(descript, "not_an_org_list"),

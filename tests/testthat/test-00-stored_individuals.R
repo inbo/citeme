@@ -38,7 +38,7 @@ test_that("stored_individuals reads existing individual.txt file", {
   )
   write.table(
     individuals,
-    file = file.path(temp_root, "individual.txt"),
+    file = file.path(temp_root, "individual.txt", fsep = "/"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"

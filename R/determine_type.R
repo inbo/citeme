@@ -29,7 +29,7 @@ determine_type <- function(path = ".") {
     return(c(quarto = path))
   }
   dirname(path[1]) |>
-    file.path(type) |>
+    file.path(type, fsep = "/") |>
     setNames(
       c(
         `_quarto.yml` = "quarto",

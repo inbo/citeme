@@ -9,8 +9,8 @@
 store_individuals <- function(x = ".") {
   current <- stored_individuals()
   current$ror <- ""
-  if (file.exists(file.path(x, "DESCRIPTION"))) {
-    this_desc <- description$new(file = file.path(x, "DESCRIPTION"))
+  if (file.exists(file.path(x, "DESCRIPTION", fsep = "/"))) {
+    this_desc <- description$new(file = file.path(x, "DESCRIPTION", fsep = "/"))
     this_desc$get_individuals() |>
       individual2df() |>
       cbind(usage = 1) |>
@@ -32,7 +32,7 @@ store_individuals <- function(x = ".") {
   ) |>
     write.table(
       file = R_user_dir("citeme", which = "data") |>
-        file.path("individual.txt"),
+        file.path("individual.txt", fsep = "/"),
       sep = "\t",
       row.names = FALSE,
       fileEncoding = "UTF8"
@@ -156,8 +156,8 @@ individual2df.person <- function(person) {
 #' @importFrom utils file_test read.table
 stored_individuals <- function() {
   root <- R_user_dir("citeme", which = "data")
-  if (file_test("-f", file.path(root, "individual.txt"))) {
-    file.path(root, "individual.txt") |>
+  if (file_test("-f", file.path(root, "individual.txt", fsep = "/"))) {
+    file.path(root, "individual.txt", fsep = "/") |>
       read.table(
         header = TRUE,
         sep = "\t",
@@ -166,8 +166,8 @@ stored_individuals <- function() {
     return(current)
   }
   root <- R_user_dir("checklist", which = "data")
-  if (file_test("-f", file.path(root, "author.txt"))) {
-    file.path(root, "author.txt") |>
+  if (file_test("-f", file.path(root, "author.txt", fsep = "/"))) {
+    file.path(root, "author.txt", fsep = "/") |>
       read.table(
         header = TRUE,
         sep = "\t",

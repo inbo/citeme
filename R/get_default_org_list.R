@@ -20,7 +20,7 @@ get_default_org_list <- function(x = ".") {
   if (!is.null(org)) {
     return(org)
   }
-  if (file.exists(file.path(x, "organisation.yml"))) {
+  if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
     return(org_list$new()$read(x))
   }
   return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))

@@ -24,10 +24,11 @@ test_that("determine_type validates path argument", {
 })
 
 test_that("determine_type identifies DESCRIPTION files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  desc_file <- file.path(temp_dir, "DESCRIPTION")
+  desc_file <- file.path(temp_dir, "DESCRIPTION", fsep = "/")
   writeLines("Package: test", desc_file)
   result <- citeme:::determine_type(desc_file)
   expect_equal(names(result), "description")
@@ -35,10 +36,11 @@ test_that("determine_type identifies DESCRIPTION files", {
 })
 
 test_that("determine_type identifies _quarto.yml files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  quarto_file <- file.path(temp_dir, "_quarto.yml")
+  quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   writeLines("project:\n  type: book", quarto_file)
   result <- citeme:::determine_type(quarto_file)
   expect_equal(names(result), "quarto")
@@ -46,11 +48,12 @@ test_that("determine_type identifies _quarto.yml files", {
 })
 
 test_that("determine_type identifies .qmd files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
 
-  qmd_file <- file.path(temp_dir, "chapter.qmd")
+  qmd_file <- file.path(temp_dir, "chapter.qmd", fsep = "/")
   writeLines("---\ntitle: Test\n---", qmd_file)
   result <- citeme:::determine_type(qmd_file)
   expect_equal(names(result), "quarto")
@@ -58,10 +61,11 @@ test_that("determine_type identifies .qmd files", {
 })
 
 test_that("determine_type identifies README.md files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  readme_file <- file.path(temp_dir, "README.md")
+  readme_file <- file.path(temp_dir, "README.md", fsep = "/")
   writeLines("# Test", readme_file)
   result <- citeme:::determine_type(readme_file)
   expect_equal(names(result), "readme")
@@ -69,10 +73,11 @@ test_that("determine_type identifies README.md files", {
 })
 
 test_that("determine_type identifies README.Rmd files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  readme_file <- file.path(temp_dir, "README.Rmd")
+  readme_file <- file.path(temp_dir, "README.Rmd", fsep = "/")
   writeLines("# Test", readme_file)
   result <- citeme:::determine_type(readme_file)
   expect_equal(names(result), "readme")
@@ -80,10 +85,11 @@ test_that("determine_type identifies README.Rmd files", {
 })
 
 test_that("determine_type identifies index.md as quarto", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  index_file <- file.path(temp_dir, "index.md")
+  index_file <- file.path(temp_dir, "index.md", fsep = "/")
   writeLines("# Book Title", index_file)
   result <- citeme:::determine_type(index_file)
   expect_equal(names(result), "quarto")
@@ -91,10 +97,11 @@ test_that("determine_type identifies index.md as quarto", {
 })
 
 test_that("determine_type identifies index.Rmd as quarto", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  index_file <- file.path(temp_dir, "index.Rmd")
+  index_file <- file.path(temp_dir, "index.Rmd", fsep = "/")
   writeLines("# Book Title", index_file)
   result <- citeme:::determine_type(index_file)
   expect_equal(names(result), "quarto")
@@ -102,19 +109,21 @@ test_that("determine_type identifies index.Rmd as quarto", {
 })
 
 test_that("determine_type errors on unsupported file type", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  unsupported <- file.path(temp_dir, "script.R")
+  unsupported <- file.path(temp_dir, "script.R", fsep = "/")
   writeLines("x <- 1", unsupported)
   expect_equal(citeme:::determine_type(unsupported), character(0))
 })
 
 test_that("determine_type finds DESCRIPTION in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  desc_file <- file.path(temp_dir, "DESCRIPTION")
+  desc_file <- file.path(temp_dir, "DESCRIPTION", fsep = "/")
   writeLines("Package: test", desc_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "description")
@@ -122,10 +131,11 @@ test_that("determine_type finds DESCRIPTION in directory", {
 })
 
 test_that("determine_type finds _quarto.yml in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  quarto_file <- file.path(temp_dir, "_quarto.yml")
+  quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   writeLines("project:\n  type: book", quarto_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "quarto")
@@ -133,10 +143,11 @@ test_that("determine_type finds _quarto.yml in directory", {
 })
 
 test_that("determine_type finds index.Rmd in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  index_file <- file.path(temp_dir, "index.Rmd")
+  index_file <- file.path(temp_dir, "index.Rmd", fsep = "/")
   writeLines("# Book", index_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "quarto")
@@ -144,10 +155,11 @@ test_that("determine_type finds index.Rmd in directory", {
 })
 
 test_that("determine_type finds index.md in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  index_file <- file.path(temp_dir, "index.md")
+  index_file <- file.path(temp_dir, "index.md", fsep = "/")
   writeLines("# Book", index_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "quarto")
@@ -155,10 +167,11 @@ test_that("determine_type finds index.md in directory", {
 })
 
 test_that("determine_type finds README.Rmd in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  readme_file <- file.path(temp_dir, "README.Rmd")
+  readme_file <- file.path(temp_dir, "README.Rmd", fsep = "/")
   writeLines("# README", readme_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "readme")
@@ -166,10 +179,11 @@ test_that("determine_type finds README.Rmd in directory", {
 })
 
 test_that("determine_type finds README.md in directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  readme_file <- file.path(temp_dir, "README.md")
+  readme_file <- file.path(temp_dir, "README.md", fsep = "/")
   writeLines("# README", readme_file)
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "readme")
@@ -177,41 +191,45 @@ test_that("determine_type finds README.md in directory", {
 })
 
 test_that("determine_type errors on empty directory", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   expect_equal(citeme:::determine_type(temp_dir), character(0))
 })
 
 test_that("determine_type prioritises quarto over other files", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   # Create multiple file types
-  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION"))
-  writeLines("# README", file.path(temp_dir, "README.md"))
-  writeLines("project:", file.path(temp_dir, "_quarto.yml"))
+  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
+  writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
+  writeLines("project:", file.path(temp_dir, "_quarto.yml", fsep = "/"))
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "quarto")
 })
 
 test_that("determine_type prioritises index over DESCRIPTION and README", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION"))
-  writeLines("# README", file.path(temp_dir, "README.md"))
-  writeLines("# Index", file.path(temp_dir, "index.Rmd"))
+  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
+  writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
+  writeLines("# Index", file.path(temp_dir, "index.Rmd", fsep = "/"))
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "quarto")
 })
 
 test_that("determine_type prioritises DESCRIPTION over README.md", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION"))
-  writeLines("# README", file.path(temp_dir, "README.md"))
+  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
+  writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
   result <- citeme:::determine_type(temp_dir)
   expect_equal(names(result), "description")
 })
@@ -268,10 +286,11 @@ test_that("find_individual_insert recognises all role types", {
 # Tests for get_yaml_header() -------------------------------------------------
 
 test_that("get_yaml_header reads _quarto.yml file", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  quarto_file <- file.path(temp_dir, "_quarto.yml")
+  quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   writeLines(
     c(
       "project:",
@@ -289,10 +308,11 @@ test_that("get_yaml_header reads _quarto.yml file", {
 })
 
 test_that("get_yaml_header reads .qmd file with YAML front matter", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  qmd_file <- file.path(temp_dir, "chapter.qmd")
+  qmd_file <- file.path(temp_dir, "chapter.qmd", fsep = "/")
   writeLines(
     c(
       "---",
@@ -314,10 +334,11 @@ test_that("get_yaml_header reads .qmd file with YAML front matter", {
 })
 
 test_that("get_yaml_header preserves pre and post content", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  qmd_file <- file.path(temp_dir, "test.qmd")
+  qmd_file <- file.path(temp_dir, "test.qmd", fsep = "/")
   writeLines(
     c(
       "<!-- comment before -->",
@@ -334,10 +355,11 @@ test_that("get_yaml_header preserves pre and post content", {
 })
 
 test_that("get_yaml_header errors without YAML delimiters", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  bad_file <- file.path(temp_dir, "bad.qmd")
+  bad_file <- file.path(temp_dir, "bad.qmd", fsep = "/")
   writeLines(c("No YAML here", "Just content"), bad_file)
   expect_error(
     citeme:::get_yaml_header(bad_file),
@@ -348,10 +370,11 @@ test_that("get_yaml_header errors without YAML delimiters", {
 # Tests for write_yaml_header() -----------------------------------------------
 
 test_that("write_yaml_header writes _quarto.yml file", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  quarto_file <- file.path(temp_dir, "_quarto.yml")
+  quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   header <- list(project = list(type = "book"), title = "New Book")
   attr(header, "path") <- quarto_file
   citeme:::write_yaml_header(header)
@@ -361,10 +384,11 @@ test_that("write_yaml_header writes _quarto.yml file", {
 })
 
 test_that("write_yaml_header writes .qmd file with pre/post content", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  qmd_file <- file.path(temp_dir, "test.qmd")
+  qmd_file <- file.path(temp_dir, "test.qmd", fsep = "/")
   header <- list(title = "Updated Title")
   attr(header, "path") <- qmd_file
   attr(header, "pre") <- "<!-- pre -->"
@@ -469,10 +493,11 @@ test_that("individual2list excludes empty strings", {
 # Tests for add_individual() --------------------------------------------------
 
 test_that("add_individual validates role argument", {
-  temp_dir <- tempfile("citeme_test")
+  tempfile("citeme_test") |>
+    normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION"))
+  writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
   expect_error(
     citeme::add_individual(temp_dir, role = "invalid"),
     "'arg' should be one of"

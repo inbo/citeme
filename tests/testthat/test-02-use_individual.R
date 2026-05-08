@@ -239,10 +239,10 @@ test_that("new_individual writes individual.txt file", {
       lang = "en"
     )
   )
-  expect_true(file.exists(file.path(temp_root, "individual.txt")))
+  expect_true(file.exists(file.path(temp_root, "individual.txt", fsep = "/")))
   # Read the file and check content
   saved <- read.table(
-    file.path(temp_root, "individual.txt"),
+    file.path(temp_root, "individual.txt", fsep = "/"),
     sep = "\t",
     header = TRUE,
     fileEncoding = "UTF8"
@@ -307,7 +307,7 @@ test_that("update_individual saves changes on save and exit", {
     )
   )
   # File should be written
-  expect_true(file.exists(file.path(temp_root, "individual.txt")))
+  expect_true(file.exists(file.path(temp_root, "individual.txt", fsep = "/")))
 })
 
 test_that("update_individual updates given name", {

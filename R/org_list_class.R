@@ -210,10 +210,10 @@ org_list <- R6Class(
         "`x` is not a string" = length(x) == 1,
         "`x` is not an existing directory" = file_test("-d", x)
       )
-      if (!file.exists(file.path(x, "organisation.yml"))) {
+      if (!file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
         return(git_org(x))
       }
-      file.path(x, "organisation.yml") |>
+      file.path(x, "organisation.yml", fsep = "/") |>
         read_yaml() -> yaml
       stopifnot(
         "old style `organisation.yml` detected" = any(
@@ -298,12 +298,12 @@ org_list <- R6Class(
         git = private$git,
         yaml
       ) |>
-        write_yaml(file = file.path(x, "organisation.yml"))
+        write_yaml(file = file.path(x, "organisation.yml", fsep = "/"))
       if (!license) {
-        return(file.path(x, "organisation.yml"))
+        return(file.path(x, "organisation.yml", fsep = "/"))
       }
       download_licenses(self$get_listed_licenses, x)
-      return(file.path(x, "organisation.yml"))
+      return(file.path(x, "organisation.yml", fsep = "/"))
     }
   ),
   active = list(
@@ -720,7 +720,7 @@ ol_select_relevant_org <- function(
 
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
-    if (file.exists(file.path(x, "organisation.yml"))) {
+    if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
       return(org_list$new()$read(x))
     }
     return(org_list$new(org_item$new(email = "info@inbo.be")))
@@ -737,8 +737,8 @@ git_org <- function(x = ".") {
   gsub("https://", "", url) |>
     tolower() -> config_name
   R_user_dir("citeme", "config") |>
-    file.path(config_name) -> config_path
-  if (file.exists(file.path(config_path, "organisation.yml"))) {
+    file.path(config_name, fsep = "/") -> config_path
+  if (file.exists(file.path(config_path, "organisation.yml", fsep = "/"))) {
     org <- org_list$new()$read(config_path)
     org$write(x)
     return(org)
@@ -751,7 +751,7 @@ git_org <- function(x = ".") {
     url,
     "/citeme doesn't exists."
   )
-  if (file.exists(file.path(x, "organisation.yml"))) {
+  if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
     return(org_list$new()$read(x))
   }
   return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))
@@ -916,7 +916,7 @@ download_licenses <- function(listed_licenses, x) {
       FUN = function(z, x) {
         download.file(
           url = z["remote_file"],
-          destfile = file.path(x, z["local_file"]),
+          destfile = file.path(x, z["local_file"], fsep = "/"),
           quiet = TRUE,
           mode = "wb"
         )

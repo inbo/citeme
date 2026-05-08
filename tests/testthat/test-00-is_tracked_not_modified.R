@@ -11,7 +11,7 @@ test_that("is_tracked_not_modified returns TRUE for non-repository", {
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   # Create a file in the temp directory
-  temp_file <- file.path(temp_dir, "test.txt")
+  temp_file <- file.path(temp_dir, "test.txt", fsep = "/")
   writeLines("test", temp_file)
   # Should return TRUE since no repository found
   expect_true(is_tracked_not_modified("test.txt", repo = temp_dir))
@@ -27,12 +27,12 @@ test_that("is_tracked_not_modified returns FALSE for untracked file", {
   gert::git_config_set("user.name", "Test User", repo = temp_repo)
   gert::git_config_set("user.email", "test@example.org", repo = temp_repo)
   # Create and commit a file
-  tracked_file <- file.path(temp_repo, "tracked.txt")
+  tracked_file <- file.path(temp_repo, "tracked.txt", fsep = "/")
   writeLines("tracked content", tracked_file)
   gert::git_add("tracked.txt", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)
   # Create an untracked file
-  untracked_file <- file.path(temp_repo, "untracked.txt")
+  untracked_file <- file.path(temp_repo, "untracked.txt", fsep = "/")
   writeLines("untracked content", untracked_file)
   # Test untracked file
   expect_false(is_tracked_not_modified("untracked.txt", repo = temp_repo))
@@ -48,7 +48,7 @@ test_that("is_tracked_not_modified returns TRUE for tracked unmodified file", {
   gert::git_config_set("user.name", "Test User", repo = temp_repo)
   gert::git_config_set("user.email", "test@example.org", repo = temp_repo)
   # Create and commit a file
-  tracked_file <- file.path(temp_repo, "tracked.txt")
+  tracked_file <- file.path(temp_repo, "tracked.txt", fsep = "/")
   writeLines("tracked content", tracked_file)
   gert::git_add("tracked.txt", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)
@@ -66,7 +66,7 @@ test_that("is_tracked_not_modified returns FALSE for modified file", {
   gert::git_config_set("user.name", "Test User", repo = temp_repo)
   gert::git_config_set("user.email", "test@example.org", repo = temp_repo)
   # Create and commit a file
-  tracked_file <- file.path(temp_repo, "tracked.txt")
+  tracked_file <- file.path(temp_repo, "tracked.txt", fsep = "/")
   writeLines("tracked content", tracked_file)
   gert::git_add("tracked.txt", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)

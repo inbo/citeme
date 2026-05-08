@@ -1,6 +1,6 @@
 test_that("is_repository returns FALSE for non-git directory", {
   temp_dir <- tempdir()
-  non_git_dir <- file.path(temp_dir, "test_non_git")
+  non_git_dir <- file.path(temp_dir, "test_non_git", fsep = "/")
   dir.create(non_git_dir, showWarnings = FALSE)
   on.exit(unlink(non_git_dir, recursive = TRUE))
 

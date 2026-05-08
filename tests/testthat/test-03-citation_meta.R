@@ -11,7 +11,7 @@ test_that("citation_meta initialises with valid project path", {
     "Description: This is a description.",
     "License: MIT"
   ) |>
-    writeLines(file.path(tmp_description, "DESCRIPTION"))
+    writeLines(file.path(tmp_description, "DESCRIPTION", fsep = "/"))
   # Suppress expected warnings about missing citation metadata
   meta <- suppressWarnings(citation_meta$new(tmp_description))
   expect_s3_class(meta, "citation_meta")

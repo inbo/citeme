@@ -76,7 +76,7 @@ create_temp_quarto <- function(
     quarto_yml <- yaml_content
   }
 
-  yaml::write_yaml(quarto_yml, file.path(temp_dir, "_quarto.yml"))
+  yaml::write_yaml(quarto_yml, file.path(temp_dir, "_quarto.yml", fsep = "/"))
 
   # Create index.qmd with description
   index_qmd <- "# Introduction
@@ -87,7 +87,7 @@ This is a test quarto project description for testing purposes.
 
 Content here.
 "
-  writeLines(index_qmd, file.path(temp_dir, "index.qmd"))
+  writeLines(index_qmd, file.path(temp_dir, "index.qmd", fsep = "/"))
 
   temp_dir
 }
@@ -213,12 +213,12 @@ test_that("citation_quarto returns error when license missing", {
     lang = "en-GB",
     author = list(list(name = list(given = "John", family = "Doe")))
   )
-  yaml::write_yaml(yaml_content, file.path(temp_dir, "_quarto.yml"))
+  yaml::write_yaml(yaml_content, file.path(temp_dir, "_quarto.yml", fsep = "/"))
 
   # Create index.qmd with description
   writeLines(
     "<!-- description: start -->\nTest\n<!-- description: end -->",
-    file.path(temp_dir, "index.qmd")
+    file.path(temp_dir, "index.qmd", fsep = "/")
   )
 
   meta <- structure(
@@ -297,7 +297,7 @@ test_that("citation_quarto notes missing keywords", {
   quarto_dir <- create_temp_quarto(keywords = NULL)
 
   # Manually remove keywords from the yml
-  yaml_file <- file.path(quarto_dir, "_quarto.yml")
+  yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$keywords <- NULL
   yaml::write_yaml(yaml_content, yaml_file)
@@ -315,7 +315,7 @@ test_that("citation_quarto notes missing publisher", {
   quarto_dir <- create_temp_quarto(publisher = NULL)
 
   # Manually remove publisher from the yml
-  yaml_file <- file.path(quarto_dir, "_quarto.yml")
+  yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$publisher <- NULL
   yaml::write_yaml(yaml_content, yaml_file)
@@ -345,7 +345,7 @@ test_that("citation_quarto notes missing publication_type", {
   quarto_dir <- create_temp_quarto(publication_type = NULL)
 
   # Manually remove publication_type from the yml
-  yaml_file <- file.path(quarto_dir, "_quarto.yml")
+  yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$publication_type <- NULL
   yaml::write_yaml(yaml_content, yaml_file)
@@ -435,7 +435,7 @@ This is the description text.
 
 Other content.
 "
-  writeLines(qmd_content, file.path(temp_dir, "index.qmd"))
+  writeLines(qmd_content, file.path(temp_dir, "index.qmd", fsep = "/"))
 
   result <- citeme:::quarto_description(temp_dir)
   expect_equal(result$description, "This is the description text.")
@@ -447,7 +447,10 @@ test_that("quarto_description returns error when no description found", {
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
 
   # Create a qmd file without description markers
-  writeLines("# Title\n\nSome content.", file.path(temp_dir, "index.qmd"))
+  writeLines(
+    "# Title\n\nSome content.",
+    file.path(temp_dir, "index.qmd", fsep = "/")
+  )
 
   result <- citeme:::quarto_description(temp_dir)
   expect_true(any(grepl("No description found", result$errors)))
@@ -455,7 +458,7 @@ test_that("quarto_description returns error when no description found", {
 
 test_that("quarto_description searches recursively", {
   temp_dir <- tempfile()
-  dir.create(file.path(temp_dir, "chapters"), recursive = TRUE)
+  dir.create(file.path(temp_dir, "chapters", fsep = "/"), recursive = TRUE)
 
   # Create a qmd file in subdirectory with description
   qmd_content <- "# Chapter
@@ -464,7 +467,10 @@ test_that("quarto_description searches recursively", {
 Chapter description.
 <!-- description: end -->
 "
-  writeLines(qmd_content, file.path(temp_dir, "chapters", "chapter1.qmd"))
+  writeLines(
+    qmd_content,
+    file.path(temp_dir, "chapters", "chapter1.qmd", fsep = "/")
+  )
 
   result <- citeme:::quarto_description(temp_dir)
   expect_equal(result$description, "Chapter description.")

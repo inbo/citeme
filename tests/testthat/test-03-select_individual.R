@@ -11,7 +11,7 @@ test_that("select_individual() returns correct individual", {
   )
   root <- mock_r_user_dir(config_dir)("citeme", which = "data")
   dir.create(root, recursive = TRUE, showWarnings = FALSE)
-  file.path(root, "individual.txt") |>
+  file.path(root, "individual.txt", fsep = "/") |>
     write.table(
       x = new_person,
       sep = "\t",

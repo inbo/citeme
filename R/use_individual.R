@@ -73,14 +73,14 @@ select_individual <- function(email, lang) {
   current$usage[selected] <- pmax(current$usage[selected], 0) + 1
   write.table(
     current,
-    file = file.path(root, "individual.txt"),
+    file = file.path(root, "individual.txt", fsep = "/"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
   message(
     "individual information stored at ",
-    file.path(root, "individual.txt")
+    file.path(root, "individual.txt", fsep = "/")
   )
   aff <- org$get_name_by_domain(current$email[selected], lang = lang)
   if (length(aff) == 1) {
@@ -127,14 +127,14 @@ update_individual <- function(current, selected, root, org, lang) {
   }
   write.table(
     current,
-    file = file.path(root, "individual.txt"),
+    file = file.path(root, "individual.txt", fsep = "/"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
   message(
     "individual information stored at ",
-    file.path(root, "individual.txt")
+    file.path(root, "individual.txt", fsep = "/")
   )
   return(current)
 }
@@ -178,14 +178,14 @@ new_individual <- function(current, root, org, lang) {
   rbind(current, extra) -> current
   write.table(
     current,
-    file = file.path(root, "individual.txt"),
+    file = file.path(root, "individual.txt", fsep = "/"),
     sep = "\t",
     row.names = FALSE,
     fileEncoding = "UTF8"
   )
   message(
     "individual information stored at ",
-    file.path(root, "individual.txt")
+    file.path(root, "individual.txt", fsep = "/")
   )
   return(current)
 }

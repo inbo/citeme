@@ -4,7 +4,7 @@
 citation_quarto <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "quarto")
-  index_file <- file.path(meta$get_path, "_quarto.yml")
+  index_file <- file.path(meta$get_path, "_quarto.yml", fsep = "/")
   if (!file_test("-f", index_file)) {
     return(
       list(

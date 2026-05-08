@@ -1,0 +1,409 @@
+---
+title: "Interactive Input and Validation"
+vignette: >
+  %\VignetteIndexEntry{Interactive Input and Validation}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+The `citeme` package provides functions for interactive user input and
+validation of common data types used in citation metadata.
+These functions ensure data quality by validating user input against
+established formats and standards.
+
+## Interactive Input Functions
+
+### Yes/No Questions
+
+The `ask_yes_no()` function provides a simple interface for yes/no questions
+with validation.
+
+```{r}
+library(citeme)
+```
+
+```{r eval=FALSE}
+# Ask a yes/no question with default answer
+answer <- ask_yes_no("Do you want to continue?", default = TRUE)
+
+# Custom prompts
+answer <- ask_yes_no(
+  "Overwrite existing file?",
+  default = FALSE,
+  prompts = c("Yes", "No", "Cancel")
+)
+```
+
+The function:
+
+- Wraps `utils::askYesNo()` with additional validation
+- Repeats the question until a valid answer is given
+- Returns the default value in non-interactive sessions
+- Handles invalid input gracefully with informative warnings
+
+### ORCID Identifiers
+
+The `ask_orcid()` function prompts for an
+[`ORCID iD`](https://orcid.org/), a unique persistent identifier for researchers.
+
+```{r eval=FALSE}
+# Ask for an ORCID iD
+orcid <- ask_orcid()
+
+# Custom prompt
+orcid <- ask_orcid(prompt = "Enter your ORCID: ")
+
+# Empty strings are allowed (optional ORCID)
+# Valid format: 0000-0000-0000-0000 (last digit can be X)
+```
+
+The function:
+
+- Validates the ORCID format using `validate_orcid()`
+- Allows empty strings for optional ORCID identifiers
+- Repeats the prompt until valid input is provided
+- Checks both format and checksum validity
+
+### ROR Identifiers
+
+The `ask_ror()` function prompts for a
+[ROR identifier](https://ror.org/), which uniquely identifies research
+organisations.
+
+```{r eval=FALSE}
+# Ask for a ROR identifier
+ror <- ask_ror()
+
+# Valid format: https://ror.org/0abcd1234
+```
+
+The function:
+
+- Validates the ROR format using `validate_ror()`
+- Ensures the identifier starts with `https://ror.org/`
+- Checks the checksum component
+- Repeats the prompt until valid input is provided
+
+### Email Addresses
+
+The `ask_email()` function prompts for an email address with format validation.
+
+```{r eval=FALSE}
+# Ask for an email address
+email <- ask_email()
+
+# Custom prompt
+email <- ask_email(prompt = "Contact email: ")
+```
+
+The function:
+
+- Validates email format using `validate_email()`
+- Checks for proper structure (local@domain)
+- Does not verify whether the address exists
+- Repeats the prompt until valid format is provided
+
+### URLs
+
+The `ask_url()` function prompts for a URL with validation.
+
+```{r eval=FALSE}
+# Ask for a URL
+url <- ask_url("Please enter the website URL: ")
+
+# The URL must start with http:// or https://
+```
+
+The function:
+
+- Validates URL format using `validate_url()`
+- Requires `http://` or `https://` prefix
+- Repeats the prompt until valid input is provided
+
+### Language Codes
+
+The `ask_language()` function prompts for a language code following the
+[BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) standard.
+
+```{r eval=FALSE}
+# Ask for a language code
+# The list of options is based on the languages used in the `org_list` object
+# The user can add another language code if needed
+lang <- ask_language(org = inbo_org_list())
+```
+
+The function:
+
+- Validates against BCP 47 standard using `validate_language()`
+- Accepts codes like `"en-GB"`, `"nl-BE"`, `"fr-FR"`
+- Repeats the prompt until valid input is provided
+
+### Licenses
+
+The `ask_new_license()` function helps select or add a license for a project.
+
+```{r eval=FALSE}
+# Interactive license selection
+org <- inbo_org_list()
+license <- ask_new_license(org$get_listed_licenses)
+
+# The function:
+# 1. Lists available licenses
+# 2. Allows selection or addition of new license
+# 3. Validates the selection
+```
+
+### Menu Selection
+
+The `menu_first()` function provides an interactive menu with the first option
+as default.
+When used in a non-interactive session, it returns the index of the first option.
+
+```{r eval=FALSE}
+# Create a menu
+choices <- c("Option A", "Option B", "Option C")
+selection <- menu_first(choices, title = "Select an option:")
+
+# Returns the index of the selected option
+# The first option is highlighted as default
+```
+
+## Validation Functions
+
+All validation functions return logical vectors indicating whether each element
+passes validation.
+They are designed to work with vectors, making them suitable for batch
+validation.
+
+### ORCID Validation
+
+The `validate_orcid()` function checks both format and checksum of ORCID
+identifiers.
+
+```{r}
+# Validate ORCID identifiers
+orcids <- c(
+  "0000-0001-2345-6789",
+  "0000-0002-3456-789X",
+  "invalid-orcid",
+  ""
+)
+validate_orcid(orcids)
+```
+
+The function:
+
+- Checks format: `0000-0000-0000-0000` (last digit can be X)
+- Validates checksum using modulo 11 algorithm
+- Accepts empty strings
+- Works with character vectors
+
+### ROR Validation
+
+The `validate_ror()` function checks ROR identifier format and checksum.
+
+```{r}
+# Validate ROR identifiers
+validate_ror("02catss52")
+validate_ror("https://ror.org/02catss52")
+validate_ror("not-a-ror")
+```
+
+The function:
+
+- Validates the identifier structure
+- Checks the checksum component
+- Works with character vectors
+
+### Email Validation
+
+The `validate_email()` function checks email address format.
+
+```{r}
+# Validate email addresses
+emails <- c(
+  "user@example.com",
+  "firstname.lastname@domain.co.uk",
+  "invalid.email",
+  "@example.com"
+)
+validate_email(emails)
+# Returns logical vector indicating validity
+```
+
+The function:
+
+- Uses comprehensive regex pattern from https://emailregex.com
+- Checks local and domain parts
+- Handles complex email formats
+- Does not verify whether addresses exist
+- Works with character vectors
+
+### URL Validation
+
+The `validate_url()` function checks URL format.
+
+```{r}
+# Validate URLs
+validate_url("https://example.com")
+validate_url("http://subdomain.example.org/path")
+validate_url("ftp://example.com") # Invalid (ftp not allowed)
+validate_url("not-a-url")
+```
+
+The function:
+
+- Requires `http://` or `https://` prefix
+- Works on a string
+- Does not verify whether URLs are accessible
+
+### Language Code Validation
+
+The `validate_language()` function checks language codes against BCP 47
+standard.
+
+```{r}
+#| error: true
+# Validate language codes
+validate_language("en-GB")
+validate_language("nl-BE")
+validate_language("en")
+validate_language("invalid")
+# Returns logical vector indicating validity
+```
+
+The function:
+
+- Validates against BCP 47 standard
+- Accepts language-region combinations
+- Works with character vectors
+
+## Integration with Interactive Functions
+
+The validation functions are automatically used by the interactive input
+functions to ensure data quality.
+You can also use them independently for batch validation or custom workflows.
+
+```{r eval=FALSE}
+# Batch validate ORCIDs from a data frame
+contributors$valid_orcid <- validate_orcid(contributors$orcid)
+
+# Filter to valid entries
+valid_contributors <- contributors[contributors$valid_orcid, ]
+
+# Batch validate emails
+valid_emails <- contributors$email[validate_email(contributors$email)]
+```
+
+## Non-Interactive Behaviour
+
+All interactive input functions (`ask_*`) have sensible behaviour in
+non-interactive sessions:
+
+- `ask_yes_no()` returns the default value
+- Other `ask_*` functions require pre-validated input or will fail
+
+This allows you to use these functions in scripts and automated workflows:
+
+```{r eval=FALSE}
+# In a non-interactive script
+if (interactive()) {
+  email <- ask_email()
+} else {
+  email <- Sys.getenv("USER_EMAIL")
+  stopifnot(validate_email(email))
+}
+```
+
+## Error Handling
+
+The validation functions provide clear feedback when validation fails:
+
+```{r eval=FALSE}
+# Invalid ORCID will trigger warning and re-prompt
+orcid <- ask_orcid()
+# User enters: "1234-5678"
+# Warning: Please provide a valid ORCiD in the format `0000-0000-0000-0000`
+
+# Invalid email will trigger warning and re-prompt
+email <- ask_email()
+# User enters: "not-an-email"
+# Warning: Please provide a valid email address
+```
+
+## Best Practices
+
+1. **Use validation functions early**: Validate input as soon as possible to
+   provide immediate feedback.
+
+2. **Batch validation**: Use validation functions on vectors for efficient
+   data cleaning.
+
+3. **Clear prompts**: Provide informative prompts that explain the expected
+   format.
+
+4. **Handle optional fields**: Use empty string checks for optional
+   identifiers like ORCID.
+
+5. **Non-interactive fallbacks**: Always provide fallbacks for non-interactive
+   sessions.
+
+6. **Combine validators**: Use multiple validation functions for complex data
+   requirements.
+
+## Common Patterns
+
+### Validating User Input
+
+```{r eval=FALSE}
+# Pattern: Validate before storing
+if (interactive()) {
+  email <- ask_email()
+} else {
+  email <- config$email
+}
+stopifnot("Invalid email" = validate_email(email))
+```
+
+### Cleaning Existing Data
+
+```{r eval=FALSE}
+# Pattern: Clean and filter data frame
+data$valid_orcid <- validate_orcid(data$orcid)
+data$valid_email <- validate_email(data$email)
+
+clean_data <- data[data$valid_orcid & data$valid_email, ]
+```
+
+### Optional Fields
+
+```{r eval=FALSE}
+# Pattern: Handle optional ORCID
+orcid <- ask_orcid() # Empty string is valid
+if (orcid != "") {
+  # Use ORCID
+  person_comment <- c(ORCID = orcid)
+}
+```
+
+### Batch Processing
+
+```{r eval=FALSE}
+# Pattern: Validate and report issues
+contributors <- read.csv("contributors.csv")
+invalid_emails <- contributors$email[!validate_email(contributors$email)]
+
+if (length(invalid_emails) > 0) {
+  warning(
+    "Invalid emails found:\n",
+    paste(invalid_emails, collapse = "\n")
+  )
+}
+```
+
+## Related Functions
+
+For information about managing individual contributor information, see `vignette("individuals")`.
+For organisation-level configuration, see `vignette("organisations")`.

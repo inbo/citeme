@@ -29,7 +29,7 @@ add_badges(readme_path = ".", ...)
 }
 }
 \seealso{
-Other utils: 
-\code{\link{coalesce}()}
+Other utils:
+\code{\link[=coalesce]{coalesce()}}
 }
 \concept{utils}

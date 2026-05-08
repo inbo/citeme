@@ -7,90 +7,90 @@
 A class containing a single organisation
 }
 \seealso{
-Other class: 
+Other class:
 \code{\link{citation_meta}},
 \code{\link{org_list}}
 }
 \concept{class}
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{as_list}}{The organisation as a list.}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{as_list}}{The organisation as a list.}
 
-\item{\code{get_zenodo}}{The organisation Zenodo community.}
+    \item{\code{get_zenodo}}{The organisation Zenodo community.}
 
-\item{\code{get_default_name}}{The organisation default name.}
+    \item{\code{get_default_name}}{The organisation default name.}
 
-\item{\code{get_email}}{The organisation email.}
+    \item{\code{get_email}}{The organisation email.}
 
-\item{\code{get_funder}}{The funder rules.}
+    \item{\code{get_funder}}{The funder rules.}
 
-\item{\code{get_name}}{The organisation names.}
+    \item{\code{get_publisher}}{The publisher rules.}
 
-\item{\code{get_orcid}}{The ORCID rules.}
+    \item{\code{get_name}}{The organisation names.}
 
-\item{\code{get_rightsholder}}{The rightsholder rules.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{get_orcid}}{The ORCID rules.}
+
+    \item{\code{get_rightsholder}}{The rightsholder rules.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-org_item-new}{\code{org_item$new()}}
-\item \href{#method-org_item-as_person}{\code{org_item$as_person()}}
-\item \href{#method-org_item-compare_by_name}{\code{org_item$compare_by_name()}}
-\item \href{#method-org_item-get_license}{\code{org_item$get_license()}}
-\item \href{#method-org_item-get_pkgdown}{\code{org_item$get_pkgdown()}}
-\item \href{#method-org_item-print}{\code{org_item$print()}}
-\item \href{#method-org_item-clone}{\code{org_item$clone()}}
-}
+  \itemize{
+    \item \href{#method-org_item-initialize}{\code{org_item$new()}}
+    \item \href{#method-org_item-as_person}{\code{org_item$as_person()}}
+    \item \href{#method-org_item-compare_by_name}{\code{org_item$compare_by_name()}}
+    \item \href{#method-org_item-get_license}{\code{org_item$get_license()}}
+    \item \href{#method-org_item-get_pkgdown}{\code{org_item$get_pkgdown()}}
+    \item \href{#method-org_item-print}{\code{org_item$print()}}
+    \item \href{#method-org_item-clone}{\code{org_item$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-org_item-new"></a>}}
-\if{latex}{\out{\hypertarget{method-org_item-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new \code{org_item} object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$new(
+\if{html}{\out{<a id="method-org_item-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-org_item-initialize}{}}}
+\subsection{\code{org_item$new()}}{
+  Initialize a new \code{org_item} object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$new(
   name,
   email,
   orcid = FALSE,
   rightsholder = c("optional", "single", "shared", "when no other"),
   funder = c("optional", "single", "shared", "when no other"),
+  publisher = c("optional", "single", "shared", "when no other"),
   license = list(package = c(`GPL-3.0` =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/gplv3.md", sep = "/"), MIT =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/mit.md", sep = "/")), project = c(`CC BY 4.0` =
-    paste("https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-    "inst/generic_template/cc_by_4_0.md", sep = "/")), data = c(CC0 =
-    paste("https://raw.githubusercontent.com/inbo/checklist",
-    "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template", 
-     "cc0.md", sep
-    = "/"))),
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/gplv3.md", sep = "/"), MIT =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/mit.md", sep = "/")), project = c(`CC BY 4.0` =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/cc_by_4_0.md", sep = "/")), data = c(CC0 =
+    paste("https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+    "inst/licenses/cc0.md", 
+     sep = "/"))),
   ror = "",
   zenodo = "",
   website = "",
   logo = ""
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{A named vector with the organisation names in one or more
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{A named vector with the organisation names in one or more
 languages.
 The first item in the vector is the default language.
 The names of the vector must match the language code.}
-
-\item{\code{email}}{An email address for the organisation.
+      \item{\code{email}}{An email address for the organisation.
 Used to contact the organisation.
 And used to detect if a person is affiliated with the organisation.}
-
-\item{\code{orcid}}{Whether the organisation requires an ORCID for every person
+      \item{\code{orcid}}{Whether the organisation requires an ORCID for every person
 that uses this organisation as affiliation.}
-
-\item{\code{rightsholder}}{The required copyright holder status for the
+      \item{\code{rightsholder}}{The required copyright holder status for the
 organisation.
 \code{"optional"} means that the organisation is not required as the copyright
 holder.
@@ -99,11 +99,11 @@ holder.
 holders.
 \code{"when no other"} means that if no other copyright holder is specified,
 the organisation must be the copyright holder.}
-
-\item{\code{funder}}{The required funder status for the organisation.
+      \item{\code{funder}}{The required funder status for the organisation.
 The categories are the same as for \code{rightsholder}.}
-
-\item{\code{license}}{A list with the allowed licenses by the organisation.
+      \item{\code{publisher}}{The required publisher status for the organisation.
+The categories are the same as for \code{rightsholder}.}
+      \item{\code{license}}{A list with the allowed licenses by the organisation.
 The list may contain the following items:
 \code{package}, \code{project}, and \code{data}.
 Every item must be a named character vector with the allowed licenses.
@@ -116,125 +116,136 @@ require a specific license for that item.
 \code{package} defaults to \code{c("GPL-3.0", "MIT")}.
 \code{project} defaults to \code{"CC BY 4.0"}.
 \code{data} defaults to \code{"CC0 1.0"}.}
-
-\item{\code{ror}}{The optional ROR ID of the organisation.}
-
-\item{\code{zenodo}}{The optional Zenodo community ID of the organisation.}
-
-\item{\code{website}}{The optional website URL of the organisation.}
-
-\item{\code{logo}}{The optional logo URL of the organisation.}
+      \item{\code{ror}}{The optional ROR ID of the organisation.}
+      \item{\code{zenodo}}{The optional Zenodo community ID of the organisation.}
+      \item{\code{website}}{The optional website URL of the organisation.}
+      \item{\code{logo}}{The optional logo URL of the organisation.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-as_person"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-as_person}{}}}
-\subsection{Method \code{as_person()}}{
-as_person The organisation as a person.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$as_person(lang = names(private$name)[1], role = c("cph", "fnd"))}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{lang}}{The language to use for the organisation name.
+\subsection{\code{org_item$as_person()}}{
+  as_person The organisation as a person.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$as_person(
+  lang = names(private$name)[1],
+  role = c("cph", "fnd", "pbl")
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{lang}}{The language to use for the organisation name.
 Defaults to the first language in the \code{name} vector.}
+      \item{\code{role}}{The role of the person in the organisation.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{role}}{The role of the person in the organisation.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-compare_by_name"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-compare_by_name}{}}}
-\subsection{Method \code{compare_by_name()}}{
-Compares the number of matching words with the organisation
+\subsection{\code{org_item$compare_by_name()}}{
+  Compares the number of matching words with the organisation
 name.
 Either \code{Inf} when there is a perfect match.
 Otherwise a number between 0 and 1 indicating the ratio of the matching
 words with the total number of words in \code{name}.
 A value of 1 means that all words in \code{name} are present in one of the
 organisation names but in a different order.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$compare_by_name(name)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$compare_by_name(name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{The name to match.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{The name to match.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-get_license"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-get_license}{}}}
-\subsection{Method \code{get_license()}}{
-Get the organisation license.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$get_license(type = c("package", "project", "data", "all"))}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{type}}{The type of license to get.
+\subsection{\code{org_item$get_license()}}{
+  Get the organisation license.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$get_license(type = c("package", "project", "data", "all"))}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{type}}{The type of license to get.
 Can be one of \code{"package"}, \code{"project"}, or \code{"data"}.
 Defaults to \code{"package"}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A named character vector with the allowed licenses.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A named character vector with the allowed licenses.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-get_pkgdown"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-get_pkgdown}{}}}
-\subsection{Method \code{get_pkgdown()}}{
-The pkgdown author field.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$get_pkgdown(lang)}\if{html}{\out{</div>}}
+\subsection{\code{org_item$get_pkgdown()}}{
+  The pkgdown author field.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$get_pkgdown(lang)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{lang}}{The language to use for the organisation name.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{lang}}{The language to use for the organisation name.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-print"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-print}{}}}
-\subsection{Method \code{print()}}{
-Print the \code{org_item} object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$print()}\if{html}{\out{</div>}}
+\subsection{\code{org_item$print()}}{
+  Print the \code{org_item} object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$print()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-org_item-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-org_item-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{org_item$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{org_item$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{org_item$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

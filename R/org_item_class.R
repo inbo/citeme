@@ -28,6 +28,8 @@ org_item <- R6Class(
     #' the organisation must be the copyright holder.
     #' @param funder The required funder status for the organisation.
     #' The categories are the same as for `rightsholder`.
+    #' @param publisher The required publisher status for the organisation.
+    #' The categories are the same as for `rightsholder`.
     #' @param ror The optional ROR ID of the organisation.
     #' @param license A list with the allowed licenses by the organisation.
     #' The list may contain the following items:
@@ -51,31 +53,31 @@ org_item <- R6Class(
       orcid = FALSE,
       rightsholder = c("optional", "single", "shared", "when no other"),
       funder = c("optional", "single", "shared", "when no other"),
+      publisher = c("optional", "single", "shared", "when no other"),
       license = list(
         package = c(
           `GPL-3.0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/gplv3.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/gplv3.md",
             sep = "/"
           ),
           MIT = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/mit.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/mit.md",
             sep = "/"
           )
         ),
         project = c(
           `CC BY 4.0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist/refs/heads/main",
-            "inst/generic_template/cc_by_4_0.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/cc_by_4_0.md",
             sep = "/"
           )
         ),
         data = c(
           `CC0` = paste(
-            "https://raw.githubusercontent.com/inbo/checklist",
-            "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template",
-            "cc0.md",
+            "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+            "inst/licenses/cc0.md",
             sep = "/"
           )
         )
@@ -87,6 +89,7 @@ org_item <- R6Class(
     ) {
       private$rightsholder <- match.arg(rightsholder)
       private$funder <- match.arg(funder)
+      private$publisher <- match.arg(publisher)
       stopifnot(
         "`email` must be a string" = is.string(email),
         "`email` cannot be NA" = noNA(email),
@@ -109,35 +112,34 @@ org_item <- R6Class(
         private$license <- list(
           package = c(
             `GPL-3` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/gplv3.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/gplv3.md",
               sep = "/"
             ),
             MIT = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/mit.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/mit.md",
               sep = "/"
             )
           ),
           project = c(
             `CC BY 4.0` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist/refs/heads",
-              "main/inst/generic_template/cc_by_4_0.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads",
+              "main/inst/licenses/cc_by_4_0.md",
               sep = "/"
             )
           ),
           data = c(
             `CC0` = paste(
-              "https://raw.githubusercontent.com/inbo/checklist",
-              "131fe5829907079795533bfea767bf7df50c3cfd/inst/generic_template",
-              "cc0.md",
+              "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+              "inst/licenses/cc0.md",
               sep = "/"
             )
           )
         )
         private$website <- "https://www.vlaanderen.be/inbo/en-gb"
         private$logo <- paste0(
-          "https://inbo.github.io/checklist/reference/figures/logo-en.png"
+          "https://inbo.github.io/citeme/reference/figures/logo-en.png"
         )
         return(self)
       }
@@ -151,7 +153,7 @@ org_item <- R6Class(
         "`orcid` must be `TRUE` or `FALSE`" = is.flag(orcid),
         "`orcid` cannot be `NA`" = noNA(orcid)
       )
-      validate_license(license)
+      validate_license_list(license)
       private$name <- name
       private$orcid <- orcid
       private$email <- email
@@ -187,7 +189,7 @@ org_item <- R6Class(
     #' @importFrom utils person
     as_person = function(
       lang = names(private$name)[1],
-      role = c("cph", "fnd")
+      role = c("cph", "fnd", "pbl")
     ) {
       if (!lang %in% names(private$name)) {
         lang <- names(private$name)[1]
@@ -285,6 +287,7 @@ org_item <- R6Class(
         sprintf("logo: %s", private$logo)[nchar(private$logo) > 0],
         sprintf("copyright holder: %s", private$rightsholder),
         sprintf("funder: %s", private$funder),
+        sprintf("publisher: %s", private$publisher),
         "allowed licenses:",
         vapply(
           names(private$license),
@@ -317,6 +320,7 @@ org_item <- R6Class(
         zenodo = private$zenodo,
         rightsholder = private$rightsholder,
         funder = private$funder,
+        publisher = private$publisher,
         license = lapply(private$license, as.list)
       )
       relevant <- lengths(organisation) > 0
@@ -337,6 +341,10 @@ org_item <- R6Class(
     #' @field get_funder The funder rules.
     get_funder = function() {
       private$funder
+    },
+    #' @field get_publisher The publisher rules.
+    get_publisher = function() {
+      private$publisher
     },
     #' @field get_name The organisation names.
     get_name = function() {
@@ -360,6 +368,7 @@ org_item <- R6Class(
     zenodo = character(0),
     rightsholder = "single",
     funder = "single",
+    publisher = "single",
     website = "",
     logo = ""
   )

@@ -23,13 +23,13 @@ digit can be a number or \code{"X"}.
 Empty strings are considered valid to allow optional \verb{ORCID iD}.
 }
 \seealso{
-Other question: 
-\code{\link{ask_email}()},
-\code{\link{ask_language}()},
-\code{\link{ask_new_license}()},
-\code{\link{ask_ror}()},
-\code{\link{ask_url}()},
-\code{\link{ask_yes_no}()},
-\code{\link{menu_first}()}
+Other question:
+\code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_language]{ask_language()}},
+\code{\link[=ask_new_license]{ask_new_license()}},
+\code{\link[=ask_ror]{ask_ror()}},
+\code{\link[=ask_url]{ask_url()}},
+\code{\link[=ask_yes_no]{ask_yes_no()}},
+\code{\link[=menu_first]{menu_first()}}
 }
 \concept{question}

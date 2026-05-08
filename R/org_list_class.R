@@ -11,20 +11,10 @@ org_list <- R6Class(
     #' @param ... One or more `org_item` objects.
     add_item = function(...) {
       dots <- list(...)
-      vapply(dots, inherits, logical(1), what = "org_item") |>
-        as.list() -> ok
-      names(ok) <- sprintf("element %i is not an `org_item`", seq_along(dots))
-      do.call(stopifnot, ok)
+      inherits_org_item(dots)
       private$items <- c(private$items, dots)
       names(private$items) <- self$get_email
-      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_rightsholder
-      }) |>
-        compatible_rules()
-      vapply(private$items, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_funder
-      }) |>
-        compatible_rules()
+      check_compatible_rules(private$items)
       return(self)
     },
     #' @description Check if the organisation list is compatible with the
@@ -43,27 +33,7 @@ org_list <- R6Class(
       email = character(0),
       type = c("package", "project", "data", "all")
     ) {
-      type <- match.arg(type)
-      if (is.null(email) || length(email) == 0) {
-        email <- names(private$items)
-      }
-      assert_that(is.character(email), noNA(email))
-      vapply(
-        private$items[email],
-        FUN.VALUE = vector(mode = "list", 1),
-        type = type,
-        FUN = function(x, type) {
-          list(x$get_license(type = type))
-        }
-      ) |>
-        unname() -> licenses
-      licenses <- licenses[lengths(licenses) > 0]
-      # fmt: skip
-      stopifnot(
-        "multiple rightholders with license requirements not yet handled" =
-          length(licenses) <= 1
-      )
-      return(unlist(licenses))
+      return(list_licenses(private$items, email = email, type = type))
     },
     #' @description Return the organisation with matching email as a `person()`.
     #' @param email The email address of the organisation.
@@ -189,18 +159,8 @@ org_list <- R6Class(
         )
       )
       dots <- list(...)
-      vapply(dots, inherits, logical(1), what = "org_item") |>
-        as.list() -> ok
-      names(ok) <- sprintf("element %i is not an `org_item`", seq_along(dots))
-      do.call(stopifnot, ok)
-      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_rightsholder
-      }) |>
-        compatible_rules()
-      vapply(dots, FUN.VALUE = character(1), FUN = function(x) {
-        x$get_funder
-      }) |>
-        compatible_rules()
+      inherits_org_item(dots)
+      check_compatible_rules(dots)
       vapply(
         dots,
         FUN.VALUE = vector(mode = "list", length = 1),
@@ -250,10 +210,10 @@ org_list <- R6Class(
         "`x` is not a string" = length(x) == 1,
         "`x` is not an existing directory" = file_test("-d", x)
       )
-      if (!file.exists(file.path(x, "organisation.yml"))) {
+      if (!file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
         return(git_org(x))
       }
-      file.path(x, "organisation.yml") |>
+      file.path(x, "organisation.yml", fsep = "/") |>
         read_yaml() -> yaml
       stopifnot(
         "old style `organisation.yml` detected" = any(
@@ -278,23 +238,40 @@ org_list <- R6Class(
     validate_person = function(person, lang) {
       ol_validate_persons(person, lang, items = private$items)
     },
-    #' @description Validate the rules for the rightsholder and funder.
+    #' @description Validate the rules for the rightsholder, funder and
+    #' publisher.
     #' @param rightsholder The rightsholders as a `person` object.
     #' @param funder The funders as a `person` object.
+    #' @param publisher The publishers as a `person` object.
     #' @importFrom utils person
-    validate_rules = function(rightsholder = person(), funder = person()) {
+    validate_rules = function(
+      rightsholder = person(),
+      funder = person(),
+      publisher = person()
+    ) {
       ol_validate_rules(
         person = rightsholder,
         which_person = self$which_rightsholder,
         type = "rightsholder",
-        items = private$items
+        items = private$items,
+        mandatory = length(self$get_default_rightsholder) > 0
       ) |>
         c(
           ol_validate_rules(
             person = funder,
             which_person = self$which_funder,
             type = "funder",
-            items = private$items
+            items = private$items,
+            mandatory = length(self$get_default_funder) > 0
+          )
+        ) |>
+        c(
+          ol_validate_rules(
+            person = publisher,
+            which_person = self$which_publisher,
+            type = "publisher",
+            items = private$items,
+            mandatory = length(self$get_default_publisher) > 0
           )
         )
     },
@@ -321,12 +298,12 @@ org_list <- R6Class(
         git = private$git,
         yaml
       ) |>
-        write_yaml(file = file.path(x, "organisation.yml"))
+        write_yaml(file = file.path(x, "organisation.yml", fsep = "/"))
       if (!license) {
-        return(file.path(x, "organisation.yml"))
+        return(file.path(x, "organisation.yml", fsep = "/"))
       }
       download_licenses(self$get_listed_licenses, x)
-      return(file.path(x, "organisation.yml"))
+      return(file.path(x, "organisation.yml", fsep = "/"))
     }
   ),
   active = list(
@@ -354,6 +331,14 @@ org_list <- R6Class(
         return(funder$required)
       }
       funder$alternative
+    },
+    #' @field get_default_publisher The default publisher.
+    get_default_publisher = function() {
+      publisher <- self$which_publisher
+      if (length(publisher$required) > 0) {
+        return(publisher$required)
+      }
+      publisher$alternative
     },
     #' @field get_default_rightsholder The default rightsholder.
     get_default_rightsholder = function() {
@@ -401,13 +386,27 @@ org_list <- R6Class(
         c("en-GB") |>
         unique()
     },
-    #' @field which_funder The required rightsholders.
+    #' @field which_funder The required funders.
     which_funder = function() {
       type <- vapply(
         private$items,
         FUN.VALUE = character(1),
         FUN = function(x) {
           x$get_funder
+        }
+      )
+      list(
+        required = names(type)[type %in% c("single", "shared")],
+        alternative = names(type)[type == "when no other"]
+      )
+    },
+    #' @field which_publisher The required publishers.
+    which_publisher = function() {
+      type <- vapply(
+        private$items,
+        FUN.VALUE = character(1),
+        FUN = function(x) {
+          x$get_publisher
         }
       )
       list(
@@ -435,22 +434,6 @@ org_list <- R6Class(
   private = list(items = list(), git = character(0))
 )
 
-compatible_rules <- function(rules) {
-  if (length(rules) < 2) {
-    return(TRUE)
-  }
-  # fmt: skip
-  stopifnot(
-    "more than one organisation with `single`" = sum(rules == "single") <= 1,
-    "`single` is not compatible with `shared`" =
-      !(any(rules == "single") && any(rules == "shared")),
-    "`single` is not compatible with `when no other`" =
-      !(any(rules == "single") && any(rules == "when no other")),
-    "more than one organisation with `when no other`" =
-      sum(rules == "when no other") <= 1
-  )
-}
-
 ol_valid_rules <- function(rules) {
   assert_that(is.character(rules), noNA(rules))
   if (length(rules) <= 1) {
@@ -464,11 +447,12 @@ ol_validate_rules <- function(
   person = person(),
   which_person,
   items,
-  type = c("rightsholder", "funder")
+  type = c("rightsholder", "funder", "publisher"),
+  mandatory = TRUE
 ) {
   type <- match.arg(type)
   if (length(person) == 0) {
-    return(sprintf("no %s listed", type))
+    return(sprintf("no %s listed", type)[isTRUE(mandatory)])
   }
   if (!inherits(person, "person")) {
     return(sprintf("`%s` is not a `person` object", type))
@@ -490,7 +474,8 @@ ol_validate_rules <- function(
           switch(
             type,
             "rightsholder" = items[[i]]$get_rightsholder,
-            items[[i]]$get_funder
+            "funder" = items[[i]]$get_funder,
+            "publisher" = items[[i]]$get_publisher
           ) |>
             ol_valid_rules()
         },
@@ -735,7 +720,7 @@ ol_select_relevant_org <- function(
 
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
-    if (file.exists(file.path(x, "organisation.yml"))) {
+    if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
       return(org_list$new()$read(x))
     }
     return(org_list$new(org_item$new(email = "info@inbo.be")))
@@ -752,8 +737,8 @@ git_org <- function(x = ".") {
   gsub("https://", "", url) |>
     tolower() -> config_name
   R_user_dir("citeme", "config") |>
-    file.path(config_name) -> config_path
-  if (file.exists(file.path(config_path, "organisation.yml"))) {
+    file.path(config_name, fsep = "/") -> config_path
+  if (file.exists(file.path(config_path, "organisation.yml", fsep = "/"))) {
     org <- org_list$new()$read(config_path)
     org$write(x)
     return(org)
@@ -766,7 +751,7 @@ git_org <- function(x = ".") {
     url,
     "/citeme doesn't exists."
   )
-  if (file.exists(file.path(x, "organisation.yml"))) {
+  if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
     return(org_list$new()$read(x))
   }
   return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))
@@ -781,7 +766,8 @@ inbo_org_list <- function() {
     org_item$new(
       email = "info@inbo.be",
       rightsholder = "share",
-      funder = "when no other"
+      funder = "when no other",
+      publisher = "when no other"
     ),
     org_item$new(
       name = c(
@@ -930,7 +916,7 @@ download_licenses <- function(listed_licenses, x) {
       FUN = function(z, x) {
         download.file(
           url = z["remote_file"],
-          destfile = file.path(x, z["local_file"]),
+          destfile = file.path(x, z["local_file"], fsep = "/"),
           quiet = TRUE,
           mode = "wb"
         )

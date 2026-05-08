@@ -13,7 +13,6 @@
 #' Defaults to the user's R configuration directory for `citeme`.
 #' @return The retrieved organisation list, or `NULL` if the URL is invalid or
 #' the repository.
-#' @importFrom httr HEAD
 #' @importFrom tools R_user_dir
 #' @importFrom utils installed.packages
 #' @export
@@ -21,33 +20,49 @@
 cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   gsub("https://", "", url) |>
     tolower() -> config_name
-  config_path <- file.path(config_folder, config_name)
+  config_path <- file.path(config_folder, config_name, fsep = "/")
   if (url == "https://github.com/inbo") {
-    file.path(config_path, "pkgdown") |>
+    file.path(config_path, "pkgdown", fsep = "/") |>
       dir.create(showWarnings = FALSE, recursive = TRUE)
     org <- inbo_org_list()
     org$write(config_path, license = TRUE)
     if ("checklist" %in% rownames(installed.packages())) {
       system.file("package_template/pkgdown.css", package = "checklist") |>
-        file.copy(to = file.path(config_path, "pkgdown.css"), overwrite = TRUE)
+        file.copy(
+          to = file.path(config_path, "pkgdown.css", fsep = "/"),
+          overwrite = TRUE
+        )
       img_files <- c(
         "flanders.woff",
         "flanders.woff2",
         "logo-en.png",
         "background-pattern.png"
       )
-      file.path("package_template", img_files) |>
+      file.path("package_template", img_files, fsep = "/") |>
         system.file(package = "checklist") |>
-        file.copy(to = file.path(config_path, "pkgdown"), overwrite = TRUE)
+        file.copy(
+          to = file.path(config_path, "pkgdown", fsep = "/"),
+          overwrite = TRUE
+        )
     }
     return(org)
   }
-  paste0(url, "/citeme") |>
-    HEAD() -> url_head
-  if (url_head$status_code != 200) {
-    paste0(url, "/checklist") |>
-      HEAD() -> url_head
-    if (url_head$status_code != 200) {
+  try(
+    suppressWarnings(
+      paste0(url, "/citeme") |>
+        download.file(destfile = tempfile(), quiet = TRUE)
+    ),
+    silent = TRUE
+  ) -> url_head
+  if (inherits(url_head, "try-error")) {
+    try(
+      suppressWarnings(
+        paste0(url, "/checklist") |>
+          download.file(destfile = tempfile(), quiet = TRUE)
+      ),
+      silent = TRUE
+    ) -> url_head
+    if (inherits(url_head, "try-error")) {
       warning(
         sprintf("no public `citeme` repo found at %s", url),
         immediate. = TRUE,
@@ -74,10 +89,10 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   to_do <- list.files(target, recursive = TRUE)
   dirname(to_do) |>
     unique() -> dirs
-  file.path(config_path, dirs[dirs != "."]) |>
+  file.path(config_path, dirs[dirs != "."], fsep = "/") |>
     dir.create(showWarnings = FALSE, recursive = TRUE)
-  file.path(target, to_do) |>
-    file.copy(to = file.path(config_path, to_do))
+  file.path(target, to_do, fsep = "/") |>
+    file.copy(to = file.path(config_path, to_do, fsep = "/"))
   org <- org_list$new()$read(target)
   org$write(config_path, license = TRUE)
   return(org)

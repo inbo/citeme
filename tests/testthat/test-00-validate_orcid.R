@@ -1,5 +1,4 @@
 test_that("validate_orcid validates correct ORCID format with checksum", {
-
   # Valid ORCIDs with correct checksum
   expect_true(validate_orcid("0000-0001-8804-4216"))
   expect_true(validate_orcid("0000-0002-1825-0097"))
@@ -12,11 +11,11 @@ test_that("validate_orcid allows empty string", {
 
 test_that("validate_orcid rejects invalid ORCID format", {
   # Wrong format
-  expect_false(validate_orcid("0000-0000-0000-000"))   # Too short
+  expect_false(validate_orcid("0000-0000-0000-000")) # Too short
   expect_false(validate_orcid("0000-0000-0000-00001")) # Too long
-  expect_false(validate_orcid("0000-000-0000-0000"))   # Wrong grouping
-  expect_false(validate_orcid("0000000000000000"))     # No dashes
-  expect_false(validate_orcid("ABCD-0000-0000-0000"))  # Non-numeric prefix
+  expect_false(validate_orcid("0000-000-0000-0000")) # Wrong grouping
+  expect_false(validate_orcid("0000000000000000")) # No dashes
+  expect_false(validate_orcid("ABCD-0000-0000-0000")) # Non-numeric prefix
 })
 
 test_that("validate_orcid rejects ORCID with wrong checksum", {

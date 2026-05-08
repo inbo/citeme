@@ -27,7 +27,7 @@
 
 
 <!-- description: start -->
-Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, and integration with citation management systems.
+Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, publisher information, and integration with citation management systems.
 <!-- description: end -->
 
 ## Installation
@@ -55,7 +55,8 @@ org <- org_item$new(
   email = "info@inbo.be",
   orcid = TRUE,
   rightsholder = "shared",
-  funder = "when no other"
+  funder = "when no other",
+  publisher = "single"
 )
 
 # Print the organisation

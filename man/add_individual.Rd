@@ -4,25 +4,41 @@
 \alias{add_individual}
 \title{Add an individual to a file}
 \usage{
-add_individual(path = ".", role = c("aut", "rev", "cph", "fnd"))
+add_individual(
+  path = ".",
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+)
 }
 \arguments{
 \item{path}{A path to a file or directory.
-The file must be a quarto file (e.g. \verb{_quarto.yml} or \verb{*.qmd}).}
+Supported file types:
+\itemize{
+\item Quarto files (\verb{_quarto.yml} or \verb{*.qmd})
+\item R package DESCRIPTION files
+\item README files (\code{README.md} or \code{README.Rmd})
+\item Bookdown index files (\code{index.md} or \code{index.Rmd})
+}}
 
 \item{role}{The role of the person to add.
-One of \code{"aut"} (author), \code{"rev"} (reviewer), \code{"cph"} (copyright holder), or
-\code{"fnd"} (funder).}
+One or multiple of \code{"aut"} (author), \code{"cre"} (creator/maintainer), \code{"ctb"}
+(contributor), \code{"rev"} (reviewer), \code{"cph"} (copyright holder),
+\code{"fnd"} (funder), or \code{"pbl"} (publisher).
+Unless you want to an individual to a Quarto or bookdown document.
+Then you can only specify one role, and \code{"aut"} will be added to the \code{author}
+field, #' \code{"rev"} to the \code{reviewer} field, \code{"cph"} to the \code{rightsholder}
+field, \code{"fnd"} to the \code{funder} field, and \code{"pbl"} to the \code{publisher} field.}
 }
 \description{
 Add an individual to a file
 }
 \seealso{
-Other individual: 
-\code{\link{individual2badge}()},
-\code{\link{individual2df}()},
-\code{\link{individual2person}()},
-\code{\link{select_individual}()},
-\code{\link{store_individuals}()}
+Other individual:
+\code{\link[=has_person_role]{has_person_role()}},
+\code{\link[=individual2badge]{individual2badge()}},
+\code{\link[=individual2df]{individual2df()}},
+\code{\link[=individual2person]{individual2person()}},
+\code{\link[=select_individual]{select_individual()}},
+\code{\link[=select_person_role]{select_person_role()}},
+\code{\link[=store_individuals]{store_individuals()}}
 }
 \concept{individual}

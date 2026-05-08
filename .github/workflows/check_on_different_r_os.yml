@@ -43,8 +43,15 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
           needs: check
+
+      - name: windows dependencies
+        if: runner.os == 'windows'
+        run: |
+          Rscript --no-save --no-restore -e 'remotes::install_local()'
 
       - uses: r-lib/actions/check-r-package@v2
         with:

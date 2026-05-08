@@ -1,17 +1,34 @@
 # Test citation_meta initialisation and accessors
 test_that("citation_meta initialises with valid project path", {
-  skip_if_not_installed("fs")
-  # Test with current directory (the package root)
+  tmp_description <- tempfile("DESCRIPTION")
+  dir.create(tmp_description)
+  on.exit(unlink(tmp_description, recursive = TRUE), add = TRUE)
+  c(
+    "Package: junk",
+    "Title: Junk Package",
+    "Version: 0.0.0",
+    "Authors@R: person(\"Given\", \"Family\", role = c(\"aut\", \"cre\"))",
+    "Description: This is a description.",
+    "License: MIT"
+  ) |>
+    writeLines(file.path(tmp_description, "DESCRIPTION", fsep = "/"))
   # Suppress expected warnings about missing citation metadata
-  meta <- suppressWarnings(citation_meta$new("."))
+  meta <- suppressWarnings(citation_meta$new(tmp_description))
   expect_s3_class(meta, "citation_meta")
   expect_type(meta$get_path, "character")
   expect_type(meta$get_type, "character")
   # person and meta may be NULL if there are errors parsing the package
-  expect_true(is.list(meta$get_person) || is.null(meta$get_person))
-  expect_true(is.list(meta$get_meta) || is.null(meta$get_meta))
+  expect_true(is.list(meta$get_person))
+  expect_true(is.list(meta$get_meta))
   expect_type(meta$get_errors, "character")
   expect_type(meta$get_notes, "character")
+  # The print method produces output, so we use expect_output
+  expect_output(meta$print())
+  # citation_meta print method can be silenced
+  expect_silent(meta$print(quiet = TRUE))
+  # citation_meta get_path returns valid path
+  expect_true(file.exists(meta$get_path))
+  expect_equal(meta$get_type, "package")
 })
 
 test_that("citation_meta fails with non-existent path", {
@@ -27,27 +44,4 @@ test_that("citation_meta fails with non-string path", {
     citation_meta$new(123),
     "path is not a string"
   )
-})
-
-test_that("citation_meta print method produces output", {
-  meta <- suppressWarnings(citation_meta$new("."))
-  # The print method produces output, so we use expect_output
-  expect_output(meta$print())
-})
-
-test_that("citation_meta print method can be silenced", {
-  meta <- suppressWarnings(citation_meta$new("."))
-  expect_silent(meta$print(quiet = TRUE))
-})
-
-test_that("citation_meta get_path returns valid path", {
-  meta <- suppressWarnings(citation_meta$new("."))
-  path <- meta$get_path
-  expect_true(dir.exists(path))
-})
-
-test_that("citation_meta get_type returns expected values", {
-  meta <- suppressWarnings(citation_meta$new("."))
-  type <- meta$get_type
-  expect_true(type %in% c("bookdown", "quarto", "package", "project"))
 })

@@ -25,11 +25,13 @@ Reuse existing individual information or add a new individual.
 Allows to update existing individual information.
 }
 \seealso{
-Other individual: 
-\code{\link{add_individual}()},
-\code{\link{individual2badge}()},
-\code{\link{individual2df}()},
-\code{\link{individual2person}()},
-\code{\link{store_individuals}()}
+Other individual:
+\code{\link[=add_individual]{add_individual()}},
+\code{\link[=has_person_role]{has_person_role()}},
+\code{\link[=individual2badge]{individual2badge()}},
+\code{\link[=individual2df]{individual2df()}},
+\code{\link[=individual2person]{individual2person()}},
+\code{\link[=select_person_role]{select_person_role()}},
+\code{\link[=store_individuals]{store_individuals()}}
 }
 \concept{individual}

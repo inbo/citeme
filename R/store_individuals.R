@@ -7,11 +7,10 @@
 #' @importFrom utils write.table
 #' @family individual
 store_individuals <- function(x = ".") {
-  root <- R_user_dir("citeme", which = "data")
-  current <- stored_individuals(root)
+  current <- stored_individuals()
   current$ror <- ""
-  if (file.exists(file.path(x, "DESCRIPTION"))) {
-    this_desc <- description$new(file = file.path(x, "DESCRIPTION"))
+  if (file.exists(file.path(x, "DESCRIPTION", fsep = "/"))) {
+    this_desc <- description$new(file = file.path(x, "DESCRIPTION", fsep = "/"))
     this_desc$get_individuals() |>
       individual2df() |>
       cbind(usage = 1) |>
@@ -32,7 +31,8 @@ store_individuals <- function(x = ".") {
     data = new_individual_df
   ) |>
     write.table(
-      file = file.path(root, "individual.txt"),
+      file = R_user_dir("citeme", which = "data") |>
+        file.path("individual.txt", fsep = "/"),
       sep = "\t",
       row.names = FALSE,
       fileEncoding = "UTF8"
@@ -152,37 +152,12 @@ individual2df.person <- function(person) {
   )
 }
 
-coalesce <- function(...) {
-  dots <- list(...)
-  i <- 1
-  while (i <= length(dots)) {
-    if (!is.null(dots[[i]])) {
-      return(dots[[i]])
-    }
-    i <- i + 1
-  }
-  return(NULL)
-}
-
 #' @importFrom assertthat assert_that is.string noNA
 #' @importFrom utils file_test read.table
-stored_individuals <- function(root) {
-  assert_that(is.string(root), noNA(root))
-  if (!file_test("-d", root)) {
-    dir.create(root, recursive = TRUE, showWarnings = FALSE)
-    return(
-      data.frame(
-        given = character(0),
-        family = character(0),
-        email = character(0),
-        orcid = character(0),
-        affiliation = character(0),
-        usage = integer(0)
-      )
-    )
-  }
-  if (file_test("-f", file.path(root, "individual.txt"))) {
-    file.path(root, "individual.txt") |>
+stored_individuals <- function() {
+  root <- R_user_dir("citeme", which = "data")
+  if (file_test("-f", file.path(root, "individual.txt", fsep = "/"))) {
+    file.path(root, "individual.txt", fsep = "/") |>
       read.table(
         header = TRUE,
         sep = "\t",
@@ -190,6 +165,18 @@ stored_individuals <- function(root) {
       ) -> current
     return(current)
   }
+  root <- R_user_dir("checklist", which = "data")
+  if (file_test("-f", file.path(root, "author.txt", fsep = "/"))) {
+    file.path(root, "author.txt", fsep = "/") |>
+      read.table(
+        header = TRUE,
+        sep = "\t",
+        colClasses = c(rep("character", 5), "integer")
+      ) -> current
+    return(current)
+  }
+  root <- R_user_dir("citeme", which = "data")
+  dir.create(root, recursive = TRUE, showWarnings = FALSE)
   return(
     data.frame(
       given = character(0),

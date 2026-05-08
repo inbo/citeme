@@ -19,8 +19,8 @@ If it is not a git repository itself, then its parent directory is consulted,
 then the parent's parent, and so on.
 }
 \seealso{
-Other git: 
-\code{\link{is_tracked_not_modified}()},
-\code{\link{ssh_http}()}
+Other git:
+\code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}},
+\code{\link[=ssh_http]{ssh_http()}}
 }
 \concept{git}

@@ -3,17 +3,16 @@
 citation_bookdown <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "bookdown")
-  index_file <- file.path(meta$get_path, "index.Rmd")
-  if (!file_test("-f", index_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(index_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  yaml <- get_yaml_header(index_file)
+  yaml <- get_yaml_header(meta$get_path)
   cit_meta <- yaml_individual(yaml = yaml)
   description <- bookdown_description(meta$get_path)
   cit_meta$meta$description <- description$description
@@ -113,17 +112,6 @@ citation_bookdown <- function(meta) {
   return(cit_meta)
 }
 
-#' @importFrom assertthat assert_that
-split_community <- function(community) {
-  if (is.null(community)) {
-    return(NULL)
-  }
-  assert_that(is.character(community))
-  strsplit(community, split = "\\s*;\\s*") |>
-    unlist() |>
-    unique()
-}
-
 #' @importFrom assertthat has_name
 yaml_individual <- function(yaml) {
   vapply(
@@ -149,6 +137,12 @@ yaml_individual <- function(yaml) {
         X = yaml$rightsholder,
         FUN = yaml_individual_format,
         role = "cph",
+        FUN.VALUE = vector(mode = "list", 1)
+      ),
+      vapply(
+        X = yaml$publisher,
+        FUN = yaml_individual_format,
+        role = "pbl",
         FUN.VALUE = vector(mode = "list", 1)
       )
     ) -> individuals
@@ -216,11 +210,10 @@ string2date <- function(date) {
 }
 
 bookdown_description <- function(path) {
-  file.path(path, "index.Rmd") |>
-    readLines() |>
+  readLines(path) |>
     list() |>
     setNames("text") |>
-    readme_description() -> description
+    extract_description() -> description
   if (has_name(description, "meta") || length(description$errors) > 0) {
     return(
       list(
@@ -229,11 +222,15 @@ bookdown_description <- function(path) {
       )
     )
   }
-  for (i in list.files(path, pattern = "\\.R?md$", full.names = TRUE)) {
+  for (i in list.files(
+    dirname(path),
+    pattern = "\\.R?md$",
+    full.names = TRUE
+  )) {
     readLines(i) |>
       list() |>
       setNames("text") |>
-      readme_description() -> description
+      extract_description() -> description
     if (has_name(description, "meta") || length(description$errors) > 0) {
       break
     }

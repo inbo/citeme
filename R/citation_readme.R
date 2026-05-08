@@ -3,22 +3,21 @@
 citation_readme <- function(meta, org) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "project")
-  readme_file <- file.path(meta$get_path, "README.md")
-  if (!file_test("-f", readme_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(readme_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  readme <- readLines(readme_file)
+  readme <- readLines(meta$get_path)
   readme_badges(readme) |>
     readme_title() |>
     readme_individual(org = org) |>
     readme_community() |>
-    readme_description() |>
+    extract_description() |>
     readme_keywords() -> cit_meta
   if (is_repository(meta$get_path)) {
     remotes <- git_remote_list(meta$get_path)
@@ -30,167 +29,6 @@ citation_readme <- function(meta, org) {
   }
   cit_meta$meta$upload_type <- "software"
   return(cit_meta)
-}
-
-#' @importFrom utils head
-readme_badges <- function(text) {
-  badges_start <- grep("<!-- badges: start -->", text)
-  badges_end <- grep("<!-- badges: end -->", text)
-  errors <- c(
-    "Multiple `<!-- badges: start -->`README.md"[length(badges_start) > 1],
-    "Multiple `<!-- badges: end -->`README.md"[length(badges_end) > 1],
-    paste(
-      "Mismatch between `<!-- badges: start -->` and",
-      "`<!-- badges: end -->` README.md"
-    )[
-      length(badges_start) != length(badges_end)
-    ],
-    "`<!-- badges: end -->` before `<!-- badges: start -->` README.md"[
-      any(
-        head(badges_end, length(badges_start)) <=
-          head(badges_start, length(badges_end))
-      )
-    ]
-  )
-  if (length(errors) > 0 || length(badges_start) == 0) {
-    return(
-      list(
-        errors = errors,
-        notes = character(0),
-        text = text,
-        warnings = character(0)
-      )
-    )
-  }
-  badges <- text[seq(badges_start + 1, badges_end - 1)]
-  badge_regexp <- "^\\[?!\\[.*?\\]\\(.*?\\)(\\]\\(.*?\\))?"
-  errors <- c(
-    errors,
-    "badges section in README.md should only contain images"[
-      !all(grepl(badge_regexp, badges, perl = TRUE))
-    ],
-    "every line in the badges section README.md should hold only one image"[
-      !all(grepl("^\\s*$", gsub(badge_regexp, "", badges, perl = TRUE)))
-    ]
-  )
-
-  paste0(
-    "\\[!\\[DOI\\]\\(https://zenodo.org/badge/DOI/(.*?)\\.svg\\)\\]",
-    "\\(https://doi\\.org/(.*)\\)"
-  ) -> doi_regexp
-  doi_line <- grep(doi_regexp, badges)
-  errors <- c(
-    errors,
-    "multiple DOI badges found in README.md"[length(doi_line) > 1]
-  )
-  notes <- "no DOI badge found in README.md"[length(doi_line) == 0]
-  if (length(doi_line) != 1) {
-    meta <- list()
-  } else {
-    doi <- gsub(doi_regexp, "\\1", badges[doi_line])
-    errors <- c(
-      errors,
-      "DOI badge in README refers to different DOI"[
-        doi != gsub(doi_regexp, "\\2", badges[doi_line])
-      ]
-    )
-    meta <- list(doi = doi)
-  }
-
-  paste0(
-    "!\\[version: (.+?)\\]\\(https:\\/\\/img\\.shields\\.io\\/badge\\/",
-    "version-(.+?)-(.+?)\\)"
-  ) -> version_regexp
-  version_line <- grep(version_regexp, badges)
-  errors <- c(
-    errors,
-    "multiple version badges found in README.md"[length(version_line) > 1]
-  )
-  notes <- "no version badge found in README.md"[length(version_line) == 0]
-  if (length(version_line) != 1) {
-    meta <- list()
-  } else {
-    version <- gsub(version_regexp, "\\1", badges[version_line])
-    errors <- c(
-      errors,
-      "version badge in README refers to different version"[
-        version != gsub(version_regexp, "\\2", badges[version_line])
-      ]
-    )
-    meta$version <- version
-  }
-
-  license_regexp <- paste0(
-    "\\[\\!\\[(.*?)\\]\\(https:\\/\\/img\\.shields\\.io\\/badge\\/",
-    "License-.*?-brightgreen\\)\\]\\(.*?\\)"
-  )
-  license_line <- grep(license_regexp, badges)
-  errors <- c(
-    errors,
-    "multiple license badges found in README.md"[length(license_line) > 1]
-  )
-  notes <- c(
-    notes,
-    "no standard license badge found in README.md"[length(license_line) == 0]
-  )
-  if (length(license_line) == 1) {
-    meta$license <- gsub(license_regexp, "\\1", badges[license_line])
-  }
-
-  paste0(
-    "\\[!\\[website\\]\\(https://img.shields.io/badge/website-(.*?)-c04384\\)",
-    "\\]\\((.*)\\)"
-  ) -> website_regexp
-  website_line <- grep(website_regexp, badges)
-  errors <- c(
-    errors,
-    "multiple website badges found in README.md"[length(website_line) > 1]
-  )
-  notes <- c(
-    notes,
-    "no website badge found in README.md"[length(website_line) == 0]
-  )
-  if (length(website_line) == 1) {
-    meta$url <- gsub(website_regexp, "\\2", badges[website_line])
-  }
-  meta$access_right <- "open"
-
-  paste0(
-    "!\\[Language: (.*)?\\]",
-    "\\(https:\\/\\/img.shields.io\\/badge\\/language\\-(.*?)\\-\\w+\\)"
-  ) -> language_regexp
-  language_line <- grep(language_regexp, badges)
-  errors <- c(
-    errors,
-    "multiple language badges found in README.md"[length(language_line) > 1]
-  )
-  notes <- c(
-    notes,
-    "no language badge found in README.md"[length(language_line) == 0]
-  )
-  if (length(language_line) == 1) {
-    meta$language <- gsub(language_regexp, "\\1", badges[language_line])
-    gsub(language_regexp, "\\2", badges[language_line]) |>
-      gsub(pattern = "--", replacement = "-") -> second_language
-    errors <- c(
-      errors,
-      "`language` must be in xx-YY format. e.g. 'en-GB', 'nl-BE'"[inherits(
-        try(validate_language(meta$language)),
-        "try-error"
-      )],
-      "mismatch between language in badge and in the URL in README.md"[
-        meta$language != second_language
-      ]
-    )
-  }
-
-  list(
-    errors = errors,
-    notes = notes,
-    meta = meta,
-    text = text[-badges_start:-badges_end],
-    warnings = character(0)
-  )
 }
 
 remove_empty_line <- function(text, top = TRUE) {
@@ -242,8 +80,12 @@ readme_individual <- function(text, org) {
   }
   grep("^\\s*$", text$text) |>
     head(1) -> empty_line
-  text$text[seq_len(empty_line - 1)] |>
-    gsub(pattern = ";\\s*$", replacement = "") -> individuals
+  if (length(empty_line) == 0) {
+    individuals <- text$text
+  } else {
+    individuals <- text$text[seq_len(empty_line - 1)]
+  }
+  individuals <- gsub(pattern = ";\\s*$", replacement = "", individuals)
   # detect individuals with affiliation as markdown footnote
   orgs <- individuals
   orgs[!grepl("\\[\\^.*\\]", orgs)] <- ""
@@ -280,7 +122,7 @@ readme_individual <- function(text, org) {
     gsub(pattern = "%40", replacement = "@") -> individuals_email
   individuals <- gsub(email_grep, "\\1", individuals)
 
-  if (empty_line > 0) {
+  if (length(empty_line) && empty_line > 0) {
     tail(text$text, -empty_line) |>
       remove_empty_line(top = TRUE) -> text$text
   }
@@ -386,36 +228,6 @@ readme_community <- function(text) {
     )
     text$text <- text$text[-community_line]
   }
-  return(text)
-}
-
-
-#' @importFrom utils head
-readme_description <- function(text) {
-  description_start <- grep("<!-- description: start -->", text$text)
-  description_end <- grep("<!-- description: end -->", text$text)
-  errors <- c(
-    "Multiple `<!-- description: start -->`"[length(description_start) > 1],
-    "Multiple `<!-- description: end -->`"[length(description_end) > 1],
-    paste(
-      "Mismatch between `<!-- description: start -->` and",
-      "`<!-- description: end -->`"
-    )[length(description_start) != length(description_end)],
-    "`<!-- description: end -->` before `<!-- description: start -->`"[
-      any(
-        head(description_end, length(description_start)) <=
-          head(description_start, length(description_end))
-      )
-    ]
-  )
-  if (length(errors) > 0 || length(description_start) == 0) {
-    text$errors <- c(text$errors, errors)
-    return(text)
-  }
-  text$meta$description <- text$text[
-    seq(description_start + 1, description_end - 1)
-  ]
-  text$text <- text$text[-description_start:-description_end]
   return(text)
 }
 

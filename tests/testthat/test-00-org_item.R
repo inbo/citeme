@@ -109,8 +109,9 @@ test_that("org_item get_license returns correct licenses by type", {
   )
   package_license <- item$get_license("package")
   expect_true(length(package_license) > 0)
-  expect_true("GPL-3.0" %in% names(package_license) ||
-                "GPL-3" %in% names(package_license))
+  expect_true(
+    "GPL-3.0" %in% names(package_license) || "GPL-3" %in% names(package_license)
+  )
 })
 
 test_that("org_item as_list returns correct structure", {
@@ -137,4 +138,34 @@ test_that("org_item as_person returns person object", {
   )
   person_obj <- item$as_person(role = "cph")
   expect_s3_class(person_obj, "person")
+})
+
+test_that("org_item stores publisher settings", {
+  item <- org_item$new(
+    name = c("en-GB" = "Test Organization"),
+    email = "test@example.org",
+    publisher = "single"
+  )
+  expect_equal(item$get_publisher, "single")
+})
+
+test_that("org_item as_list includes publisher", {
+  item <- org_item$new(
+    name = c("en-GB" = "Test Organization"),
+    email = "test@example.org",
+    publisher = "shared"
+  )
+  result <- item$as_list
+  expect_true("publisher" %in% names(result))
+  expect_equal(result$publisher, "shared")
+})
+
+test_that("org_item as_person handles pbl role", {
+  item <- org_item$new(
+    name = c("en-GB" = "Test Organization"),
+    email = "test@example.org"
+  )
+  person_obj <- item$as_person(role = "pbl")
+  expect_s3_class(person_obj, "person")
+  expect_true("pbl" %in% person_obj$role)
 })

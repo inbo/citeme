@@ -1,0 +1,318 @@
+---
+title: "Working with Individuals"
+vignette: >
+  %\VignetteIndexEntry{Working with Individuals}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+The `citeme` package provides a collection of helper functions for managing
+individual contributor information across your projects.
+These functions help you store, retrieve, and reuse information about people
+who contribute to your work, ensuring consistency and reducing repetitive data
+entry.
+
+## Why Use Individual Helper Functions?
+
+When working on multiple projects, you often need to cite the same
+contributors repeatedly.
+The individual helper functions in `citeme` allow you to:
+
+- Build a local database of contributor information
+- Reuse stored information across projects
+- Maintain consistent contributor details
+- Convert individual information between different formats
+- Add contributors to various file types (`DESCRIPTION`, `README`, `Quarto`, `Bookdown`)
+
+## Storing Individual Information
+
+The `store_individuals()` function extracts contributor information from a
+project and saves it to a local database for future use.
+This database is stored in your user data directory and persists across
+projects.
+
+```{r eval=FALSE}
+library(citeme)
+
+# Store individuals from a project with a DESCRIPTION file
+store_individuals("path/to/r-package")
+
+# Store individuals from a project with citation metadata
+store_individuals("path/to/project")
+```
+
+The function extracts information from:
+
+- **R packages**: Reads the `DESCRIPTION` file to get author details
+- **Other projects**: Reads citation metadata files
+
+Each time you store individuals, the function tracks how often each person
+appears across your projects.
+This usage count helps prioritise frequently used contributors when selecting
+individuals later.
+
+## Selecting and Reusing Individuals
+
+The `select_individual()` function allows you to interactively choose a
+contributor from your stored database or add a new one.
+
+```{r eval=FALSE}
+# Interactive selection from stored individuals
+individual <- select_individual()
+
+# Quick selection by email address
+individual <- select_individual(email = "john.doe@example.com")
+
+# Selection with specific language for affiliation
+# provided the individual's email matches an organisation with multilingual
+# names
+individual <- select_individual(lang = "nl-BE")
+```
+
+The function presents stored individuals ordered by:
+
+1. Usage count (most frequently used first)
+2. Family name
+3. Given name
+4. ORCID identifier
+
+When selecting interactively, you can also:
+
+- Add a new individual if they are not in the database
+- Update existing individual information
+
+## Converting Individual Information
+
+### To Person Objects
+
+The `individual2person()` function converts individual information into R's
+`person` object format, which is used in DESCRIPTION files and citation
+metadata.
+
+```{r eval=FALSE}
+# Convert with default author role
+person_obj <- individual2person(individual)
+
+# Convert with specific role
+person_obj <- individual2person(individual, role = "cre")
+
+# Convert with multiple roles
+person_obj <- individual2person(individual, role = c("aut", "cre"))
+
+# Interactive selection and conversion
+person_obj <- individual2person(lang = "en-GB")
+```
+
+The function automatically handles:
+
+- Optional fields (email, ORCID, affiliation)
+- Multiple roles per person
+- Language-specific affiliations
+
+### To Badge Format
+
+The `individual2badge()` function creates Markdown badges for displaying
+contributor information with ORCID identifiers and affiliations.
+
+```{r eval=FALSE}
+# Create a badge for an individual
+badge_markdown <- individual2badge(individual)
+
+# Result example:
+# [![ORCID: 0000-0000-0000-0000](https://img.shields.io/badge/
+# ORCID-0000--0000--0000--0000-brightgreen)](https://orcid.org/
+# 0000-0000-0000-0000)
+```
+
+This is useful for README files and documentation where you want to display
+contributor information with clickable links.
+
+### To Data Frames
+
+The `individual2df()` function converts `person` objects into data frames,
+making it easier to work with contributor information in tabular format.
+
+```{r eval=FALSE}
+# Convert a person object to a data frame
+person_df <- individual2df(person_obj)
+
+# The resulting data frame has columns:
+# - given: given name
+# - family: family name
+# - email: email address
+# - orcid: ORCID identifier
+# - ror: ROR identifier for affiliation
+# - affiliation: affiliation name
+# - role: role(s) as comma-separated string
+```
+
+The function handles:
+
+- Single person objects
+- Lists of person objects
+- Missing fields (replaced with empty strings)
+- Multiple roles (combined into comma-separated string)
+
+## Adding Individuals to Files
+
+The `add_individual()` function provides a unified interface for adding
+contributors to various file types in your project.
+
+```{r eval=FALSE}
+# Add an author to a DESCRIPTION file
+add_individual("path/to/DESCRIPTION", role = "aut")
+
+# Add a maintainer to an R package
+add_individual("path/to/package", role = "cre")
+
+# Add multiple roles
+add_individual("path/to/package", role = c("aut", "cre"))
+
+# Add to a Quarto document
+add_individual("path/to/document.qmd", role = "aut")
+
+# Add a reviewer to a Quarto document
+add_individual("path/to/document.qmd", role = "rev")
+```
+
+Supported file types:
+
+- **DESCRIPTION files**: R package metadata
+- **Quarto files**: `_quarto.yml` or `*.qmd` documents
+- **README files**: `README.md` or `README.Rmd`
+- **Bookdown index files**: `index.md` or `index.Rmd`
+
+The function automatically:
+
+1. Detects the file type
+2. Prompts for individual selection
+3. Adds the individual with the specified role(s)
+4. Updates the file in place
+
+### Role Mapping for Different File Types
+
+For **R packages** (DESCRIPTION files), all standard `R CMD check` roles are
+supported:
+
+- `"aut"`: Author
+- `"cre"`: Creator/Maintainer
+- `"ctb"`: Contributor
+- `"rev"`: Reviewer
+- `"cph"`: Copyright holder
+- `"fnd"`: Funder
+- `"pbl"`: Publisher
+
+For **Quarto and Bookdown documents**, roles are mapped to YAML fields:
+
+- `"aut"` -> `author` field
+- `"rev"` -> `reviewer` field
+- `"cph"` -> `rightsholder` field
+- `"fnd"` -> `funder` field
+- `"pbl"` -> `publisher` field
+
+## Helper Functions for Roles
+
+### Checking Person Roles
+
+The `has_person_role()` function checks whether a person object has specific
+roles.
+
+```{r eval=FALSE}
+# Check if person has author role
+has_person_role(person_obj, role = "aut")
+
+# Check for multiple roles
+has_person_role(person_obj, role = c("aut", "cre"))
+
+# Returns TRUE if the person has at least one of the specified roles
+```
+
+### Selecting Roles Interactively
+
+The `select_person_role()` function helps you interactively specify roles for
+a contributor.
+
+```{r eval=FALSE}
+# Interactive role selection
+roles <- select_person_role()
+
+# The function presents common roles and allows you to select one or more:
+# - Author
+# - Creator (Maintainer)
+# - Contributor
+# - Reviewer
+# - Copyright holder
+# - Funder
+# - Publisher
+```
+
+## Typical Workflow
+
+Here is a typical workflow for managing individuals across projects:
+
+```{r eval=FALSE}
+library(citeme)
+
+# Step 1: Store individuals from existing projects
+store_individuals("projects/my-r-package")
+store_individuals("projects/another-project")
+
+# Step 2: Start a new project and add contributors
+# The function will prompt you to select from stored individuals
+add_individual("new-project/DESCRIPTION", role = c("aut", "cre"))
+
+# Step 3: Add more contributors as needed
+add_individual("new-project/DESCRIPTION", role = "ctb")
+
+# Step 4: Store the new project's individuals for future use
+store_individuals("new-project")
+```
+
+## Working with Multiple Languages
+
+The individual helper functions support multilingual affiliations through the
+`lang` parameter.
+This is only relevant when the individual is a member of a known organisation (see `vignette("organisation")`) that has names in multiple languages.
+When an organisation has names in multiple languages, you can specify which
+language to use:
+
+```{r eval=FALSE}
+# Select individual with English affiliation
+individual_en <- select_individual(lang = "en-GB")
+
+# Select individual with Dutch affiliation
+individual_nl <- select_individual(lang = "nl-BE")
+
+# The affiliation field will use the specified language when available
+person_en <- individual2person(lang = "en-GB")
+```
+
+The language code should follow the
+[BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) standard
+(e.g. `"en-GB"`, `"nl-BE"`, `"fr-FR"`).
+
+## Best Practices
+
+1. **Build your database early**: Run `store_individuals()` on your existing
+   projects to build a comprehensive database of contributors.
+   Please note that `store_individuals()` only extracts information from projects that contains metadata in the same format as the one that `citeme` writes.
+
+2. **Use email for quick lookups**: When you know the contributor's email,
+   use `select_individual(email = "...")` to avoid interactive selection.
+
+3. **Keep information updated**: If contributor details change (e.g. new
+   affiliation), update them when prompted during `select_individual()`.
+
+4. **Store after each project**: Run `store_individuals()` after adding
+   contributors to a new project to keep your database current.
+
+5. **Be consistent with roles**: Use standard `R CMD check` roles for packages
+   and appropriate roles for other document types.
+
+## Related Functions
+
+For information about validating contributor information, see the
+`vignette("interactive_input")` vignette.
+For organisation-level settings, see the `vignette("organisation")` vignette.

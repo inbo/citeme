@@ -3,9 +3,8 @@
 citation_description <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "package")
-  file.path(meta$get_path, "DESCRIPTION") |>
-    description$new() -> descript
-  org <- org_list$new()$read(meta$get_path)
+  descript <- description$new(meta$get_path)
+  org <- org_list$new()$read(dirname(meta$get_path))
   descript$get_field("Config/citeme/keywords", default = character(0)) |>
     description_keywords() -> keywords
   description_communities(descript = descript, org = org) -> communities
@@ -101,6 +100,7 @@ description_communities <- function(descript, org) {
     split_community() -> communities
   descript$get_author("cph")$email |>
     c(descript$get_author("fnd")$email) |>
+    c(descript$get_author("pbl")$email) |>
     unlist() |>
     org$get_zenodo_by_email() -> required_communities
   if (length(communities) == 0 && length(required_communities) > 0) {

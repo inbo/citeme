@@ -7,7 +7,7 @@
 #' throws an error.
 #' @export
 #' @family validation
-validate_license <- function(license) {
+validate_license_list <- function(license) {
   stopifnot(
     "`license` must be a list" = inherits(license, "list"),
     "`license` must contain \`package\`, \`project\`, and \`data\`" = all(

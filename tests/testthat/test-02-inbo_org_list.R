@@ -4,7 +4,6 @@ test_that("inbo_org_list returns valid org_list object", {
 })
 
 test_that("inbo_org_list contains INBO organisation", {
-
   ol <- inbo_org_list()
   expect_true("info@inbo.be" %in% ol$get_email)
 })

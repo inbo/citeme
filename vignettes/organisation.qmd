@@ -20,7 +20,7 @@ The `org_item` class stores information about a single organisation.
 It requires two mandatory fields: `name` and `email`.
 
 - `name` must be a named character vector where each name is a
-  [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code
+  [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) language code
   (e.g. `"en-GB"`, `"nl-BE"`).
   This allows the organisation name to be used in different languages.
   The first entry is used as the default when no matching language is

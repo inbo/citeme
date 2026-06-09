@@ -4,10 +4,10 @@
 \alias{ask_language}
 \title{Ask for a language}
 \usage{
-ask_language(org, prompt = "Which language?")
+ask_language(languages, prompt = "Which language?")
 }
 \arguments{
-\item{org}{An \code{org_list} object containing the available languages.}
+\item{languages}{A character vector containing the available languages.}
 
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}

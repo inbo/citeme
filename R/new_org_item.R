@@ -8,13 +8,13 @@ new_org_item <- function(languages, licenses) {
   email <- ask_email("The organisations' email address: ")
   name <- readline(prompt = "The organisations' name: ")
   lang <- ask_language(
-    org = list(get_languages = languages),
+    languages = languages,
     prompt = "What is the language of this name?"
   )
   names(name) <- lang
   while (ask_yes_no("Add a name in another language?", default = FALSE)) {
     lang <- ask_language(
-      org = list(get_languages = languages[!languages %in% names(name)]),
+      languages = languages[!languages %in% names(name)],
       prompt = "In what language?"
     )
     extra <- readline(

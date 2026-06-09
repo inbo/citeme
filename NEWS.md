@@ -1,6 +1,7 @@
 # citeme 0.1.2
 
 * `ask_language()` now requires a vector of languages instead of an `org_list`.
+* `individual2badge()` now supports the `"pbl"` role for publishers.
 
 # citeme 0.1.1
 

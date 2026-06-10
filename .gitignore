@@ -34,6 +34,7 @@
 docs
 docs/*
 inst/doc
+inst/dependencies.R
 libs
 output
 renv/library

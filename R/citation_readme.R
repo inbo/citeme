@@ -90,7 +90,7 @@ readme_individual <- function(text, org) {
   orgs <- individuals
   orgs[!grepl("\\[\\^.*\\]", orgs)] <- ""
   gsub(".*?\\[\\^(.*?)\\]", "\\1;", orgs) |>
-    gsub(pattern = "(aut|cph|cre|ctb|fnd|rev);", replacement = "") |>
+    gsub(pattern = "(aut|cph|cre|ctb|fnd|pbl|rev);", replacement = "") |>
     gsub(pattern = ";$", replacement = "") |>
     strsplit(split = ";") -> orgs
   unlist(orgs) |>

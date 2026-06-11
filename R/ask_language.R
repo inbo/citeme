@@ -1,15 +1,16 @@
 #' Ask for a language
-#' @param org An `org_list` object containing the available languages.
+#' @param languages A character vector containing the available languages.
 #' @inheritParams base::readline
 #' @export
 #' @family question
-ask_language <- function(org, prompt = "Which language?") {
-  stopifnot("`org` is not an `org_list` object" = inherits(org, "org_list"))
-  available <- org$get_languages
-  c(available, "other") |>
+ask_language <- function(languages, prompt = "Which language?") {
+  stopifnot("`languages` is not a character vector" = is.character(languages))
+  vapply(languages, validate_language, character(1)) |>
+    unname() -> languages
+  c(languages, "other") |>
     menu_first(title = prompt) -> selected
-  if (selected <= length(available)) {
-    return(validate_language(available[selected]))
+  if (selected <= length(languages)) {
+    return(validate_language(languages[selected]))
   }
   language <- readline(prompt = "Please enter the language code: ")
   while (

@@ -6,7 +6,7 @@
 \usage{
 individual2badge(
   individual,
-  role = c("aut", "cre", "cph", "ctb", "fnd", "rev")
+  role = c("aut", "cre", "cph", "ctb", "fnd", "pbl", "rev")
 )
 }
 \arguments{

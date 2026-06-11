@@ -1,0 +1,125 @@
+on:
+  push:
+    branches-ignore:
+      - ghpages
+
+name: checklist
+
+jobs:
+  check-package:
+    name: check package
+
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: read
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_SYSTEM_CLOCK_: false
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          fetch-depth: 0
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@ff9d3a3fd8acec17e91f1d0a1876d95ad60cb519
+        with:
+          r-version: release
+          extra-repositories:
+            https://cranhaven.r-universe.dev
+            https://inbo.r-universe.dev
+
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@f50f115c574d8cb2ddc24934af6bed478382b0e7
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@2e3959d284a9ed60162f28a0f9891d1150f47f72
+        with:
+          extra-packages:
+            any::checklist
+            any::covr
+            any::curl
+            any::cyclocomp
+            any::renv
+            any::roxygen2
+
+      - name: main branch
+        run: |
+          cd $GITHUB_WORKSPACE
+          CURRENT_COMMIT="$(git rev-parse HEAD)"
+          if git ls-remote --exit-code --heads origin main >/dev/null 2>&1; then
+            git fetch origin main:main --force
+          elif git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then
+            git fetch origin master:master --force
+          else
+            echo "Neither main nor master branch found on origin." >&2
+            exit 1
+          fi
+          git checkout --force "$CURRENT_COMMIT"
+        shell: bash
+
+      - name: Check R package
+        run: |
+          pak::local_install(dependencies = TRUE, upgrade = TRUE, ask = FALSE)
+          citeme::get_default_org_list()
+          pak::pkg_install("inbo/checklist@0.5.4")
+          checklist::check_package()
+          covr::codecov(quiet = FALSE, commit="'$GITHUB_SHA'")
+          pkgdown::build_site(preview = FALSE)
+        shell: Rscript {0}
+
+  deploy-pages:
+    name: deploy to gh-pages
+    needs: check-package
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: write
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          fetch-depth: 0
+
+      - name: Check R package
+        run: checklist::set_tag()
+        shell: Rscript {0}
+
+      - name: Deploy docs to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stash the built docs from the current workspace
+          DOCS_DIR="$GITHUB_WORKSPACE/docs"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            # Branch exists: check it out and amend
+            git fetch origin gh-pages
+            git checkout gh-pages
+            # Remove existing site content, preserve .git
+            git rm -rf --ignore-unmatch .
+            cp -r "$DOCS_DIR/." .
+            git add -A
+            git commit --amend --no-edit --allow-empty
+            git push --force origin gh-pages
+          else
+            # Branch does not exist: create orphan branch
+            git checkout --orphan gh-pages
+            git rm -rf .
+            cp -r "$DOCS_DIR/." .
+            git add -A
+            git commit -m "Deploy pkgdown site to gh-pages"
+            git push origin gh-pages
+          fi
+        shell: bash

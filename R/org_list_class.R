@@ -880,14 +880,19 @@ ol_check <- function(local_org, x) {
   remote_org <- remote_org[common]
   remote_rightsholder <- vapply(remote_org, `[[`, character(1), "rightsholder")
   remote_funder <- vapply(remote_org, `[[`, character(1), "funder")
+  remote_publisher <- vapply(remote_org, `[[`, character(1), "publisher")
   local_rightsholder <- vapply(local_org, `[[`, character(1), "rightsholder")
   local_funder <- vapply(local_org, `[[`, character(1), "funder")
+  local_publisher <- vapply(local_org, `[[`, character(1), "publisher")
   not_equal <- local_rightsholder != remote_rightsholder
   local_rightsholder <- local_rightsholder[not_equal]
   remote_rightsholder <- remote_rightsholder[not_equal]
   not_equal <- local_funder != remote_funder
   local_funder <- local_funder[not_equal]
   remote_funder <- remote_funder[not_equal]
+  not_equal <- local_publisher != remote_publisher
+  local_publisher <- local_publisher[not_equal]
+  remote_publisher <- remote_publisher[not_equal]
   c(
     problems,
     sprintf(
@@ -895,13 +900,35 @@ ol_check <- function(local_org, x) {
       paste(missing_org, collapse = "\n")
     )[length(missing_org) > 0],
     sprintf(
-      "organisation with different rule for rightholder",
-      paste(names(local_rightsholder), sep = "\n")
+      "organisation with different rule for rightholder:\n%s",
+      sprintf(
+        "%s: must be `%s` instead of `%s`",
+        names(local_rightsholder),
+        remote_rightsholder,
+        local_rightsholder
+      ) |>
+        paste(sep = "\n")
     )[length(local_rightsholder) > 0],
     sprintf(
-      "organisation with different rule for funder",
-      paste(names(local_funder), sep = "\n")
-    )[length(local_funder) > 0]
+      "organisation with different rule for funder:\n%s",
+      sprintf(
+        "%s: must be `%s` instead of `%s`",
+        names(local_funder),
+        remote_funder,
+        local_funder
+      ) |>
+        paste(sep = "\n")
+    )[length(local_funder) > 0],
+    sprintf(
+      "organisation with different rule for publisher:\n%s",
+      sprintf(
+        "%s: must be `%s` instead of `%s`",
+        names(local_publisher),
+        remote_publisher,
+        local_publisher
+      ) |>
+        paste(sep = "\n")
+    )[length(local_publisher) > 0]
   )
 }
 

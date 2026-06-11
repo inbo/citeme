@@ -1,3 +1,10 @@
+# citeme 0.1.2
+
+* `ask_language()` now requires a vector of languages instead of an `org_list`.
+* `individual2badge()` now supports the `"pbl"` role for publishers.
+* `citation_meta` handles publishers in `README.md`.
+* Improve rule handling by `org_list`.
+
 # citeme 0.1.1
 
 * Add `publisher` field to `org_item` class with role `"pbl"` (#6).

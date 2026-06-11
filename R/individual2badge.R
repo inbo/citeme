@@ -15,7 +15,7 @@
 #' @family individual
 individual2badge <- function(
   individual,
-  role = c("aut", "cre", "cph", "ctb", "fnd", "rev")
+  role = c("aut", "cre", "cph", "ctb", "fnd", "pbl", "rev")
 ) {
   role <- match.arg(role, several.ok = TRUE)
   if (nrow(individual) > 1) {
@@ -50,6 +50,7 @@ individual2badge <- function(
     cph = "copyright holder",
     ctb = "contributor",
     fnd = "funder",
+    pbl = "publisher",
     rev = "reviewer"
   )[role] |>
     sprintf(fmt = "[^%2$s]: %1$s", role) -> attr(badge, "footnote")

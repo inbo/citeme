@@ -895,11 +895,11 @@ ol_check <- function(local_org, x) {
       paste(missing_org, collapse = "\n")
     )[length(missing_org) > 0],
     sprintf(
-      "organisation with different rule for rightholder",
+      "organisation with different rule for rightholder:\n%s",
       paste(names(local_rightsholder), sep = "\n")
     )[length(local_rightsholder) > 0],
     sprintf(
-      "organisation with different rule for funder",
+      "organisation with different rule for funder:\n%s",
       paste(names(local_funder), sep = "\n")
     )[length(local_funder) > 0]
   )

@@ -73,3 +73,53 @@ jobs:
           covr::codecov(quiet = FALSE, commit="'$GITHUB_SHA'")
           pkgdown::build_site(preview = FALSE)
         shell: Rscript {0}
+
+  deploy-pages:
+    name: deploy to gh-pages
+    needs: check-package
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: write
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          fetch-depth: 0
+
+      - name: Check R package
+        run: checklist::set_tag()
+        shell: Rscript {0}
+
+      - name: Deploy docs to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stash the built docs from the current workspace
+          DOCS_DIR="$GITHUB_WORKSPACE/docs"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            # Branch exists: check it out and amend
+            git fetch origin gh-pages
+            git checkout gh-pages
+            # Remove existing site content, preserve .git
+            git rm -rf --ignore-unmatch .
+            cp -r "$DOCS_DIR/." .
+            git add -A
+            git commit --amend --no-edit --allow-empty
+            git push --force origin gh-pages
+          else
+            # Branch does not exist: create orphan branch
+            git checkout --orphan gh-pages
+            git rm -rf .
+            cp -r "$DOCS_DIR/." .
+            git add -A
+            git commit -m "Deploy pkgdown site to gh-pages"
+            git push origin gh-pages
+          fi
+        shell: bash

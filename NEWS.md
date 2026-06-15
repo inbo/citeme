@@ -1,3 +1,7 @@
+# citeme 0.1.3
+
+* Handle `README` without language badge.
+
 # citeme 0.1.2
 
 * `ask_language()` now requires a vector of languages instead of an `org_list`.

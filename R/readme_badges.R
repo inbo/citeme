@@ -126,11 +126,14 @@ readme_badges <- function(text) {
   language_line <- grep(language_regexp, badges)
   errors <- c(
     errors,
-    "multiple language badges found in README.md"[length(language_line) > 1]
-  )
-  notes <- c(
-    notes,
-    "no language badge found in README.md"[length(language_line) == 0]
+    "multiple language badges found in README.md"[length(language_line) > 1],
+    paste(
+      "No language badge found in README.md.",
+      "Fix this first as it is required to properly handle individuals and",
+      "organisations.",
+      "Use `citeme::add_badges(language = \"en-GB\")` to add a language badge",
+      "to your `README.md`."
+    )[length(language_line) == 0]
   )
   if (length(language_line) == 1) {
     meta$language <- gsub(language_regexp, "\\1", badges[language_line])

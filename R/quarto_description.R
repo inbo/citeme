@@ -9,7 +9,7 @@ quarto_description <- function(path) {
       list() |>
       setNames("text") |>
       extract_description() -> description
-    if (has_name(description, "meta") || length(description$errors) > 0) {
+    if (length(description$errors) == 0) {
       break
     }
   }

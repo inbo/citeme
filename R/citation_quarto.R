@@ -33,7 +33,8 @@ citation_quarto <- function(meta) {
   yaml$lang <- coalesce(yaml$lang, language)
   cit_meta <- yaml_individual(yaml = yaml)
   cit_meta$warnings <- cit_meta$notes <- character(0)
-  description <- quarto_description(meta$get_path)
+  dirname(meta$get_path) |>
+    quarto_description() -> description
   cit_meta$meta$description <- description$description
   cit_meta$errors <- c(cit_meta$errors, description$errors)
   cit_meta$meta$title <- paste0(

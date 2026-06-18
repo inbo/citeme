@@ -30,6 +30,7 @@ Imports:
 Suggests:
     mockery,
     quarto,
+    rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder:
     quarto

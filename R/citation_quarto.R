@@ -4,17 +4,26 @@
 citation_quarto <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "quarto")
-  index_file <- file.path(meta$get_path, "_quarto.yml", fsep = "/")
-  if (!file_test("-f", index_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(index_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  yaml <- read_yaml(index_file)
+  if (basename(meta$get_path) == "_quarto.yml") {
+    yaml <- read_yaml(meta$get_path)
+  } else {
+    stopifnot(
+      "please install the 'rmarkdown' package" = requireNamespace(
+        "rmarkdown",
+        quietly = TRUE
+      )
+    )
+    yaml <- rmarkdown::yaml_front_matter(meta$get_path)
+  }
   language <- yaml$lang
   if (has_name(yaml, "flandersqmd")) {
     yaml <- yaml$flandersqmd

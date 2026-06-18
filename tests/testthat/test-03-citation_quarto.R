@@ -120,7 +120,10 @@ test_that("citation_quarto returns error when _quarto.yml missing", {
 
   # Create mock citation_meta object
   meta <- structure(
-    list(get_type = "quarto", get_path = temp_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(temp_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -134,7 +137,10 @@ test_that("citation_quarto processes valid quarto project", {
 
   # Create mock citation_meta object
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -156,7 +162,10 @@ test_that("citation_quarto extracts title with subtitle", {
   )
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -168,7 +177,10 @@ test_that("citation_quarto extracts title without subtitle", {
   quarto_dir <- create_temp_quarto(title = "Simple Title")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -183,7 +195,10 @@ test_that("citation_quarto extracts shorttitle", {
   )
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -195,7 +210,10 @@ test_that("citation_quarto extracts license", {
   quarto_dir <- create_temp_quarto(license = "GPL-3.0")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -222,7 +240,10 @@ test_that("citation_quarto returns error when license missing", {
   )
 
   meta <- structure(
-    list(get_type = "quarto", get_path = temp_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(temp_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -234,7 +255,10 @@ test_that("citation_quarto extracts publication_date", {
   quarto_dir <- create_temp_quarto(publication_date = "2024-01-15")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -246,7 +270,10 @@ test_that("citation_quarto handles embargo date", {
   quarto_dir <- create_temp_quarto(embargo = "2025-06-01")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -261,7 +288,10 @@ test_that("citation_quarto sets open access when no embargo", {
   quarto_dir <- create_temp_quarto()
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -273,7 +303,10 @@ test_that("citation_quarto extracts language", {
   quarto_dir <- create_temp_quarto(lang = "nl-BE")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -285,7 +318,10 @@ test_that("citation_quarto extracts keywords", {
   quarto_dir <- create_temp_quarto(keywords = c("keyword1", "keyword2"))
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -303,7 +339,10 @@ test_that("citation_quarto notes missing keywords", {
   yaml::write_yaml(yaml_content, yaml_file)
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -321,7 +360,10 @@ test_that("citation_quarto notes missing publisher", {
   yaml::write_yaml(yaml_content, yaml_file)
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -333,7 +375,10 @@ test_that("citation_quarto validates publication_type", {
   quarto_dir <- create_temp_quarto(publication_type = "invalid-type")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -351,7 +396,10 @@ test_that("citation_quarto notes missing publication_type", {
   yaml::write_yaml(yaml_content, yaml_file)
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -363,7 +411,10 @@ test_that("citation_quarto processes flandersqmd structure", {
   quarto_dir <- create_temp_quarto(use_flandersqmd = TRUE)
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -376,7 +427,10 @@ test_that("citation_quarto processes book structure", {
   quarto_dir <- create_temp_quarto(use_book = TRUE)
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -389,7 +443,10 @@ test_that("citation_quarto extracts doi", {
   quarto_dir <- create_temp_quarto(doi = "10.5281/zenodo.1234567")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -401,7 +458,10 @@ test_that("citation_quarto sets upload_type to publication", {
   quarto_dir <- create_temp_quarto()
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 
@@ -413,7 +473,10 @@ test_that("citation_quarto extracts community", {
   quarto_dir <- create_temp_quarto(community = "test-community")
 
   meta <- structure(
-    list(get_type = "quarto", get_path = quarto_dir),
+    list(
+      get_type = "quarto",
+      get_path = file.path(quarto_dir, "_quarto.yml", fsep = "/")
+    ),
     class = "citation_meta"
   )
 

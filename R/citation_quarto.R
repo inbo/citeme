@@ -13,17 +13,7 @@ citation_quarto <- function(meta) {
       )
     )
   }
-  if (basename(meta$get_path) == "_quarto.yml") {
-    yaml <- read_yaml(meta$get_path)
-  } else {
-    stopifnot(
-      "please install the 'rmarkdown' package" = requireNamespace(
-        "rmarkdown",
-        quietly = TRUE
-      )
-    )
-    yaml <- rmarkdown::yaml_front_matter(meta$get_path)
-  }
+  yaml <- quarto_yaml(meta$get_path)
   language <- yaml$lang
   if (has_name(yaml, "flandersqmd")) {
     yaml <- yaml$flandersqmd

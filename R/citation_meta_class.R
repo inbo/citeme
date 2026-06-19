@@ -45,7 +45,11 @@ citation_meta <- R6Class(
         },
         stop("`path` type is not supported")
       )
-      private$person <- meta$person
+      if (is.null(meta$person)) {
+        private$person <- person()
+      } else {
+        private$person <- meta$person
+      }
       private$meta <- meta$meta
       private$errors <- meta$errors
       private$notes <- meta$notes

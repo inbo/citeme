@@ -27,4 +27,4 @@ abstract: "Manage person and organisation information with validation and format
 identifiers:
 - type: url
   value: https://inbo.github.io/citeme/
-version: 0.1.2
+version: 0.1.3

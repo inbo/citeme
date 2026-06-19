@@ -4,17 +4,16 @@
 citation_quarto <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "quarto")
-  index_file <- file.path(meta$get_path, "_quarto.yml", fsep = "/")
-  if (!file_test("-f", index_file)) {
+  if (!file_test("-f", meta$get_path)) {
     return(
       list(
-        errors = paste(index_file, "not found"),
+        errors = paste(meta$get_path, "not found"),
         warnings = character(0),
         notes = character(0)
       )
     )
   }
-  yaml <- read_yaml(index_file)
+  yaml <- quarto_yaml(meta$get_path)
   language <- yaml$lang
   if (has_name(yaml, "flandersqmd")) {
     yaml <- yaml$flandersqmd
@@ -24,7 +23,8 @@ citation_quarto <- function(meta) {
   yaml$lang <- coalesce(yaml$lang, language)
   cit_meta <- yaml_individual(yaml = yaml)
   cit_meta$warnings <- cit_meta$notes <- character(0)
-  description <- quarto_description(meta$get_path)
+  dirname(meta$get_path) |>
+    quarto_description() -> description
   cit_meta$meta$description <- description$description
   cit_meta$errors <- c(cit_meta$errors, description$errors)
   cit_meta$meta$title <- paste0(

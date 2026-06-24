@@ -1,6 +1,6 @@
 {
   "title": "citeme: Manage Person and Organisation Information",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "GPL-3.0",
   "upload_type": "software",
   "description": "<p>Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, publisher information, and integration with citation management systems.<\/p>",

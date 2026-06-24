@@ -18,6 +18,8 @@
 #' @export
 select_individual <- function(email, lang) {
   root <- R_user_dir("citeme", which = "data")
+  # make sure the directory exists
+  dir.create(root, showWarnings = FALSE, recursive = TRUE)
   org <- org_list$new()$read()
   current <- stored_individuals()
   assert_that(

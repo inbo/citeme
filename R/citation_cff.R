@@ -48,6 +48,14 @@ citation_cff <- function(meta) {
   }
   dirname(meta$get_path) |>
     file.path("CITATION.cff", fsep = "/") -> citation_file
-  write_yaml(x = cff, file = citation_file, fileEncoding = "UTF-8")
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(
+    x = cff,
+    file = citation_file,
+    fileEncoding = "UTF-8",
+    handlers = handlers
+  )
   return(modified_citation_file(citation_file, dirname(meta$get_path)))
 }

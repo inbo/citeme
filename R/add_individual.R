@@ -180,13 +180,20 @@ get_yaml_header <- function(path) {
 #' @importFrom yaml as.yaml write_yaml
 write_yaml_header <- function(header) {
   path <- attr(header, "path")
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
   if (!"pre" %in% names(attributes(header))) {
-    write_yaml(header, file = path)
+    write_yaml(
+      header,
+      file = path,
+      handlers = handlers
+    )
     return(invisible(NULL))
   }
   pre <- attr(header, "pre")
   post <- attr(header, "post")
-  yaml_content <- as.yaml(header)
+  yaml_content <- as.yaml(header, handlers = handlers)
   c(pre, "---", yaml_content, "---", post) |>
     writeLines(con = path)
   return(invisible(NULL))

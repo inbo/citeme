@@ -76,7 +76,14 @@ create_temp_quarto <- function(
     quarto_yml <- yaml_content
   }
 
-  yaml::write_yaml(quarto_yml, file.path(temp_dir, "_quarto.yml", fsep = "/"))
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(
+    quarto_yml,
+    file.path(temp_dir, "_quarto.yml", fsep = "/"),
+    handlers = handlers
+  )
 
   # Create index.qmd with description
   index_qmd <- "# Introduction
@@ -231,7 +238,14 @@ test_that("citation_quarto returns error when license missing", {
     lang = "en-GB",
     author = list(list(name = list(given = "John", family = "Doe")))
   )
-  yaml::write_yaml(yaml_content, file.path(temp_dir, "_quarto.yml", fsep = "/"))
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(
+    yaml_content,
+    file.path(temp_dir, "_quarto.yml", fsep = "/"),
+    handlers = handlers
+  )
 
   # Create index.qmd with description
   writeLines(
@@ -336,7 +350,10 @@ test_that("citation_quarto notes missing keywords", {
   yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$keywords <- NULL
-  yaml::write_yaml(yaml_content, yaml_file)
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(yaml_content, yaml_file, handlers = handlers)
 
   meta <- structure(
     list(
@@ -357,7 +374,10 @@ test_that("citation_quarto notes missing publisher", {
   yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$publisher <- NULL
-  yaml::write_yaml(yaml_content, yaml_file)
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(yaml_content, yaml_file, handlers = handlers)
 
   meta <- structure(
     list(
@@ -393,7 +413,10 @@ test_that("citation_quarto notes missing publication_type", {
   yaml_file <- file.path(quarto_dir, "_quarto.yml", fsep = "/")
   yaml_content <- yaml::read_yaml(yaml_file)
   yaml_content$publication_type <- NULL
-  yaml::write_yaml(yaml_content, yaml_file)
+  handlers <- list(logical = function(x) {
+    ifelse(x, "true", "false")
+  })
+  write_yaml(yaml_content, yaml_file, handlers = handlers)
 
   meta <- structure(
     list(

@@ -6,19 +6,19 @@
 
 test_that("determine_type validates path argument", {
   expect_error(
-    citeme:::determine_type(c("a", "b")),
+    determine_type(c("a", "b")),
     "`path` must be a single string"
   )
   expect_error(
-    citeme:::determine_type(123),
+    determine_type(123),
     "`path` must be a single string"
   )
   expect_error(
-    citeme:::determine_type(NA_character_),
+    determine_type(NA_character_),
     "`path` must be a single string"
   )
   expect_error(
-    citeme:::determine_type("nonexistent_path"),
+    determine_type("nonexistent_path"),
     "`path` does not exist"
   )
 })
@@ -30,7 +30,7 @@ test_that("determine_type identifies DESCRIPTION files", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   desc_file <- file.path(temp_dir, "DESCRIPTION", fsep = "/")
   writeLines("Package: test", desc_file)
-  result <- citeme:::determine_type(desc_file)
+  result <- determine_type(desc_file)
   expect_equal(names(result), "description")
   expect_equal(unname(result), desc_file)
 })
@@ -42,7 +42,7 @@ test_that("determine_type identifies _quarto.yml files", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   writeLines("project:\n  type: book", quarto_file)
-  result <- citeme:::determine_type(quarto_file)
+  result <- determine_type(quarto_file)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), quarto_file)
 })
@@ -55,7 +55,7 @@ test_that("determine_type identifies .qmd files", {
 
   qmd_file <- file.path(temp_dir, "chapter.qmd", fsep = "/")
   writeLines("---\ntitle: Test\n---", qmd_file)
-  result <- citeme:::determine_type(qmd_file)
+  result <- determine_type(qmd_file)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), qmd_file)
 })
@@ -67,7 +67,7 @@ test_that("determine_type identifies README.md files", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   readme_file <- file.path(temp_dir, "README.md", fsep = "/")
   writeLines("# Test", readme_file)
-  result <- citeme:::determine_type(readme_file)
+  result <- determine_type(readme_file)
   expect_equal(names(result), "readme")
   expect_equal(unname(result), readme_file)
 })
@@ -79,7 +79,7 @@ test_that("determine_type identifies README.Rmd files", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   readme_file <- file.path(temp_dir, "README.Rmd", fsep = "/")
   writeLines("# Test", readme_file)
-  result <- citeme:::determine_type(readme_file)
+  result <- determine_type(readme_file)
   expect_equal(names(result), "readme")
   expect_equal(unname(result), readme_file)
 })
@@ -91,7 +91,7 @@ test_that("determine_type identifies index.md as quarto", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   index_file <- file.path(temp_dir, "index.md", fsep = "/")
   writeLines("# Book Title", index_file)
-  result <- citeme:::determine_type(index_file)
+  result <- determine_type(index_file)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), index_file)
 })
@@ -103,7 +103,7 @@ test_that("determine_type identifies index.Rmd as quarto", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   index_file <- file.path(temp_dir, "index.Rmd", fsep = "/")
   writeLines("# Book Title", index_file)
-  result <- citeme:::determine_type(index_file)
+  result <- determine_type(index_file)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), index_file)
 })
@@ -115,7 +115,7 @@ test_that("determine_type errors on unsupported file type", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   unsupported <- file.path(temp_dir, "script.R", fsep = "/")
   writeLines("x <- 1", unsupported)
-  expect_equal(citeme:::determine_type(unsupported), character(0))
+  expect_equal(determine_type(unsupported), character(0))
 })
 
 test_that("determine_type finds DESCRIPTION in directory", {
@@ -125,7 +125,7 @@ test_that("determine_type finds DESCRIPTION in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   desc_file <- file.path(temp_dir, "DESCRIPTION", fsep = "/")
   writeLines("Package: test", desc_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "description")
   expect_equal(unname(result), desc_file)
 })
@@ -137,7 +137,7 @@ test_that("determine_type finds _quarto.yml in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   writeLines("project:\n  type: book", quarto_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), quarto_file)
 })
@@ -149,7 +149,7 @@ test_that("determine_type finds index.Rmd in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   index_file <- file.path(temp_dir, "index.Rmd", fsep = "/")
   writeLines("# Book", index_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), index_file)
 })
@@ -161,7 +161,7 @@ test_that("determine_type finds index.md in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   index_file <- file.path(temp_dir, "index.md", fsep = "/")
   writeLines("# Book", index_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "quarto")
   expect_equal(unname(result), index_file)
 })
@@ -173,7 +173,7 @@ test_that("determine_type finds README.Rmd in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   readme_file <- file.path(temp_dir, "README.Rmd", fsep = "/")
   writeLines("# README", readme_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "readme")
   expect_equal(unname(result), readme_file)
 })
@@ -185,7 +185,7 @@ test_that("determine_type finds README.md in directory", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   readme_file <- file.path(temp_dir, "README.md", fsep = "/")
   writeLines("# README", readme_file)
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "readme")
   expect_equal(unname(result), readme_file)
 })
@@ -195,7 +195,7 @@ test_that("determine_type errors on empty directory", {
     normalizePath(mustWork = FALSE, winslash = "/") -> temp_dir
   dir.create(temp_dir)
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
-  expect_equal(citeme:::determine_type(temp_dir), character(0))
+  expect_equal(determine_type(temp_dir), character(0))
 })
 
 test_that("determine_type prioritises quarto over other files", {
@@ -207,7 +207,7 @@ test_that("determine_type prioritises quarto over other files", {
   writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
   writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
   writeLines("project:", file.path(temp_dir, "_quarto.yml", fsep = "/"))
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "quarto")
 })
 
@@ -219,7 +219,7 @@ test_that("determine_type prioritises index over DESCRIPTION and README", {
   writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
   writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
   writeLines("# Index", file.path(temp_dir, "index.Rmd", fsep = "/"))
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "quarto")
 })
 
@@ -230,7 +230,7 @@ test_that("determine_type prioritises DESCRIPTION over README.md", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   writeLines("Package: test", file.path(temp_dir, "DESCRIPTION", fsep = "/"))
   writeLines("# README", file.path(temp_dir, "README.md", fsep = "/"))
-  result <- citeme:::determine_type(temp_dir)
+  result <- determine_type(temp_dir)
   expect_equal(names(result), "description")
 })
 
@@ -244,7 +244,7 @@ test_that("find_individual_insert finds role footnotes", {
     "",
     "Some content"
   )
-  result <- citeme:::find_individual_insert(content)
+  result <- find_individual_insert(content)
   # Should return the line after the author line (line 4)
   expect_equal(result, 3)
 })
@@ -259,7 +259,7 @@ test_that("find_individual_insert finds last role footnote", {
     "",
     "Some content"
   )
-  result <- citeme:::find_individual_insert(content)
+  result <- find_individual_insert(content)
   # Should return the line after the last author line (line 6)
   expect_equal(result, 5)
 })
@@ -270,7 +270,7 @@ test_that("find_individual_insert returns 0 when no roles found", {
     "",
     "Some content without authors"
   )
-  result <- citeme:::find_individual_insert(content)
+  result <- find_individual_insert(content)
   expect_equal(result, 0)
 })
 
@@ -278,7 +278,7 @@ test_that("find_individual_insert recognises all role types", {
   roles <- c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
   for (role in roles) {
     content <- c("# Title", sprintf("Name[^%s]", role), "Content")
-    result <- citeme:::find_individual_insert(content)
+    result <- find_individual_insert(content)
     expect_equal(result, 2, info = sprintf("Failed for role: %s", role))
   }
 })
@@ -299,7 +299,7 @@ test_that("get_yaml_header reads _quarto.yml file", {
     ),
     quarto_file
   )
-  result <- citeme:::get_yaml_header(quarto_file)
+  result <- get_yaml_header(quarto_file)
   expect_equal(result$project$type, "book")
   expect_equal(result$title, "Test Book")
   expect_equal(attr(result, "path"), quarto_file)
@@ -325,7 +325,7 @@ test_that("get_yaml_header reads .qmd file with YAML front matter", {
     ),
     qmd_file
   )
-  result <- citeme:::get_yaml_header(qmd_file)
+  result <- get_yaml_header(qmd_file)
   expect_equal(result$title, "Chapter Title")
   expect_equal(result$author, "Test Author")
   expect_equal(attr(result, "path"), qmd_file)
@@ -349,7 +349,7 @@ test_that("get_yaml_header preserves pre and post content", {
     ),
     qmd_file
   )
-  result <- citeme:::get_yaml_header(qmd_file)
+  result <- get_yaml_header(qmd_file)
   expect_equal(attr(result, "pre"), "<!-- comment before -->")
   expect_equal(attr(result, "post"), "Content after")
 })
@@ -362,7 +362,7 @@ test_that("get_yaml_header errors without YAML delimiters", {
   bad_file <- file.path(temp_dir, "bad.qmd", fsep = "/")
   writeLines(c("No YAML here", "Just content"), bad_file)
   expect_error(
-    citeme:::get_yaml_header(bad_file),
+    get_yaml_header(bad_file),
     "unable to find two YAML header delimiters"
   )
 })
@@ -377,7 +377,7 @@ test_that("write_yaml_header writes _quarto.yml file", {
   quarto_file <- file.path(temp_dir, "_quarto.yml", fsep = "/")
   header <- list(project = list(type = "book"), title = "New Book")
   attr(header, "path") <- quarto_file
-  citeme:::write_yaml_header(header)
+  write_yaml_header(header)
   result <- yaml::read_yaml(quarto_file)
   expect_equal(result$project$type, "book")
   expect_equal(result$title, "New Book")
@@ -393,7 +393,7 @@ test_that("write_yaml_header writes .qmd file with pre/post content", {
   attr(header, "path") <- qmd_file
   attr(header, "pre") <- "<!-- pre -->"
   attr(header, "post") <- c("", "Content here")
-  citeme:::write_yaml_header(header)
+  write_yaml_header(header)
   content <- readLines(qmd_file)
   expect_equal(content[1], "<!-- pre -->")
   expect_equal(content[2], "---")
@@ -411,7 +411,7 @@ test_that("individual2list creates basic structure", {
     affiliation = NA_character_,
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_equal(result$name$given, "John")
   expect_equal(result$name$family, "Doe")
   expect_null(result$email)
@@ -428,7 +428,7 @@ test_that("individual2list includes email when present", {
     affiliation = NA_character_,
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_equal(result$email, "john@example.org")
 })
 
@@ -441,7 +441,7 @@ test_that("individual2list includes orcid when present", {
     affiliation = NA_character_,
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_equal(result$orcid, "0000-0001-2345-6789")
 })
 
@@ -454,7 +454,7 @@ test_that("individual2list includes affiliation when present", {
     affiliation = "Test University",
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_equal(result$affiliation, list("Test University"))
 })
 
@@ -467,7 +467,7 @@ test_that("individual2list includes all fields when present", {
     affiliation = "Research Institute",
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_equal(result$name$given, "Jane")
   expect_equal(result$name$family, "Smith")
   expect_equal(result$email, "jane@example.org")
@@ -484,7 +484,7 @@ test_that("individual2list excludes empty strings", {
     affiliation = "",
     stringsAsFactors = FALSE
   )
-  result <- citeme:::individual2list(individual)
+  result <- individual2list(individual)
   expect_null(result$email)
   expect_null(result$orcid)
   expect_null(result$affiliation)

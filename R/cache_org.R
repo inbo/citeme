@@ -50,7 +50,7 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   try(
     suppressWarnings(
       paste0(url, "/citeme") |>
-        download.file(destfile = tempfile(), quiet = TRUE)
+        download.file(destfile = tempfile(), quiet = TRUE, mode = "wb")
     ),
     silent = TRUE
   ) -> url_head
@@ -58,7 +58,7 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
     try(
       suppressWarnings(
         paste0(url, "/checklist") |>
-          download.file(destfile = tempfile(), quiet = TRUE)
+          download.file(destfile = tempfile(), quiet = TRUE, mode = "wb")
       ),
       silent = TRUE
     ) -> url_head

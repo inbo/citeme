@@ -101,7 +101,7 @@ Content here.
 
 test_that("citation_quarto requires citation_meta object", {
   expect_error(
-    citeme:::citation_quarto("not_a_citation_meta"),
+    citation_quarto("not_a_citation_meta"),
     "does not inherit from class citation_meta"
   )
 })
@@ -114,7 +114,7 @@ test_that("citation_quarto requires quarto type", {
   )
 
   expect_error(
-    citeme:::citation_quarto(meta_obj),
+    citation_quarto(meta_obj),
     "not equal to \"quarto\""
   )
 })
@@ -134,7 +134,7 @@ test_that("citation_quarto returns error when _quarto.yml missing", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(length(result$errors) > 0)
   expect_match(result$errors[1], "_quarto.yml.*not found")
 })
@@ -151,7 +151,7 @@ test_that("citation_quarto processes valid quarto project", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
 
   # Check structure of result
   expect_true(is.list(result))
@@ -176,7 +176,7 @@ test_that("citation_quarto extracts title with subtitle", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$title, "Main Title. A Subtitle.")
 })
 
@@ -191,7 +191,7 @@ test_that("citation_quarto extracts title without subtitle", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$title, "Simple Title.")
 })
 
@@ -209,7 +209,7 @@ test_that("citation_quarto extracts shorttitle", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$shorttitle, "Short")
 })
 
@@ -224,7 +224,7 @@ test_that("citation_quarto extracts license", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$license, "GPL-3.0")
 })
 
@@ -261,7 +261,7 @@ test_that("citation_quarto returns error when license missing", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(any(grepl("No .license. element found", result$errors)))
 })
 
@@ -276,7 +276,7 @@ test_that("citation_quarto extracts publication_date", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$publication_date, "2024-01-15")
 })
 
@@ -291,7 +291,7 @@ test_that("citation_quarto handles embargo date", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$embargo_date, "2025-06-01")
   expect_equal(result$meta$access_right, "embargoed")
   # When no publication_date is set, embargo_date is used
@@ -309,7 +309,7 @@ test_that("citation_quarto sets open access when no embargo", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$access_right, "open")
 })
 
@@ -324,7 +324,7 @@ test_that("citation_quarto extracts language", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$language, "nl-BE")
 })
 
@@ -339,7 +339,7 @@ test_that("citation_quarto extracts keywords", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$keywords, c("keyword1", "keyword2"))
 })
 
@@ -363,7 +363,7 @@ test_that("citation_quarto notes missing keywords", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(any(grepl("No .keywords. element found", result$errors)))
 })
 
@@ -387,7 +387,7 @@ test_that("citation_quarto notes missing publisher", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(any(grepl("No .publisher. element found", result$errors)))
 })
 
@@ -402,7 +402,7 @@ test_that("citation_quarto validates publication_type", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(any(grepl(".publication_type. must be one of", result$errors)))
 })
 
@@ -426,7 +426,7 @@ test_that("citation_quarto notes missing publication_type", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(any(grepl("No .publication_type. element found", result$notes)))
 })
 
@@ -441,7 +441,7 @@ test_that("citation_quarto processes flandersqmd structure", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(is.list(result))
   expect_true(has_name(result$meta, "title"))
 })
@@ -457,7 +457,7 @@ test_that("citation_quarto processes book structure", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true(is.list(result))
   expect_true(has_name(result$meta, "title"))
 })
@@ -473,7 +473,7 @@ test_that("citation_quarto extracts doi", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$doi, "10.5281/zenodo.1234567")
 })
 
@@ -488,7 +488,7 @@ test_that("citation_quarto sets upload_type to publication", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_equal(result$meta$upload_type, "publication")
 })
 
@@ -503,7 +503,7 @@ test_that("citation_quarto extracts community", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_quarto(meta)
+  result <- citation_quarto(meta)
   expect_true("test-community" %in% result$meta$community)
 })
 
@@ -523,7 +523,7 @@ Other content.
 "
   writeLines(qmd_content, file.path(temp_dir, "index.qmd", fsep = "/"))
 
-  result <- citeme:::quarto_description(temp_dir)
+  result <- quarto_description(temp_dir)
   expect_equal(result$description, "This is the description text.")
   expect_equal(result$errors, character(0))
 })
@@ -538,7 +538,7 @@ test_that("quarto_description returns error when no description found", {
     file.path(temp_dir, "index.qmd", fsep = "/")
   )
 
-  result <- citeme:::quarto_description(temp_dir)
+  result <- quarto_description(temp_dir)
   expect_true(any(grepl("No description found", result$errors)))
 })
 
@@ -558,6 +558,6 @@ Chapter description.
     file.path(temp_dir, "chapters", "chapter1.qmd", fsep = "/")
   )
 
-  result <- citeme:::quarto_description(temp_dir)
+  result <- quarto_description(temp_dir)
   expect_equal(result$description, "Chapter description.")
 })

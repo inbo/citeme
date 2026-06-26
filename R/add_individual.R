@@ -13,20 +13,22 @@
 #' Then you can only specify one role, and `"aut"` will be added to the `author`
 #' field, #' `"rev"` to the `reviewer` field, `"cph"` to the `rightsholder`
 #' field, `"fnd"` to the `funder` field, and `"pbl"` to the `publisher` field.
+#' @inheritParams select_individual
 #' @export
 #' @family individual
 add_individual <- function(
   path = ".",
-  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
+  org = org_list$new()$read()
 ) {
   role <- match.arg(role, several.ok = TRUE)
   path <- determine_type(path)
   stopifnot("no supported file found in `path`" = length(path) == 1)
   switch(
     names(path),
-    quarto = add_individual_quarto(path, role = role),
-    description = add_individual_description(path, role = role),
-    readme = add_individual_readme(path, role = role),
+    quarto = add_individual_quarto(path, role = role, org = org),
+    description = add_individual_description(path, role = role, org = org),
+    readme = add_individual_readme(path, role = role, org = org),
     stop("`path` type is not supported")
   )
   return(invisible(TRUE))
@@ -35,12 +37,13 @@ add_individual <- function(
 #' @importFrom desc description
 add_individual_description <- function(
   path = ".",
-  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
+  org = org_list$new()$read()
 ) {
   role <- match.arg(role, several.ok = TRUE)
   meta <- citation_meta$new(dirname(path))
   descript <- description$new(file = path)
-  individual <- select_individual(lang = meta$get_meta$language)
+  individual <- select_individual(lang = meta$get_meta$language, org = org)
   new_person <- individual2person(
     individual,
     role = role,
@@ -61,12 +64,13 @@ add_individual_description <- function(
 #' @importFrom utils head tail
 add_individual_readme <- function(
   path = ".",
-  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
+  org = org_list$new()$read()
 ) {
   role <- match.arg(role, several.ok = TRUE)
   meta <- citation_meta$new(path)
   content <- readLines(path)
-  individual <- select_individual(lang = meta$get_meta$language)
+  individual <- select_individual(lang = meta$get_meta$language, org = org)
   individual_line <- individuals2badge(individual, role = role)
   # Find the position to insert the individual
   insert_position <- find_individual_insert(content)
@@ -132,12 +136,13 @@ find_individual_insert <- function(content) {
 
 add_individual_quarto <- function(
   path = ".",
-  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
+  org = org_list$new()$read()
 ) {
   meta <- citation_meta$new(dirname(path))
   role <- match.arg(role)
   header <- get_yaml_header(path)
-  select_individual(lang = meta$get_meta$language) |>
+  select_individual(lang = meta$get_meta$language, org = org) |>
     individual2list() -> extra
   element <- switch(
     role,

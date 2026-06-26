@@ -206,7 +206,7 @@ org_list <- R6Class(
     #' @importFrom yaml read_yaml
     read = function(x = ".") {
       stopifnot(
-        "`x` is not a string" = inherits(x, "character"),
+        "`x` is not a character" = inherits(x, "character"),
         "`x` is not a string" = length(x) == 1,
         "`x` is not an existing directory" = file_test("-d", x)
       )

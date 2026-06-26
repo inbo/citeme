@@ -4,7 +4,7 @@
 \alias{select_individual}
 \title{Select an individual from the local database or add a new individual.}
 \usage{
-select_individual(email, lang)
+select_individual(email, lang, org = org_list$new()$read())
 }
 \arguments{
 \item{email}{An optional email address.
@@ -16,6 +16,9 @@ Defaults to the first language in the \code{name} vector of the
 \code{org_list} object.
 When the affiliation is not available in that language,
 it will use the first available language.}
+
+\item{org}{An \code{org_list} object containing the organisation information.
+Defaults to the \code{org_list} object read from the current working directory.}
 }
 \value{
 A data.frame with individual information.

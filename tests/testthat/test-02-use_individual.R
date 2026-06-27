@@ -25,7 +25,7 @@ test_that("validate_individual returns current when no affiliation match", {
   mock_org <- create_mock_org(character(0))
   # Should return current unchanged when no affiliation match
   result <- suppressMessages(
-    citeme:::validate_individual(
+    validate_individual(
       current = current,
       selected = 1,
       org = mock_org,
@@ -45,7 +45,7 @@ test_that("validate_individual requires org_list object", {
     usage = 1L
   )
   expect_error(
-    citeme:::validate_individual(
+    validate_individual(
       current = current,
       selected = 1,
       org = "not_an_org_list",
@@ -68,7 +68,7 @@ test_that("validate_individual updates affiliation when single match", {
     c("Research Institute for Nature and Forest (INBO)" = FALSE)
   )
   result <- suppressMessages(
-    citeme:::validate_individual(
+    validate_individual(
       current = current,
       selected = 1,
       org = mock_org,
@@ -93,7 +93,7 @@ test_that("validate_individual keeps affiliation when already matching", {
   # Affiliation already matches one of the options
   mock_org <- create_mock_org(c("INBO" = FALSE))
   result <- suppressMessages(
-    citeme:::validate_individual(
+    validate_individual(
       current = current,
       selected = 1,
       org = mock_org,
@@ -115,7 +115,7 @@ test_that("new_individual requires org_list object", {
     usage = integer(0)
   )
   expect_error(
-    citeme:::new_individual(
+    new_individual(
       current = current,
       root = tempdir(),
       org = "not_an_org_list",
@@ -139,7 +139,7 @@ test_that("new_individual creates individual with mocked input", {
   )
   mock_org <- create_mock_org(character(0))
   # Create a local version of new_individual with mocked functions
-  local_new_individual <- citeme:::new_individual
+  local_new_individual <- new_individual
   # Mock readline to return test values
   readline_calls <- 0
   readline_values <- c("Test", "Person", "test@example.org", "Test Affiliation")
@@ -183,7 +183,7 @@ test_that("new_individual sets affiliation from org when single match", {
   )
   # Return single organisation, FALSE means no ORCID required
   mock_org <- create_mock_org(c("INBO" = FALSE))
-  local_new_individual <- citeme:::new_individual
+  local_new_individual <- new_individual
   readline_calls <- 0
   readline_values <- c("Test", "Person", "test@inbo.be")
   mockery::stub(
@@ -219,7 +219,7 @@ test_that("new_individual writes individual.txt file", {
     usage = integer(0)
   )
   mock_org <- create_mock_org(character(0))
-  local_new_individual <- citeme:::new_individual
+  local_new_individual <- new_individual
   readline_calls <- 0
   readline_values <- c("Test", "Person", "test@example.org", "Test University")
   mockery::stub(
@@ -266,7 +266,7 @@ test_that("update_individual returns original on undo", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu to select "undo changes and exit" (option 7)
   mockery::stub(local_update_individual, "menu", 7)
   result <- suppressMessages(
@@ -294,7 +294,7 @@ test_that("update_individual saves changes on save and exit", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu to select "save and exit" (option 6)
   mockery::stub(local_update_individual, "menu", 6)
   suppressMessages(
@@ -323,7 +323,7 @@ test_that("update_individual updates given name", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu: first select "given" (1), then "save and exit" (6)
   menu_calls <- 0
   menu_values <- c(1, 6)
@@ -362,7 +362,7 @@ test_that("update_individual updates family name", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu: first select "family" (2), then "save and exit" (6)
   menu_calls <- 0
   menu_values <- c(2, 6)
@@ -400,7 +400,7 @@ test_that("update_individual updates email", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu: first select "email" (3), then "save and exit" (6)
   menu_calls <- 0
   menu_values <- c(3, 6)
@@ -438,7 +438,7 @@ test_that("update_individual updates orcid", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu: first select "orcid" (4), then "save and exit" (6)
   menu_calls <- 0
   menu_values <- c(4, 6)
@@ -476,7 +476,7 @@ test_that("update_individual updates affiliation", {
     usage = 1L
   )
   mock_org <- create_mock_org(character(0))
-  local_update_individual <- citeme:::update_individual
+  local_update_individual <- update_individual
   # Mock menu: first select "affiliation" (5), then "save and exit" (6)
   menu_calls <- 0
   menu_values <- c(5, 6)

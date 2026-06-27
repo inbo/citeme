@@ -60,7 +60,7 @@ Content here.
 
 test_that("citation_bookdown requires citation_meta object", {
   expect_error(
-    citeme:::citation_bookdown("not_a_citation_meta"),
+    citation_bookdown("not_a_citation_meta"),
     "does not inherit from class citation_meta"
   )
 })
@@ -73,7 +73,7 @@ test_that("citation_bookdown requires bookdown type", {
   )
 
   expect_error(
-    citeme:::citation_bookdown(meta_obj),
+    citation_bookdown(meta_obj),
     "not equal to \"bookdown\""
   )
 })
@@ -95,7 +95,7 @@ test_that("citation_bookdown returns error when index.Rmd missing", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
   expect_true(length(result$errors) > 0)
   expect_match(result$errors[1], "index.Rmd.*not found")
 })
@@ -112,7 +112,7 @@ test_that("citation_bookdown processes valid bookdown project", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   # Check structure of result
   expect_true(is.list(result))
@@ -133,7 +133,7 @@ test_that("citation_bookdown extracts title from YAML", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_true(has_name(result$meta, "title"))
   expect_match(result$meta$title, "Test Book")
@@ -150,7 +150,7 @@ test_that("citation_bookdown sets upload_type to publication", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_equal(result$meta$upload_type, "publication")
 })
@@ -166,7 +166,7 @@ test_that("citation_bookdown handles publication_date", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_true(has_name(result$meta, "publication_date"))
   expect_match(result$meta$publication_date, "\\d{4}-\\d{2}-\\d{2}")
@@ -210,7 +210,7 @@ Content
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_equal(result$meta$access_right, "embargoed")
   expect_true(has_name(result$meta, "embargo_date"))
@@ -227,7 +227,7 @@ test_that("citation_bookdown sets access_right to open when no embargo", {
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_equal(result$meta$access_right, "open")
 })
@@ -263,7 +263,7 @@ Content
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_true(any(grepl("license", result$errors, ignore.case = TRUE)))
 })
@@ -304,7 +304,7 @@ Content
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_match(result$meta$title, "Sub Title")
 })
@@ -345,7 +345,7 @@ Content
     class = "citation_meta"
   )
 
-  result <- citeme:::citation_bookdown(meta)
+  result <- citation_bookdown(meta)
 
   expect_equal(result$meta$shorttitle, "Short")
 })
@@ -353,12 +353,12 @@ Content
 # Tests for split_community helper function
 
 test_that("split_community handles NULL input", {
-  result <- citeme:::split_community(NULL)
+  result <- split_community(NULL)
   expect_null(result)
 })
 
 test_that("split_community splits on semicolon", {
-  result <- citeme:::split_community("community1; community2; community3")
+  result <- split_community("community1; community2; community3")
   expect_length(result, 3)
   expect_true("community1" %in% result)
   expect_true("community2" %in% result)
@@ -368,7 +368,7 @@ test_that("split_community splits on semicolon", {
 test_that("split_community removes whitespace around semicolons", {
   # The function splits on \s*;\s* so whitespace around semicolons is removed
   # but leading/trailing whitespace on the full string is preserved
-  result <- citeme:::split_community("com1;com2;com3")
+  result <- split_community("com1;com2;com3")
   expect_length(result, 3)
   expect_true("com1" %in% result)
   expect_true("com2" %in% result)
@@ -376,7 +376,7 @@ test_that("split_community removes whitespace around semicolons", {
 })
 
 test_that("split_community removes duplicates", {
-  result <- citeme:::split_community("dup; dup; unique")
+  result <- split_community("dup; dup; unique")
   expect_length(result, 2)
   expect_equal(sum(result == "dup"), 1)
 })
@@ -384,7 +384,7 @@ test_that("split_community removes duplicates", {
 test_that("split_community fails with non-character input", {
   # assertthat uses different error message format
   expect_error(
-    citeme:::split_community(123),
+    split_community(123),
     "community is not a character vector"
   )
 })
@@ -404,7 +404,7 @@ test_that("yaml_individual extracts authors correctly", {
     rightsholder = list()
   )
 
-  result <- citeme:::yaml_individual(yaml_data)
+  result <- yaml_individual(yaml_data)
 
   expect_true(has_name(result, "person"))
   expect_true(has_name(result, "errors"))
@@ -429,7 +429,7 @@ test_that("yaml_individual handles multiple roles", {
     rightsholder = list()
   )
 
-  result <- citeme:::yaml_individual(yaml_data)
+  result <- yaml_individual(yaml_data)
 
   expect_true(length(result$person) >= 2)
 })
@@ -442,7 +442,7 @@ test_that("yaml_individual_format requires name structure", {
     email = "test@example.com"
   )
 
-  result <- citeme:::yaml_individual_format(person_data, role = "aut")
+  result <- yaml_individual_format(person_data, role = "aut")
 
   expect_true(has_name(result[[1]], "person"))
   expect_true(has_name(result[[1]], "errors"))
@@ -452,7 +452,7 @@ test_that("yaml_individual_format requires name structure", {
 test_that("yaml_individual_format handles invalid person structure", {
   person_data <- "invalid"
 
-  result <- citeme:::yaml_individual_format(person_data, role = "aut")
+  result <- yaml_individual_format(person_data, role = "aut")
 
   expect_true(length(result[[1]]$errors) > 0)
 })
@@ -464,7 +464,7 @@ test_that("yaml_individual_format adds ORCID comment", {
     orcid = "0000-0001-2345-6789"
   )
 
-  result <- citeme:::yaml_individual_format(person_data, role = "aut")
+  result <- yaml_individual_format(person_data, role = "aut")
 
   expect_true("ORCID" %in% names(result[[1]]$person$comment))
 })
@@ -476,7 +476,7 @@ test_that("yaml_individual_format handles corresponding author", {
     corresponding = TRUE
   )
 
-  result <- citeme:::yaml_individual_format(person_data, role = "aut")
+  result <- yaml_individual_format(person_data, role = "aut")
 
   expect_true("cre" %in% result[[1]]$person$role)
 })
@@ -484,19 +484,19 @@ test_that("yaml_individual_format handles corresponding author", {
 # Tests for string2date helper function
 
 test_that("string2date parses valid dates", {
-  result <- citeme:::string2date("2023-01-15")
+  result <- string2date("2023-01-15")
   expect_s3_class(result, "Date")
   expect_equal(as.character(result), "2023-01-15")
 })
 
 test_that("string2date handles invalid dates", {
-  result <- citeme:::string2date("invalid-date")
+  result <- string2date("invalid-date")
   expect_true(is.na(result))
   expect_true(!is.null(attr(result, "error")))
 })
 
 test_that("string2date uses system date for non-string input", {
-  result <- citeme:::string2date(123)
+  result <- string2date(123)
   expect_s3_class(result, "Date")
   expect_true(!is.null(attr(result, "error")))
 })
@@ -506,7 +506,7 @@ test_that("string2date uses system date for non-string input", {
 test_that("validate_language_yaml requires lang or language", {
   yaml_data <- list()
 
-  result <- citeme:::validate_language_yaml(yaml_data)
+  result <- validate_language_yaml(yaml_data)
 
   expect_true(has_name(result, "error"))
 })
@@ -514,7 +514,7 @@ test_that("validate_language_yaml requires lang or language", {
 test_that("validate_language_yaml uses lang element", {
   yaml_data <- list(lang = "en-GB")
 
-  result <- citeme:::validate_language_yaml(yaml_data)
+  result <- validate_language_yaml(yaml_data)
 
   expect_true(has_name(result, "lang"))
 })
@@ -522,7 +522,7 @@ test_that("validate_language_yaml uses lang element", {
 test_that("validate_language_yaml uses language element as fallback", {
   yaml_data <- list(language = "en-GB")
 
-  result <- citeme:::validate_language_yaml(yaml_data)
+  result <- validate_language_yaml(yaml_data)
 
   expect_true(has_name(result, "lang"))
 })

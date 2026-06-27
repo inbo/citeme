@@ -20,6 +20,7 @@ Ask one or more licenses.
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_keywords]{ask_keywords()}},
 \code{\link[=ask_language]{ask_language()}},
 \code{\link[=ask_orcid]{ask_orcid()}},
 \code{\link[=ask_ror]{ask_ror()}},

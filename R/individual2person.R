@@ -12,12 +12,18 @@
 #' @param role The role to use for the `person` object.
 #' Defaults to `"aut"`` (author).
 #' @param lang The language to use for the affiliation.
+#' @inheritParams select_individual
 #' @importFrom utils person
 #' @export
 #' @family individual
-individual2person <- function(individual, role = "aut", lang) {
+individual2person <- function(
+  individual,
+  role = "aut",
+  lang,
+  org = org_list$new()$read()
+) {
   if (missing(individual)) {
-    individual <- select_individual(lang = lang)
+    individual <- select_individual(lang = lang, org = org)
   }
   if (is.na(individual$email) || individual$email == "") {
     email <- NULL

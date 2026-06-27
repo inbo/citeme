@@ -6,7 +6,8 @@
 \usage{
 add_individual(
   path = ".",
-  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl")
+  role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
+  org = org_list$new()$read()
 )
 }
 \arguments{
@@ -27,6 +28,9 @@ Unless you want to an individual to a Quarto or bookdown document.
 Then you can only specify one role, and \code{"aut"} will be added to the \code{author}
 field, #' \code{"rev"} to the \code{reviewer} field, \code{"cph"} to the \code{rightsholder}
 field, \code{"fnd"} to the \code{funder} field, and \code{"pbl"} to the \code{publisher} field.}
+
+\item{org}{An \code{org_list} object containing the organisation information.
+Defaults to the \code{org_list} object read from the current working directory.}
 }
 \description{
 Add an individual to a file

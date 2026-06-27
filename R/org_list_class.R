@@ -206,7 +206,7 @@ org_list <- R6Class(
     #' @importFrom yaml read_yaml
     read = function(x = ".") {
       stopifnot(
-        "`x` is not a string" = inherits(x, "character"),
+        "`x` is not a character" = inherits(x, "character"),
         "`x` is not a string" = length(x) == 1,
         "`x` is not an existing directory" = file_test("-d", x)
       )
@@ -716,45 +716,6 @@ ol_select_relevant_org <- function(
   ) |>
     which() -> which_aff
   relevant <- relevant[which_aff]
-}
-
-git_org <- function(x = ".") {
-  if (!is_repository(x)) {
-    if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
-      return(org_list$new()$read(x))
-    }
-    return(org_list$new(org_item$new(email = "info@inbo.be")))
-  }
-  remotes <- git_remote_list(repo = x)
-  stopifnot("no git remote `origin` found" = any(remotes$name == "origin"))
-  url <- ssh_http(remotes$url[remotes$name == "origin"])
-  if (!grepl("^https://", url, perl = TRUE)) {
-    return(org_list$new(org_item$new(email = "info@inbo.be")))
-  }
-  if (url == "https://github.com/inbo") {
-    return(inbo_org_list())
-  }
-  gsub("https://", "", url) |>
-    tolower() -> config_name
-  R_user_dir("citeme", "config") |>
-    file.path(config_name, fsep = "/") -> config_path
-  if (file.exists(file.path(config_path, "organisation.yml", fsep = "/"))) {
-    org <- org_list$new()$read(config_path)
-    org$write(x)
-    return(org)
-  }
-
-  message(
-    "no local `org_list` information found. ",
-    "See ?get_default_org_list. ",
-    "\nYou can ignore this message when ",
-    url,
-    "/citeme doesn't exists."
-  )
-  if (file.exists(file.path(x, "organisation.yml", fsep = "/"))) {
-    return(org_list$new()$read(x))
-  }
-  return(org_list$new(org_item$new(email = "info@inbo.be"), git = url))
 }
 
 #' The INBO organisation list

@@ -4,7 +4,7 @@
 \alias{individual2person}
 \title{Select the individual information to use as a \code{person} object}
 \usage{
-individual2person(individual, role = "aut", lang)
+individual2person(individual, role = "aut", lang, org = org_list$new()$read())
 }
 \arguments{
 \item{individual}{An optional \code{individual} object to convert to a \code{person}
@@ -15,6 +15,9 @@ If not provided, the function will prompt the user to select an individual.}
 Defaults to `"aut"`` (author).}
 
 \item{lang}{The language to use for the affiliation.}
+
+\item{org}{An \code{org_list} object containing the organisation information.
+Defaults to the \code{org_list} object read from the current working directory.}
 }
 \description{
 This function retrieves the individual information using

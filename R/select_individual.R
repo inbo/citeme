@@ -11,14 +11,17 @@
 #' `org_list` object.
 #' When the affiliation is not available in that language,
 #' it will use the first available language.
+#' @param org An `org_list` object containing the organisation information.
+#' Defaults to the `org_list` object read from the current working directory.
 #' @importFrom assertthat assert_that is.string noNA
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family individual
 #' @export
-select_individual <- function(email, lang) {
+select_individual <- function(email, lang, org = org_list$new()$read()) {
   root <- R_user_dir("citeme", which = "data")
-  org <- org_list$new()$read()
+  # make sure the directory exists
+  dir.create(root, showWarnings = FALSE, recursive = TRUE)
   current <- stored_individuals()
   assert_that(
     interactive() || nrow(current) > 0,

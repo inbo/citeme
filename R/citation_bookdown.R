@@ -214,7 +214,7 @@ bookdown_description <- function(path) {
     list() |>
     setNames("text") |>
     extract_description() -> description
-  if (has_name(description, "meta") || length(description$errors) > 0) {
+  if (has_name(description, "meta")) {
     return(
       list(
         description = description$meta$description,
@@ -231,7 +231,7 @@ bookdown_description <- function(path) {
       list() |>
       setNames("text") |>
       extract_description() -> description
-    if (has_name(description, "meta") || length(description$errors) > 0) {
+    if (has_name(description, "meta")) {
       break
     }
   }

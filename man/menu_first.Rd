@@ -24,6 +24,7 @@ want to return a logical value.
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_keywords]{ask_keywords()}},
 \code{\link[=ask_language]{ask_language()}},
 \code{\link[=ask_new_license]{ask_new_license()}},
 \code{\link[=ask_orcid]{ask_orcid()}},

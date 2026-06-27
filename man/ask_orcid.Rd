@@ -25,6 +25,7 @@ Empty strings are considered valid to allow optional \verb{ORCID iD}.
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},
+\code{\link[=ask_keywords]{ask_keywords()}},
 \code{\link[=ask_language]{ask_language()}},
 \code{\link[=ask_new_license]{ask_new_license()}},
 \code{\link[=ask_ror]{ask_ror()}},

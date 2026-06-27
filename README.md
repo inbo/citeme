@@ -3,7 +3,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![GPL-3](https://img.shields.io/badge/License-GPL-3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
 [![Release](https://img.shields.io/github/release/inbo/citeme.svg)](https://github.com/inbo/citeme/releases)
-![GitHub Workflow Status](https://github.com/inbo/citeme/actions/workflows/check_on_main.yml/badge.svg)
+![GitHub Workflow Status](https://github.com/inbo/citeme/actions/workflows/check_package.yml/badge.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/inbo/citeme)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/inbo/citeme.svg)
 ![r-universe name](https://inbo.r-universe.dev/badges/:name?color=c04384)

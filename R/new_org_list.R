@@ -5,6 +5,7 @@
 #' @param git An optional string with the absolute path to a git
 #' organisation.
 #' E.g. `"https://github.com/inbo"`
+#' @return An [`org_list`] object containing the selected organisations.
 #' @seealso [`org_list`], [`org_item`]
 #' @family organisation
 #' @export

@@ -13,6 +13,8 @@
 #' Defaults to `"aut"`` (author).
 #' @param lang The language to use for the affiliation.
 #' @inheritParams select_individual
+#' @return A [`person`][utils::person] object with the given name, family name,
+#' email, ORCID, and affiliation of the selected individual.
 #' @importFrom utils person
 #' @export
 #' @family individual

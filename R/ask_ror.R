@@ -5,6 +5,8 @@
 #' ROR makes it easy for anyone or any system to disambiguate institution names
 #' and connect research organizations to researchers and research outputs.
 #' @inheritParams base::readline
+#' @return A character string containing a valid ROR identifier or an empty
+#' string.
 #' @export
 #' @family question
 ask_ror <- function(prompt) {

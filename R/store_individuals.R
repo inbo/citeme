@@ -1,5 +1,7 @@
 #' Store individual details for later usage
 #' @param x Path to a project
+#' @return Invisibly returns `NULL`.
+#' Writes the individual details to the user data directory as a side effect.
 #' @export
 #' @importFrom desc description
 #' @importFrom stats aggregate
@@ -49,6 +51,8 @@ store_individuals <- function(x = ".") {
 #' @param person The person object or a list of person objects, `NA` or `NULL`.
 #' Any `"character"` is converted to a person object using `as.person()` with a
 #' warning.
+#' @return A `data.frame` with columns `given`, `family`, `email`, `orcid`,
+#' `ror`, `affiliation`, and `role`.
 #' @family individual
 #' @export
 individual2df <- function(person) {

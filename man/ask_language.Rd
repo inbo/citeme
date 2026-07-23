@@ -12,6 +12,9 @@ ask_language(languages, prompt = "Which language?")
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}
 }
+\value{
+A character string containing a valid language code.
+}
 \description{
 Ask for a language
 }

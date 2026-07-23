@@ -20,7 +20,8 @@ ask_orcid <- function(prompt = "orcid: ") {
   while (!validate_orcid(orcid)) {
     warning(
       "\nPlease provide a valid ORCiD in the format `0000-0000-0000-0000`\n",
-      immediate. = TRUE, call. = FALSE
+      immediate. = TRUE,
+      call. = FALSE
     )
     orcid <- readline(prompt = prompt)
   }

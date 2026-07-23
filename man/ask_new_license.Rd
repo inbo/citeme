@@ -14,6 +14,11 @@ Use the abbreviation of the license name as names.}
 \item{type}{The type of license.
 Must be one of \code{"package"}, \code{"project"} or \code{"data"}.}
 }
+\value{
+A named character vector where each element is a URL to the
+markdown version of the license and each name is the license abbreviation.
+Returns an empty character vector when no license is selected.
+}
 \description{
 Ask one or more licenses.
 }

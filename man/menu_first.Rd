@@ -15,6 +15,10 @@ menu_first(choices, graphics = FALSE, title = NULL)
 \item{title}{a character string to be used as the title of the menu.
     \code{NULL} is also accepted.}
 }
+\value{
+An integer indicating the index of the selected choice.
+Returns \code{1} in non-interactive sessions.
+}
 \description{
 This function is a wrapper around \code{utils::menu()} that returns the index of
 the first choice instead of the index of the selected choice.

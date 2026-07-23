@@ -1,5 +1,6 @@
 #' Ask for an e-mail address
 #' @inheritParams base::readline
+#' @return A character string containing a valid e-mail address.
 #' @export
 #' @family question
 ask_email <- function(prompt) {

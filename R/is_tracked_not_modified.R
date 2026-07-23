@@ -6,6 +6,9 @@
 #' @importFrom assertthat assert_that is.string
 #' @importFrom gert git_ls git_status
 #'
+#' @return A logical value: `TRUE` when the file is tracked by git and has no
+#' modifications, `FALSE` otherwise.
+#' Returns `TRUE` when no git repository is found.
 #' @export
 #' @family git
 is_tracked_not_modified <- function(file, repo = ".") {

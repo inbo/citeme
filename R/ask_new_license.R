@@ -4,6 +4,9 @@
 #'   Use the abbreviation of the license name as names.
 #' @param type The type of license.
 #'   Must be one of `"package"`, `"project"` or `"data"`.
+#' @return A named character vector where each element is a URL to the
+#' markdown version of the license and each name is the license abbreviation.
+#' Returns an empty character vector when no license is selected.
 #' @export
 #' @family question
 ask_new_license <- function(licenses, type = c("package", "project", "data")) {

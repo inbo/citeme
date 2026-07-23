@@ -11,6 +11,10 @@ individual2df(person)
 Any \code{"character"} is converted to a person object using \code{as.person()} with a
 warning.}
 }
+\value{
+A \code{data.frame} with columns \code{given}, \code{family}, \code{email}, \code{orcid},
+\code{ror}, \code{affiliation}, and \code{role}.
+}
 \description{
 Results in a data.frame with the given name, family name, e-mail, ORCID,
 affiliation and role.

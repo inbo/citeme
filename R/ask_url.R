@@ -1,5 +1,6 @@
 #' Ask an URL
 #' @inheritParams base::readline
+#' @return A character string containing a valid URL or an empty string.
 #' @export
 #' @family question
 ask_url <- function(prompt) {

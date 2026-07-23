@@ -1,6 +1,7 @@
 #' Ask for a language
 #' @param languages A character vector containing the available languages.
 #' @inheritParams base::readline
+#' @return A character string containing a valid language code.
 #' @export
 #' @family question
 ask_language <- function(languages, prompt = "Which language?") {

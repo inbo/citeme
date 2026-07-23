@@ -4,6 +4,9 @@
 #' This function is used to ask yes no questions in an interactive way.
 #' It repeats the question until a valid answer is given.
 #' @inheritParams utils::askYesNo
+#' @return A logical value: `TRUE` for yes, `FALSE` for no, or `NA` for
+#' cancel.
+#' Returns `default` in non-interactive sessions.
 #' @importFrom utils askYesNo
 #' @export
 #' @family question

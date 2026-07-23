@@ -11,6 +11,9 @@ new_org_list(git)
 organisation.
 E.g. \code{"https://github.com/inbo"}}
 }
+\value{
+An \code{\link{org_list}} object containing the selected organisations.
+}
 \description{
 An interactive alternative for \code{org_list$new()}.
 Reuses available organisations where possible.

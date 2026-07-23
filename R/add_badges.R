@@ -8,6 +8,8 @@
 #' @param readme_path Directory containing the `README.md` or `README.Rmd` file.
 #' @param ... Additional arguments
 #' @importFrom assertthat assert_that
+#' @return Invisibly returns `NULL`.
+#' Writes the updated README file as a side effect.
 #' @export
 #' @family utils
 #' @examples

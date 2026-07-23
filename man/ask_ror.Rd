@@ -10,6 +10,10 @@ ask_ror(prompt)
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}
 }
+\value{
+A character string containing a valid ROR identifier or an empty
+string.
+}
 \description{
 The Research Organization Registry (ROR) is a global, community-led registry
 of open persistent identifiers for research organizations.

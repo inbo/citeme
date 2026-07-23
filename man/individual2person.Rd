@@ -19,6 +19,10 @@ Defaults to `"aut"`` (author).}
 \item{org}{An \code{org_list} object containing the organisation information.
 Defaults to the \code{org_list} object read from the current working directory.}
 }
+\value{
+A \code{\link[utils:person]{person}} object with the given name, family name,
+email, ORCID, and affiliation of the selected individual.
+}
 \description{
 This function retrieves the individual information using
 \code{select_individual()} and converts it to a \code{person} object.

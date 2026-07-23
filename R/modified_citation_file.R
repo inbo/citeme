@@ -1,3 +1,4 @@
+#' @noRd
 modified_citation_file <- function(citation_file, base_path) {
   normalizePath(base_path, mustWork = TRUE, winslash = "/") |>
     paste0("/") |>

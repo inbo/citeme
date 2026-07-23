@@ -1,3 +1,4 @@
+#' @noRd
 list_licenses <- function(
   items,
   email = character(0),

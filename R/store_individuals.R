@@ -158,6 +158,7 @@ individual2df.person <- function(person) {
 
 #' @importFrom assertthat assert_that is.string noNA
 #' @importFrom utils file_test read.table
+#' @noRd
 stored_individuals <- function() {
   root <- R_user_dir("citeme", which = "data")
   if (file_test("-f", file.path(root, "individual.txt", fsep = "/"))) {

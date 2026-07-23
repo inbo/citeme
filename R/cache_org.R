@@ -14,7 +14,6 @@
 #' @return The retrieved organisation list, or `NULL` if the URL is invalid or
 #' the repository.
 #' @importFrom tools R_user_dir
-#' @importFrom utils installed.packages
 #' @export
 #' @family organisation
 cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
@@ -26,7 +25,7 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
       dir.create(showWarnings = FALSE, recursive = TRUE)
     org <- inbo_org_list()
     org$write(config_path, license = TRUE)
-    if ("checklist" %in% rownames(installed.packages())) {
+    if (length(find.package("checklist", quiet = TRUE)) == 1) {
       system.file("package_template/pkgdown.css", package = "checklist") |>
         file.copy(
           to = file.path(config_path, "pkgdown.css", fsep = "/"),

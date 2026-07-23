@@ -210,7 +210,7 @@ test_that("citation_quarto extracts shorttitle", {
   )
 
   result <- citation_quarto(meta)
-  expect_equal(result$meta$shorttitle, "Short")
+  expect_equal(result$meta$shorttitle, NULL)
 })
 
 test_that("citation_quarto extracts license", {

@@ -15,6 +15,11 @@ A logical vector.
 \description{
 It only checks the format of the text, not if the email address exists.
 }
+\examples{
+validate_email("user@example.com")
+validate_email("invalid")
+validate_email(c("a@b.com", "not-an-email"))
+}
 \seealso{
 Other validation:
 \code{\link[=validate_citation]{validate_citation()}},

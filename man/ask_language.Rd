@@ -18,6 +18,11 @@ A character string containing a valid language code.
 \description{
 Ask for a language
 }
+\examples{
+\dontrun{
+ask_language(languages = c("en-GB", "nl-BE"))
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

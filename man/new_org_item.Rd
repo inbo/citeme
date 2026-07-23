@@ -17,6 +17,14 @@ An \code{org_item} object.
 \description{
 Interactively create a new \code{org_item}
 }
+\examples{
+\dontrun{
+new_org_item(
+  languages = c("en-GB", "nl-BE"),
+  licenses = c("MIT" = "https://example.com/mit.md")
+)
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

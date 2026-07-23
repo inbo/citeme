@@ -20,6 +20,12 @@ The \verb{ORCID iD} must be in the format \code{0000-0000-0000-0000} where the l
 digit can be a number or \code{"X"}.
 Empty strings are considered valid to allow optional \verb{ORCID iD}.
 }
+\examples{
+validate_orcid("0000-0002-1825-0097")
+validate_orcid("0000-0001-2345-6789")
+validate_orcid("invalid")
+validate_orcid("")
+}
 \seealso{
 Other validation:
 \code{\link[=validate_citation]{validate_citation()}},

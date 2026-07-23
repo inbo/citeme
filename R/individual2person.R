@@ -18,6 +18,17 @@
 #' @importFrom utils person
 #' @export
 #' @family individual
+#' @examples
+#' \dontrun{
+#' individual2person(
+#'   data.frame(
+#'     given = "Jane", family = "Doe", email = "jane@example.com",
+#'     orcid = "0000-0002-1825-0097", affiliation = "University"
+#'   ),
+#'   role = "aut",
+#'   lang = "en-GB"
+#' )
+#' }
 individual2person <- function(
   individual,
   role = "aut",

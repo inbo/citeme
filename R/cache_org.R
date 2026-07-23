@@ -16,6 +16,10 @@
 #' @importFrom tools R_user_dir
 #' @export
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' cache_org("https://github.com/inbo")
+#' }
 cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   gsub("https://", "", url) |>
     tolower() -> config_name

@@ -8,6 +8,10 @@
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family individual
+#' @examples
+#' \dontrun{
+#' store_individuals()
+#' }
 store_individuals <- function(x = ".") {
   current <- stored_individuals()
   current$ror <- ""
@@ -55,6 +59,9 @@ store_individuals <- function(x = ".") {
 #' `ror`, `affiliation`, and `role`.
 #' @family individual
 #' @export
+#' @examples
+#' individual2df(person("Jane", "Doe", role = "aut"))
+#' individual2df(NULL)
 individual2df <- function(person) {
   UseMethod("individual2df", person)
 }

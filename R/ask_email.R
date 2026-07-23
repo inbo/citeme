@@ -3,6 +3,10 @@
 #' @return A character string containing a valid e-mail address.
 #' @export
 #' @family question
+#' @examples
+#' \dontrun{
+#' ask_email("Enter your email: ")
+#' }
 ask_email <- function(prompt) {
   repeat {
     email <- readline(prompt = prompt)

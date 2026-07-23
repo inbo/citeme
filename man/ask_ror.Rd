@@ -20,6 +20,11 @@ of open persistent identifiers for research organizations.
 ROR makes it easy for anyone or any system to disambiguate institution names
 and connect research organizations to researchers and research outputs.
 }
+\examples{
+\dontrun{
+ask_ror("Enter ROR: ")
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

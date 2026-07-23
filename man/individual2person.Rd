@@ -31,6 +31,18 @@ select an individual.
 The \code{person} object will include the given name, family name, email, ORCID,
 and affiliation (if available) of the selected individual.
 }
+\examples{
+\dontrun{
+individual2person(
+  data.frame(
+    given = "Jane", family = "Doe", email = "jane@example.com",
+    orcid = "0000-0002-1825-0097", affiliation = "University"
+  ),
+  role = "aut",
+  lang = "en-GB"
+)
+}
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

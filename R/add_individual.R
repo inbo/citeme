@@ -16,6 +16,10 @@
 #' @inheritParams select_individual
 #' @export
 #' @family individual
+#' @examples
+#' \dontrun{
+#' add_individual(path = ".", role = "aut")
+#' }
 add_individual <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),

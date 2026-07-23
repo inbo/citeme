@@ -18,6 +18,11 @@ An \code{\link{org_list}} object containing the selected organisations.
 An interactive alternative for \code{org_list$new()}.
 Reuses available organisations where possible.
 }
+\examples{
+\dontrun{
+new_org_list(git = "https://github.com/inbo")
+}
+}
 \seealso{
 \code{\link{org_list}}, \code{\link{org_item}}
 

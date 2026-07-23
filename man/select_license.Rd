@@ -22,6 +22,12 @@ This function allows you to select a license for a project, package or
 dataset from the list of allowed licenses for the organisation.
 If there is only one license available, it will be selected automatically.
 }
+\examples{
+\dontrun{
+org <- org_list$new()$read()
+select_license(org, type = "package")
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

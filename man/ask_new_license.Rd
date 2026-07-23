@@ -22,6 +22,14 @@ Returns an empty character vector when no license is selected.
 \description{
 Ask one or more licenses.
 }
+\examples{
+\dontrun{
+ask_new_license(
+  c("MIT" = "https://example.com/mit.md"),
+  type = "package"
+)
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

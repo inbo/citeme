@@ -9,6 +9,9 @@
 #' Returns `1` in non-interactive sessions.
 #' @export
 #' @family question
+#' @examples
+#' # Returns 1 in non-interactive sessions
+#' menu_first(choices = c("option A", "option B"))
 menu_first <- function(choices, graphics = FALSE, title = NULL) {
   if (!interactive()) {
     return(1)

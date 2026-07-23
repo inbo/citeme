@@ -4,6 +4,13 @@
 #' @return An `org_item` object.
 #' @family organisation
 #' @export
+#' @examples
+#' \dontrun{
+#' new_org_item(
+#'   languages = c("en-GB", "nl-BE"),
+#'   licenses = c("MIT" = "https://example.com/mit.md")
+#' )
+#' }
 new_org_item <- function(languages, licenses) {
   email <- ask_email("The organisations' email address: ")
   name <- readline(prompt = "The organisations' name: ")

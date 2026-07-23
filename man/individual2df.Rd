@@ -21,6 +21,10 @@ affiliation and role.
 Missing elements result in an empty string (\code{""}).
 Persons with multiple roles will have the roles as a comma separated string.
 }
+\examples{
+individual2df(person("Jane", "Doe", role = "aut"))
+individual2df(NULL)
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

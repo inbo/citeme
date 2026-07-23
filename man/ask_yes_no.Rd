@@ -36,6 +36,10 @@ Provides a simple wrapper around \code{utils::askYesNo()}.
 This function is used to ask yes no questions in an interactive way.
 It repeats the question until a valid answer is given.
 }
+\examples{
+# Returns default in non-interactive sessions
+ask_yes_no("Continue?", default = TRUE)
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

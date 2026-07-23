@@ -16,6 +16,11 @@ A character string containing a valid e-mail address.
 \description{
 Ask for an e-mail address
 }
+\examples{
+\dontrun{
+ask_email("Enter your email: ")
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_keywords]{ask_keywords()}},

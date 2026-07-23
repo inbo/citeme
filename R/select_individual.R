@@ -18,6 +18,10 @@
 #' @importFrom utils write.table
 #' @family individual
 #' @export
+#' @examples
+#' \dontrun{
+#' select_individual(lang = "en-GB")
+#' }
 select_individual <- function(email, lang, org = org_list$new()$read()) {
   root <- R_user_dir("citeme", which = "data")
   # make sure the directory exists

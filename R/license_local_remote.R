@@ -13,6 +13,11 @@
 #' and the `remote_file` column contains the corresponding remote license URLs.
 #' @export
 #' @family license
+#' @examples
+#' license_local_remote(
+#'   c("MIT" = "https://example.com/mit.md",
+#'     "CC-BY-4.0" = "https://example.com/cc-by.md")
+#' )
 license_local_remote <- function(license) {
   data.frame(
     local_file = gsub("[ -]", "_", names(license)) |>

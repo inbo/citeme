@@ -12,6 +12,10 @@
 #' @return A character string containing the `ORCID iD` entered by the user.
 #' @export
 #' @family question
+#' @examples
+#' \dontrun{
+#' ask_orcid()
+#' }
 ask_orcid <- function(prompt = "orcid: ") {
   orcid <- readline(prompt = prompt)
   if (orcid == "") {

@@ -16,6 +16,11 @@ A character string containing a valid URL or an empty string.
 \description{
 Ask an URL
 }
+\examples{
+\dontrun{
+ask_url("Enter URL: ")
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

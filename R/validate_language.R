@@ -10,6 +10,9 @@
 #' @export
 #' @importFrom assertthat assert_that is.string noNA
 #' @family validation
+#' @examples
+#' validate_language("en-GB")
+#' validate_language("nl-BE")
 validate_language <- function(language) {
   assert_that(is.string(language), noNA(language))
   assert_that(

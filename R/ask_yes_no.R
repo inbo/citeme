@@ -10,6 +10,9 @@
 #' @importFrom utils askYesNo
 #' @export
 #' @family question
+#' @examples
+#' # Returns default in non-interactive sessions
+#' ask_yes_no("Continue?", default = TRUE)
 ask_yes_no <- function(
   msg,
   default = TRUE,

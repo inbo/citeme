@@ -25,6 +25,10 @@ the first choice instead of the index of the selected choice.
 This is useful when you want to ask a question with only one choice and you
 want to return a logical value.
 }
+\examples{
+# Returns 1 in non-interactive sessions
+menu_first(choices = c("option A", "option B"))
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

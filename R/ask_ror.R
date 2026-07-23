@@ -9,6 +9,10 @@
 #' string.
 #' @export
 #' @family question
+#' @examples
+#' \dontrun{
+#' ask_ror("Enter ROR: ")
+#' }
 ask_ror <- function(prompt) {
   repeat {
     ror <- readline(prompt = prompt)

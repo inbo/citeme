@@ -16,6 +16,11 @@ Writes the individual details to the user data directory as a side effect.
 \description{
 Store individual details for later usage
 }
+\examples{
+\dontrun{
+store_individuals()
+}
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

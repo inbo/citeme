@@ -18,6 +18,9 @@ a git repository.
 If it is not a git repository itself, then its parent directory is consulted,
 then the parent's parent, and so on.
 }
+\examples{
+is_repository(tempdir())
+}
 \seealso{
 Other git:
 \code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}},

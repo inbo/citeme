@@ -26,6 +26,7 @@ test_that("citation_readme returns error when README.md missing", {
   org <- citeme::org_list$new()
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   meta <- structure(
     list(get_type = "project", get_path = temp_dir),

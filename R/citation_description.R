@@ -1,5 +1,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom desc description
+#' @importFrom tools analyze_license
 citation_description <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   assert_that(meta$get_type == "package")
@@ -14,7 +15,18 @@ citation_description <- function(meta) {
     org$validate_person(lang = lang) -> individuals
   descript$get_field("License") |>
     gsub(pattern = " \\+ file LICENSE", replacement = "") |>
-    gsub(pattern = "^GPL-3$", replacement = "GPL-3.0") -> license
+    analyze_license() -> license
+  if (license$spdx == "") {
+    notes <- paste(
+      "The license in DESCRIPTION has no valid SPDX identifier.",
+      "Please check https://spdx.org/licenses/ for valid identifiers."
+    )
+    license <- license$components
+  } else {
+    notes <- character(0)
+    license <- license$spdx
+  }
+
   descript$get_field("Description") |>
     gsub(pattern = "<((\\w|:|\\.|-|\\/)*?)>", replacement = "\\1") -> abstract
   list(
@@ -50,7 +62,7 @@ citation_description <- function(meta) {
     person = individuals,
     errors = c(attr(individuals, "errors"), urls$errors, keywords$errors),
     warnings = communities$warnings,
-    notes = character(0)
+    notes = notes
   )
 }
 

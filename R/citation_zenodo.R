@@ -1,7 +1,7 @@
 #' @importFrom assertthat assert_that has_name
+#' @importFrom gert git_find
 #' @importFrom jsonlite toJSON
 #' @importFrom knitr pandoc
-#' @importFrom gert git_find
 citation_zenodo <- function(meta) {
   # Validate input
   assert_that(inherits(meta, "citation_meta"))
@@ -9,6 +9,7 @@ citation_zenodo <- function(meta) {
 
   # Extract base metadata
   zenodo <- meta$get_meta
+  zenodo$license <- tolower(zenodo$license)
 
   # Read and validate person entries from DESCRIPTION
   person <- org_list$new()$read(dirname(meta$get_path))$validate_person(

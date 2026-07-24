@@ -143,13 +143,13 @@ format_zenodo <- function(x, type = TRUE) {
 
 zenodo_role <- function(z) {
   if ("cre" %in% z) {
-    return("contactperson")
+    return("ContactPerson")
   } else if ("cph" %in% z) {
-    return("rightsholder")
+    return("RightsHolder")
   } else if ("rev" %in% z) {
-    return("other")
+    return("Other")
   } else {
-    return("projectmember")
+    return("ProjectMember")
   }
 }
 

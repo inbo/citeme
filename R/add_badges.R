@@ -44,7 +44,7 @@ add_badges <- function(readme_path = ".", ...) {
     org <- org_list$new()$read(readme_path)
     dots$license <- c(
       dots$license,
-      gsub("-", "_", dots$license),
+      gsub("[- ]", "_", dots$license),
       license_local_remote(org$get_listed_licenses[dots$license])$remote_file
     )
   }

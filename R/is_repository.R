@@ -9,6 +9,8 @@
 #' @return TRUE if directory is in a git repository else FALSE
 #' @export
 #' @family git
+#' @examples
+#' is_repository(tempdir())
 is_repository <- function(path = ".") {
   out <- tryCatch(git_find(path = path), error = function(e) e)
   !any(class(out) == "error")

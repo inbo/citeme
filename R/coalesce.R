@@ -4,6 +4,10 @@
 #' @return The first non-NULL argument, or NULL if all arguments are NULL.
 #' @export
 #' @family utils
+#' @examples
+#' coalesce(NULL, NULL, "a", "b")
+#' coalesce(NULL, 1)
+#' coalesce(NULL)
 coalesce <- function(...) {
   dots <- list(...)
   i <- 1

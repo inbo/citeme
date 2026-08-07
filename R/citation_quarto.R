@@ -1,4 +1,5 @@
 #' @importFrom assertthat assert_that is.string
+#' @importFrom tools analyze_license
 #' @importFrom utils file_test
 #' @importFrom yaml read_yaml
 citation_quarto <- function(meta) {
@@ -15,14 +16,23 @@ citation_quarto <- function(meta) {
   }
   yaml <- quarto_yaml(meta$get_path)
   language <- yaml$lang
+  shorttitle <- NULL
   if (has_name(yaml, "flandersqmd")) {
     yaml <- yaml$flandersqmd
+    dirname(meta$get_path) |>
+      basename() -> shorttitle
   } else if (has_name(yaml, "book")) {
     yaml <- yaml$book
   }
   yaml$lang <- coalesce(yaml$lang, language)
   cit_meta <- yaml_individual(yaml = yaml)
-  cit_meta$warnings <- cit_meta$notes <- character(0)
+  cit_meta$warnings <- character(0)
+  cit_meta$notes <- paste(
+    "`shorttitle` in `_quarto.yml` is deprecated.",
+    "Use the folder name to define the name of the pdf."
+  )[has_name(yaml, "shorttitle")]
+  cit_meta$meta$shorttitle <- shorttitle[!is.null(shorttitle)]
+
   dirname(meta$get_path) |>
     quarto_description() -> description
   cit_meta$meta$description <- description$description
@@ -31,9 +41,7 @@ citation_quarto <- function(meta) {
     yaml$title,
     ifelse(has_name(yaml, "subtitle"), paste0(". ", yaml$subtitle, "."), ".")
   )
-  if (has_name(yaml, "shorttitle")) {
-    cit_meta$meta$shorttitle <- yaml$shorttitle
-  }
+  cit_meta$meta$description
   cit_meta$meta$upload_type <- "publication"
   if (has_name(yaml, "publication_date")) {
     cit_meta$meta$publication_date <- string2date(yaml$publication_date) |>
@@ -55,6 +63,17 @@ citation_quarto <- function(meta) {
       "No `license` element found in YAML"
     )
     return(cit_meta)
+  }
+  license <- analyze_license(yaml$license)
+  if (license$spdx == "") {
+    cit_meta$notes <- c(
+      cit_meta$notes,
+      "The license in YAML has no valid SPDX identifier.",
+      "Please check https://spdx.org/licenses/ for valid identifiers."
+    )
+    cit_meta$meta$license <- license$components
+  } else {
+    cit_meta$meta$license <- license$spdx
   }
   cit_meta$meta$license <- yaml$license
   if (has_name(yaml, "lang")) {

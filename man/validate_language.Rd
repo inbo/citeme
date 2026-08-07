@@ -19,6 +19,10 @@ country code.
 For example, \code{en-GB} for English (United Kingdom) and \code{nl-BE} for Dutch
 (Belgium).
 }
+\examples{
+validate_language("en-GB")
+validate_language("nl-BE")
+}
 \seealso{
 Other validation:
 \code{\link[=validate_citation]{validate_citation()}},

@@ -27,6 +27,15 @@ This function creates a markdown badge for an individual, including their
 name, ORCID, email, and affiliation if available.
 It also adds a footnote with the individual's role and affiliation.
 }
+\examples{
+individual2badge(
+  data.frame(
+    given = "Jane", family = "Doe", email = "jane@example.com",
+    orcid = "0000-0002-1825-0097", affiliation = "University"
+  ),
+  role = "aut"
+)
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

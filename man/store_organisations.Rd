@@ -17,6 +17,12 @@ This function stores organisation information locally for later retrieval.
 The organisations are stored in a tab-separated file in the user's data
 directory.
 }
+\examples{
+\dontrun{
+org <- org_list$new()$read()
+store_organisations(org)
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

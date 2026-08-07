@@ -18,6 +18,11 @@ specified roles.
 \description{
 Does a person object has a given role?
 }
+\examples{
+p <- person("Jane", "Doe", role = c("aut", "cre"))
+has_person_role(p, "aut")
+has_person_role(p, "ctb")
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

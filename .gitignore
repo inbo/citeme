@@ -30,6 +30,7 @@
 .Rproj.user
 .Ruserdata
 .httr-oauth
+.posit
 .quarto
 docs
 docs/*

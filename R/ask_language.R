@@ -1,8 +1,13 @@
 #' Ask for a language
 #' @param languages A character vector containing the available languages.
 #' @inheritParams base::readline
+#' @return A character string containing a valid language code.
 #' @export
 #' @family question
+#' @examples
+#' \dontrun{
+#' ask_language(languages = c("en-GB", "nl-BE"))
+#' }
 ask_language <- function(languages, prompt = "Which language?") {
   stopifnot("`languages` is not a character vector" = is.character(languages))
   vapply(languages, validate_language, character(1)) |>

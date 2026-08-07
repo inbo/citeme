@@ -9,8 +9,17 @@ store_individuals(x = ".")
 \arguments{
 \item{x}{Path to a project}
 }
+\value{
+Invisibly returns \code{NULL}.
+Writes the individual details to the user data directory as a side effect.
+}
 \description{
 Store individual details for later usage
+}
+\examples{
+\dontrun{
+store_individuals()
+}
 }
 \seealso{
 Other individual:

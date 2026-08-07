@@ -85,6 +85,7 @@ test_that("description_communities warns on missing communities", {
   # Create a mock description object
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   # Create minimal DESCRIPTION file
   desc_content <- c(
@@ -123,6 +124,7 @@ test_that("description_communities requires description object", {
 test_that("description_communities requires org_list object", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   desc_content <- c(
     "Package: testpkg",

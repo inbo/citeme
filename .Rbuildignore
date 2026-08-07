@@ -7,6 +7,7 @@
 ^\.Rproj\.user$
 ^\.github$
 ^\.httr-oauth$
+^\.posit$
 ^\.vscode$
 ^\.zenodo\.json$
 ^_pkgdown.yml$

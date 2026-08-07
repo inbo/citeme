@@ -19,6 +19,10 @@ Defaults to `"aut"`` (author).}
 \item{org}{An \code{org_list} object containing the organisation information.
 Defaults to the \code{org_list} object read from the current working directory.}
 }
+\value{
+A \code{\link[utils:person]{person}} object with the given name, family name,
+email, ORCID, and affiliation of the selected individual.
+}
 \description{
 This function retrieves the individual information using
 \code{select_individual()} and converts it to a \code{person} object.
@@ -26,6 +30,18 @@ If the \code{individual} argument is not provided, it will prompt the user to
 select an individual.
 The \code{person} object will include the given name, family name, email, ORCID,
 and affiliation (if available) of the selected individual.
+}
+\examples{
+\dontrun{
+individual2person(
+  data.frame(
+    given = "Jane", family = "Doe", email = "jane@example.com",
+    orcid = "0000-0002-1825-0097", affiliation = "University"
+  ),
+  role = "aut",
+  lang = "en-GB"
+)
+}
 }
 \seealso{
 Other individual:

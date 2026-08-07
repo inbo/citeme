@@ -10,11 +10,20 @@ ask_ror(prompt)
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}
 }
+\value{
+A character string containing a valid ROR identifier or an empty
+string.
+}
 \description{
 The Research Organization Registry (ROR) is a global, community-led registry
 of open persistent identifiers for research organizations.
 ROR makes it easy for anyone or any system to disambiguate institution names
 and connect research organizations to researchers and research outputs.
+}
+\examples{
+\dontrun{
+ask_ror("Enter ROR: ")
+}
 }
 \seealso{
 Other question:

@@ -18,6 +18,10 @@
 #' @importFrom utils write.table
 #' @family individual
 #' @export
+#' @examples
+#' \dontrun{
+#' select_individual(lang = "en-GB")
+#' }
 select_individual <- function(email, lang, org = org_list$new()$read()) {
   root <- R_user_dir("citeme", which = "data")
   # make sure the directory exists
@@ -98,6 +102,7 @@ select_individual <- function(email, lang, org = org_list$new()$read()) {
 }
 
 #' @importFrom utils menu write.table
+#' @noRd
 update_individual <- function(current, selected, root, org, lang) {
   original <- current
   item <- c("given", "family", "email", "orcid", "affiliation")
@@ -143,6 +148,7 @@ update_individual <- function(current, selected, root, org, lang) {
 }
 
 #' @importFrom assertthat assert_that
+#' @noRd
 new_individual <- function(current, root, org, lang) {
   assert_that(inherits(org, "org_list"))
   cat("Please provide person information.\n")
@@ -193,6 +199,7 @@ new_individual <- function(current, root, org, lang) {
   return(current)
 }
 
+#' @noRd
 validate_individual <- function(current, selected, org, lang) {
   assert_that(inherits(org, "org_list"))
   affiliation <- org$get_name_by_domain(current$email[selected], lang = lang)

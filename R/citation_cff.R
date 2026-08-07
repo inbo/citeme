@@ -1,3 +1,4 @@
+#' @noRd
 citation_cff <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   if (!meta$get_type %in% c("package", "project")) {

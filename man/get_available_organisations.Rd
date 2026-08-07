@@ -16,6 +16,11 @@ configuration files and locally stored organisations.
 It returns a list containing the names, languages, licenses, ORCID, Zenodo,
 ROR, website, and logo of the available organisations.
 }
+\examples{
+\dontrun{
+get_available_organisations()
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

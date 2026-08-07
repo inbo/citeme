@@ -30,7 +30,7 @@ individual2badge <- function(
     return(individuals2badge(individual, role = role))
   }
   sprintf("[^%s]", role) |>
-    paste(collapse = "") -> role_link
+    paste(collapse = " ") -> role_link
   if (is.na(individual$orcid) || individual$orcid == "") {
     if (is.na(individual$email) || individual$email == "") {
       ifelse(individual$family == "", "", paste0(individual$family, ", ")) |>

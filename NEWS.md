@@ -1,3 +1,9 @@
+# citeme 0.2.0
+
+* Prepare package for CRAN.
+* Use SPDX licenses names.
+* Improve documentation.
+
 # citeme 0.1.4
 
 * Add `ask_keywords()` function for interactive keyword input.

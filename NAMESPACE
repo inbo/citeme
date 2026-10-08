@@ -57,33 +57,45 @@ export(validate_orcid)
 export(validate_ror)
 export(validate_url)
 importFrom(R6,R6Class)
-importFrom(assertthat,assert_that)
-importFrom(assertthat,has_name)
-importFrom(assertthat,is.flag)
-importFrom(assertthat,is.string)
-importFrom(assertthat,noNA)
+importFrom(assertthat,
+  assert_that,
+  has_name,
+  is.flag,
+  is.string,
+  noNA
+)
 importFrom(desc,description)
-importFrom(gert,git_find)
-importFrom(gert,git_ls)
-importFrom(gert,git_remote_list)
-importFrom(gert,git_status)
+importFrom(gert,
+  git_find,
+  git_ls,
+  git_remote_list,
+  git_status
+)
 importFrom(jsonlite,toJSON)
 importFrom(knitr,pandoc)
-importFrom(stats,aggregate)
-importFrom(stats,setNames)
-importFrom(tools,R_user_dir)
-importFrom(tools,analyze_license)
-importFrom(utils,as.person)
-importFrom(utils,askYesNo)
-importFrom(utils,download.file)
-importFrom(utils,file_test)
-importFrom(utils,head)
-importFrom(utils,menu)
-importFrom(utils,person)
-importFrom(utils,read.table)
-importFrom(utils,sessionInfo)
-importFrom(utils,tail)
-importFrom(utils,write.table)
-importFrom(yaml,as.yaml)
-importFrom(yaml,read_yaml)
-importFrom(yaml,write_yaml)
+importFrom(stats,
+  aggregate,
+  setNames
+)
+importFrom(tools,
+  R_user_dir,
+  analyze_license
+)
+importFrom(utils,
+  as.person,
+  askYesNo,
+  download.file,
+  file_test,
+  head,
+  menu,
+  person,
+  read.table,
+  sessionInfo,
+  tail,
+  write.table
+)
+importFrom(yaml,
+  as.yaml,
+  read_yaml,
+  write_yaml
+)

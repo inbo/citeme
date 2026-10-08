@@ -10,7 +10,8 @@ test_that("modified_citation_file returns character(0) outside a repository", {
   on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
   writeLines("test", file.path(temp_dir, "CITATION.cff", fsep = "/"))
   expect_identical(
-    modified_citation_file("CITATION.cff", base_path = temp_dir),
+    file.path(temp_dir, "CITATION.cff", fsep = "/") |>
+      modified_citation_file(base_path = temp_dir),
     character(0)
   )
 })
@@ -28,7 +29,8 @@ test_that("modified_citation_file returns character(0) for unmodified file", {
   gert::git_add("CITATION.cff", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)
   expect_identical(
-    modified_citation_file("CITATION.cff", base_path = temp_repo),
+    file.path(temp_repo, "CITATION.cff", fsep = "/") |>
+      modified_citation_file(base_path = temp_repo),
     character(0)
   )
 })
@@ -47,8 +49,9 @@ test_that("modified_citation_file returns a message for a modified file", {
   gert::git_add("CITATION.cff", repo = temp_repo)
   gert::git_commit("Initial commit", repo = temp_repo)
   writeLines("modified", citation_path)
-  expect_identical(
-    modified_citation_file("CITATION.cff", base_path = temp_repo),
+  expect_match(
+    file.path(temp_repo, "CITATION.cff", fsep = "/") |>
+      modified_citation_file(base_path = temp_repo),
     "CITATION.cff is modified. Please commit changes."
   )
 })
@@ -69,7 +72,8 @@ test_that("modified_citation_file works when base_path is a subdirectory", {
   # `base_path` is the subdirectory, so the path must be resolved relative to
   # the repository root before checking git status.
   expect_identical(
-    modified_citation_file("CITATION.cff", base_path = sub_dir),
+    file.path(sub_dir, "CITATION.cff", fsep = "/") |>
+      modified_citation_file(base_path = sub_dir),
     character(0)
   )
 })

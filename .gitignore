@@ -39,3 +39,4 @@ inst/dependencies.R
 libs
 output
 renv/library
+tests/testthat/_problems

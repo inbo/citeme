@@ -2,6 +2,12 @@
 #' @importFrom utils file_test
 #' @noRd
 modified_citation_file <- function(citation_file, base_path) {
+  citation_file <- normalizePath(
+    citation_file,
+    winslash = "/",
+    mustWork = FALSE
+  )
+  base_path <- normalizePath(base_path, winslash = "/", mustWork = FALSE)
   stopifnot(
     "`citation_file` is not an existing file" = file_test("-f", citation_file),
     "`base_path` is not an existing directory" = file_test("-d", base_path)

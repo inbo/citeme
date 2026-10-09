@@ -1,7 +1,7 @@
 <!-- badges: start -->
-[![Project Status: Concept - Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![GPL-3](https://img.shields.io/badge/License-GPL-3-brightgreen)](https://raw.githubusercontent.com/inbo/checklist/refs/heads/main/inst/generic_template/gplv3.md)
+[![GPL-3](https://img.shields.io/badge/License-GPL_3-brightgreen)](https://raw.githubusercontent.com/inbo/citeme/refs/heads/main/inst/licenses/gplv3.md)
+[![GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-brightgreen)](NA)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)[![Lifecycle: experimental](https://lifecycle.r-lib.org/reference/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Release](https://img.shields.io/github/release/inbo/citeme.svg)](https://github.com/inbo/citeme/releases)
 ![GitHub Workflow Status](https://github.com/inbo/citeme/actions/workflows/check_package.yml/badge.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/inbo/citeme)

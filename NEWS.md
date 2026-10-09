@@ -2,6 +2,7 @@
 
 * Prepare package for CRAN.
 * Use SPDX licenses names.
+  This requires R 4.6.0 or later.
 * Improve documentation.
 
 # citeme 0.1.4

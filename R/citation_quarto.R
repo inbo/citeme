@@ -1,5 +1,4 @@
 #' @importFrom assertthat assert_that is.string
-#' @importFrom tools analyze_license
 #' @importFrom utils file_test
 #' @importFrom yaml read_yaml
 citation_quarto <- function(meta) {
@@ -64,18 +63,9 @@ citation_quarto <- function(meta) {
     )
     return(cit_meta)
   }
-  license <- analyze_license(yaml$license)
-  if (license$spdx == "") {
-    cit_meta$notes <- c(
-      cit_meta$notes,
-      "The license in YAML has no valid SPDX identifier.",
-      "Please check https://spdx.org/licenses/ for valid identifiers."
-    )
-    cit_meta$meta$license <- license$components
-  } else {
-    cit_meta$meta$license <- license$spdx
-  }
-  cit_meta$meta$license <- yaml$license
+  lic <- spdx_license(yaml$license)
+  cit_meta$meta$license <- unname(lic[["license"]])
+  cit_meta$notes <- c(cit_meta$notes, unname(lic[["notes"]]))
   if (has_name(yaml, "lang")) {
     cit_meta$meta$language <- yaml$lang
   }

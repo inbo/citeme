@@ -1,4 +1,3 @@
-#' @importFrom tools analyze_license
 #' @importFrom utils head
 readme_badges <- function(text) {
   badges_start <- grep("<!-- badges: start -->", text)
@@ -100,17 +99,9 @@ readme_badges <- function(text) {
   )
   if (length(license_line) == 1) {
     gsub(license_regexp, "\\1", badges[license_line]) |>
-      analyze_license() -> license
-    if (license$spdx == "") {
-      notes <- c(
-        notes,
-        "The license in README.md has no valid SPDX identifier.",
-        "Please check https://spdx.org/licenses/ for valid identifiers."
-      )
-      meta$license <- license$components
-    } else {
-      meta$license <- license$spdx
-    }
+      spdx_license() -> lic
+    meta$license <- unname(lic[["license"]])
+    notes <- c(notes, unname(lic[["notes"]]))
   }
 
   paste0(

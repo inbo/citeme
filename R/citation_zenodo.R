@@ -117,7 +117,7 @@ citation_zenodo <- function(meta) {
   # Write .zenodo.json file
   dirname(meta$get_path) |>
     file.path(".zenodo.json", fsep = "/") -> citation_file
-  toJSON(zenodo, pretty = TRUE, auto_unbox = TRUE) |>
+  toJSON(zenodo[sort(names(zenodo))], pretty = TRUE, auto_unbox = TRUE) |>
     writeLines(citation_file)
   errors <- modified_citation_file(citation_file, dirname(meta$get_path))
   return(errors)

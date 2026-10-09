@@ -4,6 +4,7 @@
 * Use SPDX licenses names.
   This requires R 4.6.0 or later.
 * Improve documentation.
+* Sort `.zenodo.json` elements to ensure a stable order in the longer run.
 
 # citeme 0.1.4
 

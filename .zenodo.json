@@ -1,17 +1,10 @@
 {
-  "title": "citeme: Manage Person and Organisation Information",
-  "version": "0.2.0",
-  "license": "gpl-3.0-only",
-  "upload_type": "software",
-  "description": "<p>Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, publisher information, and integration with citation management systems.<\/p>",
-  "keywords": [
-    "organisation",
-    "author",
-    "standardisation",
-    "inbo_version"
-  ],
   "access_right": "open",
-  "language": "eng",
+  "communities": [
+    {
+      "identifier": "inbo"
+    }
+  ],
   "contributors": [
     {
       "name": "Onkelinx, Thierry",
@@ -31,10 +24,17 @@
       "orcid": "0000-0001-8804-4216"
     }
   ],
-  "communities": [
-    {
-      "identifier": "inbo"
-    }
+  "description": "<p>Manage person and organisation information with validation and formatting capabilities. Provides R6 classes for managing organisations and their members, with support for multiple languages, ORCID identifiers, ROR identifiers, licensing requirements, publisher information, and integration with citation management systems.<\/p>",
+  "keywords": [
+    "organisation",
+    "author",
+    "standardisation",
+    "inbo_version"
   ],
-  "publisher": "Research Institute for Nature and Forest (INBO)"
+  "language": "eng",
+  "license": "gpl-3.0-only",
+  "publisher": "Research Institute for Nature and Forest (INBO)",
+  "title": "citeme: Manage Person and Organisation Information",
+  "upload_type": "software",
+  "version": "0.2.0"
 }

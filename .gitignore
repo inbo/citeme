@@ -34,8 +34,8 @@
 .quarto
 docs
 docs/*
-inst/doc
 inst/dependencies.R
+inst/doc
 libs
 output
 renv/library

@@ -14,22 +14,109 @@ and publishers.
 This allows an organisation to enforce a consistent set of rules across all
 its projects.
 
+## The organisation-level `citeme` repository
+
+`citeme` allows every organisation to publish its rules in a single public git repository named `citeme`, located directly under the organisation's git host account.
+For an account at https://gitlab.com/ThierryO, it is https://gitlab.com/ThierryO/citeme.
+We created https://gitlab.com/ThierryO/citeme as a toy example to illustrate the structure of such a repository.
+https://github.com/inbo/citeme is not an example because it hosts the `citeme` package itself, which hard-codes the INBO rules in `inbo_org_list()`.
+
+The repository holds the organisation's settings, not code:
+
+| File or folder | Purpose |
+|---|---|
+| `organisation.yml` | The `org_list`: names, emails, ROR, roles and allowed licences. |
+| `set_organisation.R` | The optional script that generates `organisation.yml`, kept under version control so the settings are reproducible. |
+| `pkgdown.css`, `pkgdown/` | Optional house style and images for `pkgdown` websites. |
+
+The repository must be public and must have a `main` branch.
+`citeme` clones it anonymously, so a private repository cannot be read by
+your colleagues' sessions.
+
+### Benefits
+
+- **One source of truth.**
+  Every project in the organisation reads the same `organisation.yml`, so names, email addresses, ROR identifiers and licence lists cannot drift apart between repositories.
+- **Rules travel automatically.**
+  A colleague runs `get_default_org_list()` once and gets the organisation's conventions, without reading any policy document.
+- **Change once, apply everywhere.**
+  Update `organisation.yml` in the `citeme` repository and every project picks up the new rules the next time its cache is refreshed.
+- **Enforceable in CI.**
+  `org_list$check()` recognises a continuous integration environment, so a non-compliant copyright holder, funder, publisher or licence can block a
+  pull request or a release.
+- **Licences stay legal.**
+  The allowed licences are listed as URLs to the licence text, so each
+  project gets a byte-identical `LICENSE.md`.
+- **Reproducible settings.**
+  Keeping `set_organisation.R` next to the generated `organisation.yml`
+  documents how the rules came about and makes review of a change easy.
+- **Reusable for other purposes.**
+  The organisation's settings can be reused in other projects or scripts, ensuring consistency across different tools and workflows.
+  The `citeme` repository can be used to store additional resources, such as templates, guidelines, or scripts that support the organisation's practices.
+  For instance the `checklist` package uses the `citeme` repository to store its mandatory configuration files at the organisation level.
+
+### Setting up the repository
+
+1. Create a new **public** repository named `citeme` directly under your organisation's git account, with `main` as the default branch.
+2. Write a script, for example `set_organisation.R`, that builds the `org_list` for your organisation.
+   Create one `org_item` per organisation that may appear as `rightsholder`, `funder` or `publisher`, then combine them with `org_list$new()`.
+   Set `git` to the URL of the organisation account, *without* the `citeme` suffix.
+
+```{r}
+#| label: setup-org-script
+#| eval: false
+library(citeme)
+org_item$new(
+  name = c(
+    `en-GB` = "The checklist organisation",
+    `nl-BE` = "De checklist organisatie"
+  ),
+  email = "info@organisation.checklist",
+  rightsholder = "shared",
+  funder = "shared",
+  license = list(
+    package = c(
+      MIT = paste(
+        "https://raw.githubusercontent.com/inbo/citeme/refs/heads/main",
+        "inst/licenses/mit.md",
+        sep = "/"
+      )
+    ),
+    project = character(0),
+    data = character(0)
+  )
+) |>
+  org_list$new(git = "https://gitlab.com/ThierryO") -> org
+org$write()
+```
+
+3. Run the script from the root of the clone of the `citeme` repository. `write()` creates `organisation.yml` in the working directory.
+4. Commit both `set_organisation.R` and `organisation.yml` and push them to `main`.
+5. Optionally add the licence texts you refer to (as Markdown files) and a `pkgdown.css` with your house style to the same repository.
+6. Verify the result from a project of your organisation:
+
+```{r}
+#| label: setup-org-verify
+#| eval: false
+get_default_org_list(".")
+```
+
+This clones the organisation's `citeme` repository and caches it under `tools::R_user_dir("citeme", "config")`.
+Each colleague runs this once, and again whenever the organisation's rules change.
+
+Compare your result with the toy example at <https://gitlab.com/ThierryO/citeme>, which contains exactly these pieces: a `set_organisation.R` script, the generated `organisation.yml` and some `pkgdown` styling.
+
 ## The `org_item` class
 
 The `org_item` class stores information about a single organisation.
 It requires two mandatory fields: `name` and `email`.
 
-- `name` must be a named character vector where each name is a
-  [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) language code
-  (e.g. `"en-GB"`, `"nl-BE"`).
+- `name` must be a named character vector where each name is a [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) language code (e.g. `"en-GB"`, `"nl-BE"`).
   This allows the organisation name to be used in different languages.
-  The first entry is used as the default when no matching language is
-  available.
+  The first entry is used as the default when no matching language is available.
 - `email` serves two purposes:
-  1. It gives users a contact point for the organisation when individual
-     authors are unavailable.
-  2. `citeme` uses the email domain to detect whether a person is affiliated
-     with the organisation.
+  1. It gives users a contact point for the organisation when individual authors are unavailable.
+  2. `citeme` uses the email domain to detect whether a person is affiliated with the organisation.
 
 Optionally you can provide:
 
@@ -44,8 +131,7 @@ Optionally you can provide:
 
 ### Roles: `rightsholder`, `funder`, and `publisher`
 
-`org_item` defines the required status of the organisation for each of the
-three roles: `rightsholder`, `funder`, and `publisher`.
+`org_item` defines the required status of the organisation for each of the three roles: `rightsholder`, `funder`, and `publisher`.
 Each accepts one of the following values:
 
 | Value | Meaning |
@@ -61,23 +147,18 @@ The default for all three roles is `"optional"`.
 
 The `org_list` class holds a collection of `org_item` objects.
 The rules of the different items must be mutually compatible.
-For example, if one organisation has `rightsholder = "single"`, no other
-organisation can be set to `"single"` or `"shared"` for the same role.
+For example, if one organisation has `rightsholder = "single"`, no other organisation can be set to `"single"` or `"shared"` for the same role.
 
 The `org_list` also stores the URL of the organisation's git host.
-`citeme` looks for an `organisation.yml` file in the `citeme` repository
-at that URL to retrieve the minimum rules for the organisation.
-For example, when `git = "https://github.com/inbo"`, `citeme` looks at
-`https://github.com/inbo/citeme`.
+`citeme` looks for an `organisation.yml` file in the `citeme` repository at that URL to retrieve the minimum rules for the organisation.
+For example, when `git = "https://github.com/inbo"`, `citeme` looks at `https://github.com/inbo/citeme`.
 
 ## Creating an `org_list` programmatically
 
 Use `org_item$new()` to create `org_item` objects.
-Note that license values must be URLs pointing to publicly accessible
-Markdown files with the license text.
+Note that license values must be URLs pointing to publicly accessible Markdown files with the license text.
 We recommend hosting these files in your organisation's `citeme` repository.
-`citeme` caches license files locally and includes them as `LICENSE.md` in
-packages and projects.
+`citeme` caches license files locally and includes them as `LICENSE.md` in packages and projects.
 
 ```{r}
 #| label: create-org-item
@@ -165,22 +246,17 @@ inbo_org$write(path_to_citeme_repo)
 
 ## Creating an `org_list` interactively
 
-Use `new_org_list()` to build an `org_list` step by step in an interactive
-session.
+Use `new_org_list()` to build an `org_list` step by step in an interactive session.
 `new_org_item()` similarly walks you through creating a single `org_item`.
 Both functions are intended for use in the console, not inside scripts.
 
 ## Getting the default `org_list` for a project
 
-Run `get_default_org_list()` inside a git project to fetch the default
-organisation list from the organisation's `citeme` repository.
-The function uses the `origin` remote of the project to determine which
-organisation to look up.
+Run `get_default_org_list()` inside a git project to fetch the default organisation list from the organisation's `citeme` repository.
+The function uses the `origin` remote of the project to determine which organisation to look up.
 
-`get_default_org_list()` stores the result in `citeme`'s user-level
-configuration.
-You only need to run it once per organisation, or when the organisation's
-defaults change.
+`get_default_org_list()` stores the result in `citeme`'s user-level configuration.
+You only need to run it once per organisation, or when the organisation's defaults change.
 After that, `org_list$new()$read()` returns the cached information.
 
 ```{r}
@@ -204,8 +280,7 @@ my_org
 ## Adding an `org_item` to an existing `org_list`
 
 Use the `add_item()` method to extend an existing `org_list`.
-Call `write()` afterwards to persist the change to the local
-`organisation.yml` file.
+Call `write()` afterwards to persist the change to the local `organisation.yml` file.
 
 ```{r}
 #| label: update-org-list
@@ -221,9 +296,7 @@ my_org$write(test_dir)
 
 ## The built-in INBO organisation list
 
-`citeme` ships with `inbo_org_list()`, a ready-to-use `org_list` for
-projects affiliated with the Research Institute for Nature and Forest (INBO)
-and its partner organisations.
+`citeme` ships with `inbo_org_list()`, a ready-to-use `org_list` for projects affiliated with the Research Institute for Nature and Forest (INBO) and its partner organisations.
 
 ```{r}
 #| label: inbo-org-list
@@ -234,13 +307,11 @@ inbo_org_list()
 
 **Can I use `citeme` without git?**
 
-Yes. Without git, `citeme` only checks rules defined in a local
-`organisation.yml` file.
+Yes. Without git, `citeme` only checks rules defined in a local `organisation.yml` file.
 
 **Is a `citeme` repository at the organisation level required?**
 
-No. Without an organisation-level repository, no organisation-wide rules are
-enforced.
+No. Without an organisation-level repository, no organisation-wide rules are enforced.
 
 **Do I need to add an `organisation.yml` file to my project?**
 

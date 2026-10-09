@@ -16,6 +16,10 @@
 #' @inheritParams select_individual
 #' @export
 #' @family individual
+#' @examples
+#' \dontrun{
+#' add_individual(path = ".", role = "aut")
+#' }
 add_individual <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
@@ -35,6 +39,7 @@ add_individual <- function(
 }
 
 #' @importFrom desc description
+#' @noRd
 add_individual_description <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
@@ -62,6 +67,7 @@ add_individual_description <- function(
 }
 
 #' @importFrom utils head tail
+#' @noRd
 add_individual_readme <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
@@ -134,6 +140,7 @@ find_individual_insert <- function(content) {
   max(individual_lines)
 }
 
+#' @noRd
 add_individual_quarto <- function(
   path = ".",
   role = c("aut", "cre", "ctb", "rev", "cph", "fnd", "pbl"),
@@ -164,6 +171,7 @@ add_individual_quarto <- function(
 }
 
 #' @importFrom yaml read_yaml
+#' @noRd
 get_yaml_header <- function(path) {
   content <- readLines(path)
   if (basename(path) == "_quarto.yml") {
@@ -183,6 +191,7 @@ get_yaml_header <- function(path) {
 }
 
 #' @importFrom yaml as.yaml write_yaml
+#' @noRd
 write_yaml_header <- function(header) {
   path <- attr(header, "path")
   handlers <- list(logical = function(x) {
@@ -204,6 +213,7 @@ write_yaml_header <- function(header) {
   return(invisible(NULL))
 }
 
+#' @noRd
 individual2list <- function(individual) {
   individual_list <- list(
     name = list(given = individual$given, family = individual$family)

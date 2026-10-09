@@ -15,6 +15,11 @@ The first non-NULL argument, or NULL if all arguments are NULL.
 \description{
 Return the first non-NULL argument.
 }
+\examples{
+coalesce(NULL, NULL, "a", "b")
+coalesce(NULL, 1)
+coalesce(NULL)
+}
 \seealso{
 Other utils:
 \code{\link[=add_badges]{add_badges()}}

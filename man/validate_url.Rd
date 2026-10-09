@@ -16,6 +16,10 @@ A logical value indicating whether the URL is valid.
 Validate that a URL is a string of length 1 which is not NA and matches the
 pattern of a valid URL.
 }
+\examples{
+validate_url("https://example.com")
+validate_url("not a url")
+}
 \seealso{
 Other validation:
 \code{\link[=validate_citation]{validate_citation()}},

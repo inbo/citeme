@@ -18,6 +18,13 @@ specified roles.
 \description{
 Select the person object with a given role
 }
+\examples{
+p <- c(
+  person("Jane", "Doe", role = "aut"),
+  person("John", "Smith", role = c("aut", "cre"))
+)
+select_person_role(p, "cre")
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

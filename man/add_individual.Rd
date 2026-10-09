@@ -35,6 +35,11 @@ Defaults to the \code{org_list} object read from the current working directory.}
 \description{
 Add an individual to a file
 }
+\examples{
+\dontrun{
+add_individual(path = ".", role = "aut")
+}
+}
 \seealso{
 Other individual:
 \code{\link[=has_person_role]{has_person_role()}},

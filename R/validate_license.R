@@ -7,6 +7,12 @@
 #' throws an error.
 #' @export
 #' @family validation
+#' @examples
+#' validate_license_list(list(
+#'   package = c("MIT" = "https://example.com/mit.md"),
+#'   project = c("CC-BY-4.0" = "https://example.com/cc-by.md"),
+#'   data = c("CC0-1.0" = "https://example.com/cc0.md")
+#' ))
 validate_license_list <- function(license) {
   stopifnot(
     "`license` must be a list" = inherits(license, "list"),

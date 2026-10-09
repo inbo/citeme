@@ -27,6 +27,11 @@ If it is, it returns the cached version.
 If not, it attempts to retrieve the organisation list from the specified git
 URL and caches it for future use.
 }
+\examples{
+\dontrun{
+org_list_from_url("https://github.com/inbo/citeme")
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

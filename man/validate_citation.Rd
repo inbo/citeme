@@ -16,6 +16,12 @@ or an empty character vector if the metadata is valid.
 \description{
 Validate a citation metadata object
 }
+\examples{
+\dontrun{
+meta <- citation_meta$new(".")
+validate_citation(meta)
+}
+}
 \seealso{
 Other validation:
 \code{\link[=validate_email]{validate_email()}},

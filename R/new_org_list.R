@@ -5,9 +5,14 @@
 #' @param git An optional string with the absolute path to a git
 #' organisation.
 #' E.g. `"https://github.com/inbo"`
+#' @return An [`org_list`] object containing the selected organisations.
 #' @seealso [`org_list`], [`org_item`]
 #' @family organisation
 #' @export
+#' @examples
+#' \dontrun{
+#' new_org_list(git = "https://github.com/inbo")
+#' }
 new_org_list <- function(git) {
   available <- get_available_organisations()
   rf_option <- c("optional", "single", "shared", "when no other")

@@ -98,7 +98,10 @@ readme_badges <- function(text) {
     "no standard license badge found in README.md"[length(license_line) == 0]
   )
   if (length(license_line) == 1) {
-    meta$license <- gsub(license_regexp, "\\1", badges[license_line])
+    gsub(license_regexp, "\\1", badges[license_line]) |>
+      spdx_license() -> lic
+    meta$license <- unname(lic[["license"]])
+    notes <- c(notes, unname(lic[["notes"]]))
   }
 
   paste0(

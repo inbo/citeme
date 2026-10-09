@@ -22,6 +22,10 @@ Validate that a ROR is a string of 9 characters starting with 0, followed by
 6 characters which can be a letter (except i, l, o) or a digit, and ending
 with 2 digits.
 }
+\examples{
+validate_ror("0abcde789")
+validate_ror("invalid")
+}
 \seealso{
 Other validation:
 \code{\link[=validate_citation]{validate_citation()}},

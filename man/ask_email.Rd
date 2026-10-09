@@ -10,8 +10,16 @@ ask_email(prompt)
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}
 }
+\value{
+A character string containing a valid e-mail address.
+}
 \description{
 Ask for an e-mail address
+}
+\examples{
+\dontrun{
+ask_email("Enter your email: ")
+}
 }
 \seealso{
 Other question:

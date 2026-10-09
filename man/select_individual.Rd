@@ -27,6 +27,11 @@ A data.frame with individual information.
 Reuse existing individual information or add a new individual.
 Allows to update existing individual information.
 }
+\examples{
+\dontrun{
+select_individual(lang = "en-GB")
+}
+}
 \seealso{
 Other individual:
 \code{\link[=add_individual]{add_individual()}},

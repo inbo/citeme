@@ -10,6 +10,11 @@
 #' @returns A logical vector with the same length as the input vector.
 #' @export
 #' @family validation
+#' @examples
+#' validate_orcid("0000-0002-1825-0097")
+#' validate_orcid("0000-0001-2345-6789")
+#' validate_orcid("invalid")
+#' validate_orcid("")
 validate_orcid <- function(orcid) {
   stopifnot("`orcid` must be a character vector" = inherits(orcid, "character"))
   format_ok <- grepl("^(\\d{4}-){3}\\d{3}[\\dX]$", orcid, perl = TRUE)

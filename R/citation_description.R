@@ -12,9 +12,7 @@ citation_description <- function(meta) {
   lang <- descript$get_field("Language", default = "")
   descript$get_authors() |>
     org$validate_person(lang = lang) -> individuals
-  descript$get_field("License") |>
-    gsub(pattern = " \\+ file LICENSE", replacement = "") |>
-    gsub(pattern = "^GPL-3$", replacement = "GPL-3.0") -> license
+
   descript$get_field("Description") |>
     gsub(pattern = "<((\\w|:|\\.|-|\\/)*?)>", replacement = "\\1") -> abstract
   list(
@@ -24,7 +22,6 @@ citation_description <- function(meta) {
       descript$get_field("Title")
     ),
     version = descript$get_version(),
-    license = license,
     upload_type = "software",
     description = abstract
   ) |>
@@ -34,6 +31,10 @@ citation_description <- function(meta) {
       urls$meta,
       access_right = "open"
     ) -> cit_meta
+  descript$get_field("License") |>
+    gsub(pattern = " \\+ file LICENSE", replacement = "") |>
+    spdx_license() -> lic
+  cit_meta$license <- unname(lic[["license"]])
   if (lang != "") {
     cit_meta$language <- lang
   }
@@ -50,7 +51,7 @@ citation_description <- function(meta) {
     person = individuals,
     errors = c(attr(individuals, "errors"), urls$errors, keywords$errors),
     warnings = communities$warnings,
-    notes = character(0)
+    notes = unname(lic[["notes"]])
   )
 }
 

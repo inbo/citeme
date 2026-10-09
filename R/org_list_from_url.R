@@ -11,6 +11,10 @@
 #' @importFrom utils file_test
 #' @export
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' org_list_from_url("https://github.com/inbo/citeme")
+#' }
 org_list_from_url <- function(git) {
   ssh_http(git) |>
     gsub(pattern = "https://", replacement = "") |>

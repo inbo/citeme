@@ -8,6 +8,9 @@
 #' @return The converted HTTP URL.
 #' @export
 #' @family git
+#' @examples
+#' ssh_http("git@github.com:inbo/citeme.git")
+#' ssh_http("https://github.com/inbo/citeme")
 ssh_http <- function(url) {
   if (!grepl("^https:\\/\\/", url)) {
     url <- gsub("^git@(.*):", "https://\\1/", url, perl = TRUE)

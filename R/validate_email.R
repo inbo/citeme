@@ -5,6 +5,10 @@
 #' @return A logical vector.
 #' @export
 #' @family validation
+#' @examples
+#' validate_email("user@example.com")
+#' validate_email("invalid")
+#' validate_email(c("a@b.com", "not-an-email"))
 validate_email <- function(email) {
   stopifnot("`email` must be a character vector" = inherits(email, "character"))
   # expression taken from https://emailregex.com/

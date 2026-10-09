@@ -11,6 +11,10 @@ add_badges(readme_path = ".", ...)
 
 \item{...}{Additional arguments}
 }
+\value{
+Invisibly returns \code{NULL}.
+Writes the updated README file as a side effect.
+}
 \description{
 \itemize{
 \item \code{doi}: add a DOI badge

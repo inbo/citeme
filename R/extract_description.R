@@ -1,4 +1,5 @@
 #' @importFrom utils head
+#' @noRd
 extract_description <- function(text) {
   description_start <- grep("<!-- description: start -->", text$text)
   description_end <- grep("<!-- description: end -->", text$text)

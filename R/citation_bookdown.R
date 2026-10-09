@@ -46,7 +46,9 @@ citation_bookdown <- function(meta) {
     )
     return(cit_meta)
   }
-  cit_meta$meta$license <- yaml$license
+  lic <- spdx_license(yaml$license)
+  cit_meta$meta$license <- unname(lic[["license"]])
+  cit_meta$notes <- c(cit_meta$notes, unname(lic[["notes"]]))
   lang_check <- validate_language_yaml(yaml)
   if (has_name(lang_check, "error")) {
     cit_meta$errors <- c(cit_meta$errors, lang_check$error)

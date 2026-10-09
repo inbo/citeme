@@ -1,3 +1,4 @@
+#' @noRd
 split_community <- function(community) {
   if (is.null(community) || length(community) == 0) {
     return(NULL)

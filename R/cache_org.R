@@ -93,7 +93,12 @@ cache_org <- function(url, config_folder = R_user_dir("citeme", "config")) {
   dirname(to_do) |>
     unique() -> dirs
   file.path(config_path, dirs[dirs != "."], fsep = "/") |>
-    dir.create(showWarnings = FALSE, recursive = TRUE)
+    vapply(
+      FUN = dir.create,
+      FUN.VALUE = logical(1),
+      showWarnings = FALSE,
+      recursive = TRUE
+    )
   file.path(target, to_do, fsep = "/") |>
     file.copy(to = file.path(config_path, to_do, fsep = "/"))
   org <- org_list$new()$read(target)

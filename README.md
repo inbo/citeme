@@ -36,7 +36,7 @@ Manage person and organisation information with validation and formatting capabi
 You record each person once (name, email, ORCID, affiliation) and each organisation once (names in several languages, ROR identifier, allowed licences, rules on copyright holder, funder and publisher).
 From that single source of truth `citeme` creates the main source of citation information in your package.
 Depending on the kind of project, this source is a `DESCRIPTION`, `_quarto.yml`, the yaml header in Quarto or bookdown document.
-The fallback is the project`s `README.md`.
+The fallback is the project's `README.md`.
 `citeme` creates a `CITATION.cff`, `.zenodo.json`, `inst/CITATION` based on the source file.
 Every value is validated before it is written, so a typo in an ORCID or an unsupported licence is caught in your project rather than in a repository such as Zenodo or CRAN.
 

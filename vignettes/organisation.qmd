@@ -11,7 +11,7 @@ vignette: >
 `citeme` uses the `org_list` to check whether a project complies with the
 organisation's rules about naming conventions, copyright holders, funders,
 and publishers.
-This allows an organisation to enforce a consistent set of rules across all
+This allows a [GitHub organisation](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations) or [GitLab organisation](https://docs.gitlab.com/user/organization/) to enforce a consistent set of rules across all
 its projects.
 
 ## The organisation-level `citeme` repository

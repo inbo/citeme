@@ -1,3 +1,4 @@
+#' @noRd
 git_org <- function(x = ".") {
   if (!is_repository(x)) {
     return(local_git_org(x))

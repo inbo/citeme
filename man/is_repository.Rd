@@ -7,7 +7,7 @@
 is_repository(path = ".")
 }
 \arguments{
-\item{path}{the location of the git repository, see details.}
+\item{path}{the location of the git repository, see the "path" section.}
 }
 \value{
 TRUE if directory is in a git repository else FALSE
@@ -17,6 +17,9 @@ The path arguments specifies the directory at which to start the search for
 a git repository.
 If it is not a git repository itself, then its parent directory is consulted,
 then the parent's parent, and so on.
+}
+\examples{
+is_repository(tempdir())
 }
 \seealso{
 Other git:

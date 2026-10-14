@@ -1,3 +1,4 @@
+#' @noRd
 inherits_org_item <- function(dots) {
   vapply(dots, inherits, logical(1), what = "org_item") |>
     as.list() -> ok

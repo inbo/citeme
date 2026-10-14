@@ -102,6 +102,7 @@ test_that("citation_bookdown returns error when index.Rmd missing", {
 
 test_that("citation_bookdown processes valid bookdown project", {
   bookdown_dir <- create_temp_bookdown()
+  on.exit(unlink(bookdown_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   # Create mock citation_meta object
   meta <- structure(
@@ -124,6 +125,7 @@ test_that("citation_bookdown processes valid bookdown project", {
 
 test_that("citation_bookdown extracts title from YAML", {
   bookdown_dir <- create_temp_bookdown()
+  on.exit(unlink(bookdown_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   meta <- structure(
     list(
@@ -141,6 +143,7 @@ test_that("citation_bookdown extracts title from YAML", {
 
 test_that("citation_bookdown sets upload_type to publication", {
   bookdown_dir <- create_temp_bookdown()
+  on.exit(unlink(bookdown_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   meta <- structure(
     list(
@@ -157,6 +160,7 @@ test_that("citation_bookdown sets upload_type to publication", {
 
 test_that("citation_bookdown handles publication_date", {
   bookdown_dir <- create_temp_bookdown()
+  on.exit(unlink(bookdown_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   meta <- structure(
     list(
@@ -218,6 +222,7 @@ Content
 
 test_that("citation_bookdown sets access_right to open when no embargo", {
   bookdown_dir <- create_temp_bookdown()
+  on.exit(unlink(bookdown_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   meta <- structure(
     list(
@@ -235,6 +240,7 @@ test_that("citation_bookdown sets access_right to open when no embargo", {
 test_that("citation_bookdown requires license", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
@@ -271,6 +277,7 @@ Content
 test_that("citation_bookdown handles subtitle", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 
@@ -312,6 +319,7 @@ Content
 test_that("citation_bookdown handles shorttitle", {
   temp_dir <- tempfile()
   dir.create(temp_dir, showWarnings = FALSE, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE, force = TRUE), add = TRUE)
 
   writeLines("title: Test", file.path(temp_dir, "_bookdown.yml", fsep = "/"))
 

@@ -12,6 +12,9 @@
 #' @return A logical value indicating whether the ROR is valid.
 #' @export
 #' @family validation
+#' @examples
+#' validate_ror("0abcde789")
+#' validate_ror("invalid")
 validate_ror <- function(ror) {
   stopifnot(
     "`ror` must be a string" = is.character(ror),

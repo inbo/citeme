@@ -11,11 +11,19 @@ individual2df(person)
 Any \code{"character"} is converted to a person object using \code{as.person()} with a
 warning.}
 }
+\value{
+A \code{data.frame} with columns \code{given}, \code{family}, \code{email}, \code{orcid},
+\code{ror}, \code{affiliation}, and \code{role}.
+}
 \description{
 Results in a data.frame with the given name, family name, e-mail, ORCID,
 affiliation and role.
 Missing elements result in an empty string (\code{""}).
 Persons with multiple roles will have the roles as a comma separated string.
+}
+\examples{
+individual2df(person("Jane", "Doe", role = "aut"))
+individual2df(NULL)
 }
 \seealso{
 Other individual:

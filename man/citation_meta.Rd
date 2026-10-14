@@ -3,6 +3,9 @@
 \name{citation_meta}
 \alias{citation_meta}
 \title{The \code{citation_meta} R6 class}
+\value{
+A \code{citation_meta} \link[R6:R6Class]{R6} object.
+}
 \description{
 A class which contains citation information.
 }

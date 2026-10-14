@@ -5,6 +5,11 @@
 #' @export
 #' @importFrom assertthat assert_that
 #' @family validation
+#' @examples
+#' \dontrun{
+#' meta <- citation_meta$new(".")
+#' validate_citation(meta)
+#' }
 validate_citation <- function(meta) {
   assert_that(inherits(meta, "citation_meta"))
   org <- org_list$new()$read(dirname(meta$get_path))

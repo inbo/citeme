@@ -1,10 +1,20 @@
 # citeme 0.2.0
 
+## New features
+
 * Prepare package for CRAN.
-* Use SPDX licenses names.
-  This requires R 4.6.0 or later.
+* Improved `README.md` and `vignette("organisation", package = "citeme")`.
+* Use SPDX licenses names when using R 4.6.0 or later.
 * Improve documentation.
 * Sort `.zenodo.json` elements to ensure a stable order in the longer run.
+* `individual2badge()` separates role and affiliation footnotes with a space to
+  make distinguishable for persons.
+
+## Bugfixes
+
+* Fix license badges with spaces in the license name.
+* Fix `.zenodo.json` roles.
+* Fix the detection of modified citation files.
 
 # citeme 0.1.4
 

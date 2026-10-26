@@ -28,6 +28,7 @@ Imports:
     utils,
     yaml
 Suggests:
+    gitcreds,
     mockery,
     quarto,
     rmarkdown,

@@ -23,6 +23,7 @@ is_repository(tempdir())
 }
 \seealso{
 Other git:
+\code{\link[=get_token]{get_token()}},
 \code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}},
 \code{\link[=ssh_http]{ssh_http()}}
 }

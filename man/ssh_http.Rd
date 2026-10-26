@@ -24,6 +24,7 @@ ssh_http("https://github.com/inbo/citeme")
 }
 \seealso{
 Other git:
+\code{\link[=get_token]{get_token()}},
 \code{\link[=is_repository]{is_repository()}},
 \code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}}
 }

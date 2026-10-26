@@ -26,6 +26,7 @@ is_tracked_not_modified("R/my_function.R")
 }
 \seealso{
 Other git:
+\code{\link[=get_token]{get_token()}},
 \code{\link[=is_repository]{is_repository()}},
 \code{\link[=ssh_http]{ssh_http()}}
 }

@@ -9,6 +9,7 @@
 * Sort `.zenodo.json` elements to ensure a stable order in the longer run.
 * `individual2badge()` separates role and affiliation footnotes with a space to
   make distinguishable for persons.
+* New `get_token()` function.
 
 ## Bugfixes
 

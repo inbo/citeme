@@ -20,6 +20,11 @@ This function retrieves the default organisation list from the
 The \code{origin} of the repository is used to determine the root URL of the
 organisation.
 }
+\examples{
+\dontrun{
+get_default_org_list()
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

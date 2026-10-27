@@ -11,6 +11,11 @@
 #' @return The name of the selected license.
 #' @export
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' org <- org_list$new()$read()
+#' select_license(org, type = "package")
+#' }
 select_license <- function(org, type = c("package", "project", "data")) {
   stopifnot("`org` must be of class `org_list`" = inherits(org, "org_list"))
   type <- match.arg(type)

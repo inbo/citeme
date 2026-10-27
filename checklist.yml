@@ -3,18 +3,18 @@ package: yes
 allowed:
   warnings: []
   notes:
-  - motivation: Package not yet on CRAN
-    value: |-
-      checking CRAN incoming feasibility ... NOTE
-      Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
-
-      New submission
+  - motivation: False positive about ROR
+    value: "checking CRAN incoming feasibility ... NOTE\nMaintainer: 'Thierry Onkelinx
+      <thierry.onkelinx@inbo.be>'\n\nNew submission\n\nFound the following (possibly)
+      invalid URLs:\n  URL: https://ror.org/\n    From: man/validate_ror.Rd\n          inst/doc/interactive_input.html\n
+      \         inst/doc/organisation.html\n    Status: 429\n    Message: Too Many
+      Requests\n\nFound the following (possibly) invalid ROR IDs:\n  ID: 00j54wy13\t(from:
+      DESCRIPTION)"
 required:
 - CITATION
 - DESCRIPTION
 - R CMD check
 - checklist
-- codemeta
 - documentation
 - filename conventions
 - folder conventions
@@ -31,3 +31,4 @@ spelling:
   - LICENSE.md
   - inst/licenses
 pak: []
+gha_install: []

@@ -5,6 +5,10 @@
 #' specified roles.
 #' @export
 #' @family individual
+#' @examples
+#' p <- person("Jane", "Doe", role = c("aut", "cre"))
+#' has_person_role(p, "aut")
+#' has_person_role(p, "ctb")
 has_person_role <- function(individual, role) {
   stopifnot(
     "`individual` must be a `person` object" = inherits(individual, "person"),

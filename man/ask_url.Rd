@@ -10,8 +10,16 @@ ask_url(prompt)
 \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}
 }
+\value{
+A character string containing a valid URL or an empty string.
+}
 \description{
 Ask an URL
+}
+\examples{
+\dontrun{
+ask_url("Enter URL: ")
+}
 }
 \seealso{
 Other question:

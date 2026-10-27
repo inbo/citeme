@@ -6,6 +6,9 @@
 #' @return A logical value indicating whether the URL is valid.
 #' @export
 #' @family validation
+#' @examples
+#' validate_url("https://example.com")
+#' validate_url("not a url")
 validate_url <- function(url) {
   stopifnot(
     "`url` must be a string" = inherits(url, "character"),

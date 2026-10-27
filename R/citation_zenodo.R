@@ -1,7 +1,7 @@
 #' @importFrom assertthat assert_that has_name
+#' @importFrom gert git_find
 #' @importFrom jsonlite toJSON
 #' @importFrom knitr pandoc
-#' @importFrom gert git_find
 citation_zenodo <- function(meta) {
   # Validate input
   assert_that(inherits(meta, "citation_meta"))
@@ -9,6 +9,7 @@ citation_zenodo <- function(meta) {
 
   # Extract base metadata
   zenodo <- meta$get_meta
+  zenodo$license <- tolower(zenodo$license)
 
   # Read and validate person entries from DESCRIPTION
   person <- org_list$new()$read(dirname(meta$get_path))$validate_person(
@@ -116,7 +117,7 @@ citation_zenodo <- function(meta) {
   # Write .zenodo.json file
   dirname(meta$get_path) |>
     file.path(".zenodo.json", fsep = "/") -> citation_file
-  toJSON(zenodo, pretty = TRUE, auto_unbox = TRUE) |>
+  toJSON(zenodo[sort(names(zenodo))], pretty = TRUE, auto_unbox = TRUE) |>
     writeLines(citation_file)
   errors <- modified_citation_file(citation_file, dirname(meta$get_path))
   return(errors)
@@ -143,13 +144,13 @@ format_zenodo <- function(x, type = TRUE) {
 
 zenodo_role <- function(z) {
   if ("cre" %in% z) {
-    return("contactperson")
+    return("ContactPerson")
   } else if ("cph" %in% z) {
-    return("rightsholder")
+    return("RightsHolder")
   } else if ("rev" %in% z) {
-    return("other")
+    return("Other")
   } else {
-    return("projectmember")
+    return("ProjectMember")
   }
 }
 

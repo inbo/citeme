@@ -9,6 +9,11 @@
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' org <- org_list$new()$read()
+#' store_organisations(org)
+#' }
 store_organisations <- function(x) {
   UseMethod("store_organisations", x)
 }
@@ -53,6 +58,11 @@ store_organisations.org_item <- function(x) {
 #' @return A data.frame with the organisation information.
 #' @export
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' org <- org_list$new()$read()
+#' organisation2df(org)
+#' }
 organisation2df <- function(x) {
   UseMethod("organisation2df", x)
 }
@@ -117,6 +127,10 @@ org_item_to_row <- function(item) {
 #' @importFrom tools R_user_dir
 #' @importFrom utils file_test read.table
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' stored_organisations()
+#' }
 stored_organisations <- function() {
   root <- R_user_dir("citeme", which = "data")
   org_file <- file.path(root, "organisation.txt", fsep = "/")

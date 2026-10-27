@@ -18,8 +18,13 @@ It also removes any \code{OAuth2} tokens from the URL.
 The resulting URL is used to determine the root URL of the organisation for
 retrieving the organisation list.
 }
+\examples{
+ssh_http("git@github.com:inbo/citeme.git")
+ssh_http("https://github.com/inbo/citeme")
+}
 \seealso{
 Other git:
+\code{\link[=get_token]{get_token()}},
 \code{\link[=is_repository]{is_repository()}},
 \code{\link[=is_tracked_not_modified]{is_tracked_not_modified()}}
 }

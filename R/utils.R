@@ -1,8 +1,10 @@
+#' @noRd
 rules <- function(x = "#", nl = "\n") {
   assertthat::assert_that(assertthat::is.string(nl), assertthat::noNA(nl))
   paste(c(nl, rep(x, getOption("width", 80)), nl), collapse = "")
 }
 
+#' @noRd
 set_non_empty <- function(x, fun, prompt) {
   if (x == "") {
     return(x)
@@ -13,6 +15,7 @@ set_non_empty <- function(x, fun, prompt) {
   return(x)
 }
 
+#' @noRd
 first_non_null <- function(...) {
   dots <- list(...)
   if (length(dots) == 0) {

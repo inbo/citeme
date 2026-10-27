@@ -11,11 +11,22 @@ is_tracked_not_modified(file, repo = ".")
 
 \item{repo}{path to the repository}
 }
+\value{
+A logical value: \code{TRUE} when the file is tracked by git and has no
+modifications, \code{FALSE} otherwise.
+Returns \code{TRUE} when no git repository is found.
+}
 \description{
 Check if a file is tracked and not modified
 }
+\examples{
+\dontrun{
+is_tracked_not_modified("R/my_function.R")
+}
+}
 \seealso{
 Other git:
+\code{\link[=get_token]{get_token()}},
 \code{\link[=is_repository]{is_repository()}},
 \code{\link[=ssh_http]{ssh_http()}}
 }

@@ -274,6 +274,21 @@ test_that("readme_badges validates non-image content in badges section", {
   expect_true(any(grepl("should only contain images", result$errors)))
 })
 
+test_that("readme_badges ignores html comments in badges section", {
+  text <- c(
+    "<!-- badges: start -->",
+    "<!-- spell-check: ignore:start -->",
+    "![badge](url)",
+    "![badge2](url2) <!-- spell-check: ignore -->",
+    "<!-- spell-check: ignore:end -->",
+    "<!-- badges: end -->"
+  )
+  result <- readme_badges(text)
+
+  expect_false(any(grepl("should only contain images", result$errors)))
+  expect_false(any(grepl("should hold only one image", result$errors)))
+})
+
 # Tests for remove_empty_line
 test_that("remove_empty_line removes leading empty lines", {
   text <- c("", "  ", "Content", "More")

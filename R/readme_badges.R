@@ -29,7 +29,7 @@ readme_badges <- function(text) {
     )
   }
   badges <- text[seq(badges_start + 1, badges_end - 1)]
-  comment_regexp <- "^(.*\\S)?\\s*\\<\\!\\-\\-.*\\-\\-\\>"
+  comment_regexp <- "(.*)\\s*\\<\\!\\-\\-.*?\\-\\-\\>"
   # ignore comments to avoid false positives, keep empty line
   badges <- gsub(comment_regexp, "\\1", badges, perl = TRUE)
   badge_regexp <- "^\\[?!\\[.*?\\]\\(.*?\\)(\\]\\(.*?\\))?"

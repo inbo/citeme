@@ -1,3 +1,4 @@
+#' @noRd
 check_compatible_rules <- function(items) {
   vapply(
     items,

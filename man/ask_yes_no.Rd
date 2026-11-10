@@ -26,10 +26,19 @@ a single character value containing the prompts separated by
 Additional parameters, ignored by the default function.
 }
 }
+\value{
+A logical value: \code{TRUE} for yes, \code{FALSE} for no, or \code{NA} for
+cancel.
+Returns \code{default} in non-interactive sessions.
+}
 \description{
 Provides a simple wrapper around \code{utils::askYesNo()}.
 This function is used to ask yes no questions in an interactive way.
 It repeats the question until a valid answer is given.
+}
+\examples{
+# Returns default in non-interactive sessions
+ask_yes_no("Continue?", default = TRUE)
 }
 \seealso{
 Other question:

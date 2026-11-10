@@ -22,6 +22,11 @@ The \verb{ORCID iD} must be in the format \code{0000-0000-0000-0000} where the l
 digit can be a number or \code{"X"}.
 Empty strings are considered valid to allow optional \verb{ORCID iD}.
 }
+\examples{
+\dontrun{
+ask_orcid()
+}
+}
 \seealso{
 Other question:
 \code{\link[=ask_email]{ask_email()}},

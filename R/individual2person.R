@@ -13,9 +13,22 @@
 #' Defaults to `"aut"`` (author).
 #' @param lang The language to use for the affiliation.
 #' @inheritParams select_individual
+#' @return A [`person`][utils::person] object with the given name, family name,
+#' email, ORCID, and affiliation of the selected individual.
 #' @importFrom utils person
 #' @export
 #' @family individual
+#' @examples
+#' \dontrun{
+#' individual2person(
+#'   data.frame(
+#'     given = "Jane", family = "Doe", email = "jane@example.com",
+#'     orcid = "0000-0002-1825-0097", affiliation = "University"
+#'   ),
+#'   role = "aut",
+#'   lang = "en-GB"
+#' )
+#' }
 individual2person <- function(
   individual,
   role = "aut",

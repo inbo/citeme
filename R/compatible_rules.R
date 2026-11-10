@@ -1,3 +1,4 @@
+#' @noRd
 compatible_rules <- function(rules) {
   if (length(rules) < 2) {
     return(TRUE)

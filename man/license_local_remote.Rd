@@ -23,4 +23,10 @@ lowercase, replacing spaces and hyphens with underscores, and appending the
 \code{.md} extension.
 The remote file URLs are taken directly from the input \code{license} vector.
 }
+\examples{
+license_local_remote(
+  c("MIT" = "https://example.com/mit.md",
+    "CC-BY-4.0" = "https://example.com/cc-by.md")
+)
+}
 \concept{license}

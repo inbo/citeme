@@ -26,6 +26,11 @@ For other URLs, it checks if a public \code{citeme} repository exists and clones
 it to retrieve the organisation list.
 The cached organisation list is stored in a specified configuration folder.
 }
+\examples{
+\dontrun{
+cache_org("https://github.com/inbo")
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=get_available_organisations]{get_available_organisations()}},

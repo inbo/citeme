@@ -1,5 +1,6 @@
 #' @importFrom stats setNames
 #' @importFrom utils file_test head
+#' @noRd
 determine_type <- function(path = ".") {
   stopifnot(
     "`path` must be a single string" = length(path) == 1,

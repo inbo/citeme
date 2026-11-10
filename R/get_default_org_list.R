@@ -11,6 +11,10 @@
 #' @export
 #' @family organisation
 #' @importFrom gert git_remote_list
+#' @examples
+#' \dontrun{
+#' get_default_org_list()
+#' }
 get_default_org_list <- function(x = ".") {
   stopifnot(is_repository(x))
   remotes <- git_remote_list(repo = x)

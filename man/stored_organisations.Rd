@@ -16,6 +16,11 @@ Returns an empty data.frame if no organisations are stored.
 This function retrieves organisation information that was previously stored
 using \code{store_organisations()}.
 }
+\examples{
+\dontrun{
+stored_organisations()
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

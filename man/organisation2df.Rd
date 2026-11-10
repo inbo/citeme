@@ -16,6 +16,12 @@ A data.frame with the organisation information.
 Results in a data.frame with the email, default name, ROR, ORCID requirement,
 Zenodo community, website, and logo of the organisation.
 }
+\examples{
+\dontrun{
+org <- org_list$new()$read()
+organisation2df(org)
+}
+}
 \seealso{
 Other organisation:
 \code{\link[=cache_org]{cache_org()}},

@@ -1,3 +1,4 @@
+(.+/)*.quarto$
 ^.*\.Rproj$
 ^CITATION\.cff$
 ^LICENSE.md$
@@ -7,6 +8,7 @@
 ^\.Rproj\.user$
 ^\.github$
 ^\.httr-oauth$
+^\.posit$
 ^\.vscode$
 ^\.zenodo\.json$
 ^_pkgdown.yml$
@@ -18,5 +20,4 @@
 ^man-roxygen$
 ^organisation.yml$
 ^pkgdown$
-(.+/)*.quarto$
 ^vignettes/*_files$

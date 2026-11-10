@@ -9,6 +9,10 @@
 #' @export
 #' @importFrom tools R_user_dir
 #' @family organisation
+#' @examples
+#' \dontrun{
+#' get_available_organisations()
+#' }
 get_available_organisations <- function() {
   # Get organisations from configuration files
   config_folder <- R_user_dir("citeme", which = "config")

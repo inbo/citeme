@@ -9,6 +9,7 @@ test_that("select_individual() works with non-existing config_folder", {
     select_individual(lang = "en-GB"),
     "No available individuals in a non-interactive session."
   )
+  on.exit(unlink(temp_config_dir, recursive = TRUE, force = TRUE), add = TRUE)
 })
 
 test_that("select_individual() returns correct individual", {

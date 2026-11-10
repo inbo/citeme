@@ -1,3 +1,4 @@
+#' @noRd
 quarto_description <- function(path) {
   for (i in list.files(
     path,

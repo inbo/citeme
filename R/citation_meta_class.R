@@ -1,5 +1,6 @@
 #' @title The `citation_meta` R6 class
 #' @description A class which contains citation information.
+#' @return A `citation_meta` [R6][R6::R6Class] object.
 #' @export
 #' @importFrom R6 R6Class
 #' @importFrom utils file_test

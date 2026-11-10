@@ -1,11 +1,17 @@
 #' Store individual details for later usage
 #' @param x Path to a project
+#' @return Invisibly returns `NULL`.
+#' Writes the individual details to the user data directory as a side effect.
 #' @export
 #' @importFrom desc description
 #' @importFrom stats aggregate
 #' @importFrom tools R_user_dir
 #' @importFrom utils write.table
 #' @family individual
+#' @examples
+#' \dontrun{
+#' store_individuals()
+#' }
 store_individuals <- function(x = ".") {
   current <- stored_individuals()
   current$ror <- ""
@@ -49,8 +55,13 @@ store_individuals <- function(x = ".") {
 #' @param person The person object or a list of person objects, `NA` or `NULL`.
 #' Any `"character"` is converted to a person object using `as.person()` with a
 #' warning.
+#' @return A `data.frame` with columns `given`, `family`, `email`, `orcid`,
+#' `ror`, `affiliation`, and `role`.
 #' @family individual
 #' @export
+#' @examples
+#' individual2df(person("Jane", "Doe", role = "aut"))
+#' individual2df(NULL)
 individual2df <- function(person) {
   UseMethod("individual2df", person)
 }
@@ -154,6 +165,7 @@ individual2df.person <- function(person) {
 
 #' @importFrom assertthat assert_that is.string noNA
 #' @importFrom utils file_test read.table
+#' @noRd
 stored_individuals <- function() {
   root <- R_user_dir("citeme", which = "data")
   if (file_test("-f", file.path(root, "individual.txt", fsep = "/"))) {

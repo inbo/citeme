@@ -29,11 +29,14 @@ readme_badges <- function(text) {
     )
   }
   badges <- text[seq(badges_start + 1, badges_end - 1)]
+  comment_regexp <- "(.*)\\s*\\<\\!\\-\\-.*?\\-\\-\\>"
+  # ignore comments to avoid false positives, keep empty line
+  badges <- gsub(comment_regexp, "\\1", badges, perl = TRUE)
   badge_regexp <- "^\\[?!\\[.*?\\]\\(.*?\\)(\\]\\(.*?\\))?"
   errors <- c(
     errors,
     "badges section in README.md should only contain images"[
-      !all(grepl(badge_regexp, badges, perl = TRUE))
+      !all(badges == "" | grepl(badge_regexp, badges, perl = TRUE))
     ],
     "every line in the badges section README.md should hold only one image"[
       !all(grepl("^\\s*$", gsub(badge_regexp, "", badges, perl = TRUE)))
@@ -98,7 +101,10 @@ readme_badges <- function(text) {
     "no standard license badge found in README.md"[length(license_line) == 0]
   )
   if (length(license_line) == 1) {
-    meta$license <- gsub(license_regexp, "\\1", badges[license_line])
+    gsub(license_regexp, "\\1", badges[license_line]) |>
+      spdx_license() -> lic
+    meta$license <- unname(lic[["license"]])
+    notes <- c(notes, unname(lic[["notes"]]))
   }
 
   paste0(

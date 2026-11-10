@@ -13,6 +13,14 @@
 #' @return A character string containing the markdown badge for the individual.
 #' @export
 #' @family individual
+#' @examples
+#' individual2badge(
+#'   data.frame(
+#'     given = "Jane", family = "Doe", email = "jane@example.com",
+#'     orcid = "0000-0002-1825-0097", affiliation = "University"
+#'   ),
+#'   role = "aut"
+#' )
 individual2badge <- function(
   individual,
   role = c("aut", "cre", "cph", "ctb", "fnd", "pbl", "rev")
@@ -22,7 +30,7 @@ individual2badge <- function(
     return(individuals2badge(individual, role = role))
   }
   sprintf("[^%s]", role) |>
-    paste(collapse = "") -> role_link
+    paste(collapse = " ") -> role_link
   if (is.na(individual$orcid) || individual$orcid == "") {
     if (is.na(individual$email) || individual$email == "") {
       ifelse(individual$family == "", "", paste0(individual$family, ", ")) |>
@@ -73,6 +81,7 @@ individual2badge <- function(
     )
 }
 
+#' @noRd
 individuals2badge <- function(df, role = "aut") {
   badges <- character(nrow(df))
   footnotes <- vector(mode = "list", length = nrow(df))
